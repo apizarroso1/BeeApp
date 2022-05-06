@@ -18,6 +18,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
 
         auth = FirebaseAuth.getInstance()
 
@@ -42,9 +44,6 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
     }
 
     private fun register(email: String, password: String) {
