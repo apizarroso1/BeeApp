@@ -44,6 +44,12 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        registerGoLoginButton.setOnClickListener{
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+
+        }
     }
 
     private fun register(email: String, password: String) {
