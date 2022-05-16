@@ -82,17 +82,17 @@
         android:fontFamily="@font/press_start_2p"
         android:textSize="16sp"
          />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerGoLoginButton"
         android:layout_width="160dp"
         android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/registerRegisterButton"
-        android:layout_marginTop="52dp"
-        android:text="I already have an account"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/press_start_2p"
-        android:textSize="12sp"
-        />
+        android:text="I already have an account"
+        android:textSize="12sp" />
 
 </RelativeLayout>
