@@ -1,82 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:text="Register an account"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/press_start_2p"
+        android:textSize="38sp"
+
+        />
 
     <EditText
         android:id="@+id/registerEmail"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_width="320dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView"
         android:layout_marginTop="28dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
         android:hint="email"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:background="@drawable/text_entry"
+        android:fontFamily="@font/press_start_2p"
+
+         />
 
     <EditText
         android:id="@+id/registerPassword"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_width="320dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/registerEmail"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
         android:hint="password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmail" />
+        android:background="@drawable/text_entry"
+        android:fontFamily="@font/press_start_2p"
+
+        />
 
     <EditText
         android:id="@+id/registerRepeatPassword"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="15dp"
+        android:layout_width="320dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registerPassword"
         android:layout_marginTop="44dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
         android:hint="repeat password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
+        android:background="@drawable/text_entry"
+        android:fontFamily="@font/press_start_2p"
 
-    <Button
-        android:id="@+id/registerGoLoginButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="52dp"
-        android:text="I already have an account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerRegisterButton" />
+         />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerRegisterButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_width="160dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registerRepeatPassword"
         android:layout_marginTop="32dp"
         android:text="ACCEPT"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerRepeatPassword" />
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/press_start_2p"
+        android:textSize="16sp"
+         />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registerGoLoginButton"
+        android:layout_width="160dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registerRegisterButton"
+        android:layout_marginTop="52dp"
+        android:text="I already have an account"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/press_start_2p"
+        android:textSize="12sp"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
