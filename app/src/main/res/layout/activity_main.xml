@@ -8,10 +8,33 @@
     android:background="@drawable/background2">
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/mainGoUserButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="user" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        >
+        <ImageView
+            android:id="@+id/ivUserImage"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"
+            android:src="#000000"
+            />
+        <ImageView
+            android:id="@+id/mainGoUserButton"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="36dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/user_frame"
+             />
+
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
