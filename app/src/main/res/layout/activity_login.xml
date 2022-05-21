@@ -50,7 +50,6 @@
         android:inputType="textPassword"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
-
          />
 
     <androidx.appcompat.widget.AppCompatButton
