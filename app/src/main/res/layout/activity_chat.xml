@@ -7,6 +7,7 @@
     tools:context=".ChatActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,15 +21,25 @@
         android:weightSum="100"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
 
         >
         <EditText
+            android:id="@+id/edMessage"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_weight="80"
+            android:layout_weight="85"
             android:hint="Mensaje"
             android:background="@drawable/rv_background"
             android:paddingStart="20dp"
+            android:layout_marginStart="5dp"
+            />
+        <ImageView
+            android:id="@+id/ivSendButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/submit"
+            android:layout_weight="15"
             />
     </LinearLayout>
 

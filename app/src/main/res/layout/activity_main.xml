@@ -65,6 +65,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/rv_background"
         tools:listitem="@layout/user_layout"
+        android:padding="10dp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>
