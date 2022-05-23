@@ -11,14 +11,14 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:fontFamily="@font/press_start_2p"
         android:text="Register an account"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:fontFamily="@font/press_start_2p"
-        android:textSize="38sp"
-        />
+        android:textSize="38sp" />
 
     <EditText
         android:id="@+id/registerUsername"
@@ -61,46 +61,46 @@
         android:inputType="textPassword"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
-
         />
 
     <EditText
         android:id="@+id/registerRepeatPassword"
         android:layout_width="320dp"
         android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/registerPassword"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:hint="repeat password"
-        android:inputType="textPassword"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
+        android:hint="repeat password"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
 
-         />
+        />
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerRegisterButton"
         android:layout_width="160dp"
         android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/registerRepeatPassword"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="ACCEPT"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/press_start_2p"
-        android:textSize="16sp"
-         />
+        android:text="ACCEPT"
+        android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerGoLoginButton"
         android:layout_width="160dp"
         android:layout_height="64dp"
         android:layout_below="@id/registerRegisterButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/press_start_2p"
         android:text="I already have an account"

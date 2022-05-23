@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var goUserButton: ImageView
@@ -28,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserAdapter
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+
+    private lateinit var tempList: ArrayList<User>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -88,17 +94,52 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
+    /*
+        TODO("Lanza nullpointer")
+        val item = menu?.findItem(R.id.search_action)
+        val searchView = item?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                tempList.clear()
+                val searchText = newText!!.lowercase(Locale.getDefault())
+
+                if (searchText.isNotEmpty()) {
+                    userList.forEach {
+                        if (it.username?.lowercase(Locale.getDefault())!!.contains(searchText)) {
+                            tempList.add(it)
+                        }
+                    }
+
+                    rvChats.adapter?.notifyDataSetChanged()
+                } else {
+                    tempList.clear()
+                    tempList.addAll(userList)
+                    rvChats.adapter!!.notifyDataSetChanged()
+                }
+
+                return false
+            }
+        })
+
+
+    */
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.logout){
-            auth.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            return true
+
+        when (item.itemId){
+            R.id.logout ->{
+                auth.signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         }
         return true
-
     }
 }

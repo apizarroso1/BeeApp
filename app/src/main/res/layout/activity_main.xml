@@ -12,46 +12,45 @@
         android:id="@+id/linearL"
         android:layout_width="300dp"
         android:layout_height="120dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
         android:layout_centerHorizontal="true"
-        >
+        android:layout_marginTop="10dp"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BeeApp"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
             android:layout_gravity="center"
             android:fontFamily="@font/press_start_2p"
+            android:text="BeeApp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
 
             />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginStart="100dp"
-            >
+            android:layout_marginStart="100dp">
+
             <ImageView
                 android:id="@+id/ivUserImage"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="#000000"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/mainGoUserButton"
                 android:layout_width="78dp"
                 android:layout_height="78dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/user_frame"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/user_frame"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,9 +63,8 @@
         android:layout_below="@+id/linearL"
         android:layout_centerHorizontal="true"
         android:background="@drawable/rv_background"
-        tools:listitem="@layout/user_layout"
         android:padding="10dp"
-        >
+        tools:listitem="@layout/user_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>
