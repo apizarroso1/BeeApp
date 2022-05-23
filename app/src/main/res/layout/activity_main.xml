@@ -58,12 +58,13 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChats"
         android:layout_width="300dp"
         android:layout_height="500dp"
         android:layout_below="@+id/linearL"
         android:layout_centerHorizontal="true"
-        android:background="@color/yellow"
-
+        android:background="@drawable/rv_background"
+        tools:listitem="@layout/user_layout"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

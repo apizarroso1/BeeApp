@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeApp">
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -28,4 +31,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

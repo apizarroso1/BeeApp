@@ -7,11 +7,16 @@
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_register.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/custom_button.xml" value="0.463" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/rv_background.xml" value="0.421" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/user_border.xml" value="0.421" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_chat.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_user.xml" value="0.4234375" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_user_profile.xml" value="0.4234375" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/user_layout.xml" value="0.316796875" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/menu/menu.xml" value="0.4270833333333333" />
       </map>
     </option>
   </component>

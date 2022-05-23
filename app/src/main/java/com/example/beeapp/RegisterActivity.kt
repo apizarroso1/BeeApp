@@ -6,23 +6,31 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.beeapp.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var registerUsername: EditText
     private lateinit var registerEmail: EditText
     private lateinit var registerPassword: EditText
     private lateinit var registerRepeatPassword: EditText
     private lateinit var registerButton: Button
     private lateinit var registerGoLoginButton: Button
     private lateinit var auth: FirebaseAuth
+    private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
+        dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         auth = FirebaseAuth.getInstance()
 
+        registerUsername = findViewById(R.id.registerUsername)
         registerEmail = findViewById(R.id.registerEmail)
         registerPassword = findViewById(R.id.registerPassword)
         registerRepeatPassword = findViewById(R.id.registerRepeatPassword)
@@ -30,12 +38,13 @@ class RegisterActivity : AppCompatActivity() {
         registerGoLoginButton = findViewById(R.id.registerGoLoginButton)
 
         registerButton.setOnClickListener {
+            val username = registerUsername.text.toString()
             val email = registerEmail.text.toString()
             val password = registerPassword.text.toString()
             val repeatPassword = registerRepeatPassword.text.toString()
 
-            if (password == repeatPassword && checkEmpty(email, password, repeatPassword)) {
-                register(email, password)
+            if (password == repeatPassword && checkEmpty(username,email, password, repeatPassword)) {
+                register(username,email, password)
             } else {
                 Toast.makeText(
                     applicationContext,
@@ -52,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun register(email: String, password: String) {
+    private fun register(username:String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -61,6 +70,7 @@ class RegisterActivity : AppCompatActivity() {
                         "Account successfully created",
                         Toast.LENGTH_LONG
                     ).show()
+                    addUserToDataBase(username,email, auth.currentUser?.uid!!)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
@@ -69,7 +79,14 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun checkEmpty(email: String, password: String, repeatPassword: String): Boolean {
-        return email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty()
+
+
+    private fun checkEmpty(username:String, email: String, password: String, repeatPassword: String): Boolean {
+        return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty()
+    }
+
+    private fun addUserToDataBase(username: String, email: String, uid: String) {
+        dbRef.child("users").child(uid).setValue(User(username,email,uid))
+
     }
 }

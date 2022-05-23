@@ -21,19 +21,32 @@
         />
 
     <EditText
+        android:id="@+id/registerUsername"
+        android:layout_width="320dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/text_entry"
+        android:fontFamily="@font/press_start_2p"
+        android:hint="username"
+        android:inputType="textEmailAddress"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp" />
+
+    <EditText
         android:id="@+id/registerEmail"
         android:layout_width="320dp"
         android:layout_height="64dp"
+        android:layout_below="@id/registerUsername"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/textView"
         android:layout_marginTop="28dp"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:hint="email"
-        android:inputType="textEmailAddress"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
-         />
+        android:hint="email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp" />
 
     <EditText
         android:id="@+id/registerPassword"
@@ -41,13 +54,13 @@
         android:layout_height="64dp"
         android:layout_below="@id/registerEmail"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:hint="password"
-        android:inputType="textPassword"
+        android:layout_marginTop="28dp"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
 
         />
 
@@ -57,7 +70,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/registerPassword"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="28dp"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:hint="repeat password"
