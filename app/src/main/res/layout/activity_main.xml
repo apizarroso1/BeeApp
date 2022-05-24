@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/background2">
+    android:background="@drawable/background3">
 
 
     <LinearLayout
@@ -17,20 +17,22 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/press_start_2p"
-            android:text="BeeApp"
+            android:text="Usuario"
             android:textColor="@android:color/white"
             android:textSize="18sp"
 
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginStart="100dp">
+            android:layout_marginStart="90dp">
 
             <ImageView
                 android:id="@+id/ivUserImage"
@@ -56,15 +58,37 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChats"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linearL"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rv_background"
-        android:padding="10dp"
-        tools:listitem="@layout/user_layout">
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearL"
+            android:background="@color/honey"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/grey"
+            app:tabIndicatorColor="@color/white">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Grupos"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Amigos"/>
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
+
+    </LinearLayout>
+
 </RelativeLayout>
