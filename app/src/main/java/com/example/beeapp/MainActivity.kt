@@ -54,13 +54,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
         tabLayoutMediator.attach()
-
-
-
-
         initListeners()
         tvUsername()
-
     }
 
     private fun initVar(){
@@ -106,8 +101,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayUser(){
         startActivity(Intent(this, UserActivity::class.java))
-        finish()
-        //
+
+
 
     }
 

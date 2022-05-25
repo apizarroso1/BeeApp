@@ -28,7 +28,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<Message>
     private lateinit var dbRef: DatabaseReference
 
-    private lateinit var btnGoBack: Button
 
     var recieverRoom: String? = null
     var senderRoom: String? = null
@@ -48,15 +47,17 @@ class ChatActivity : AppCompatActivity() {
         senderRoom = recieverUid + senderUid
         recieverRoom = senderUid + recieverUid
 
-                supportActionBar?.title = username
+        supportActionBar?.title = username
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initView()
 
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
-
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
+
+
 
         //
         dbRef.child("chats").child(senderRoom!!).child("messages")
@@ -71,6 +72,12 @@ class ChatActivity : AppCompatActivity() {
                         messageList.add(message!!)
 
                     }
+                    try {
+                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount-1)
+                    }catch (e:Exception){
+
+                    }
+
 
                     messageAdapter.notifyDataSetChanged()
                 }
@@ -95,10 +102,6 @@ class ChatActivity : AppCompatActivity() {
             edMessage.setText("")
         }
 
-        btnGoBack.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
 
 
     }
@@ -107,6 +110,5 @@ class ChatActivity : AppCompatActivity() {
         edMessage = viewBinding.edMessage
         rvMessage = viewBinding.rvMessage
         ivSendButton = viewBinding.ivSendButton
-        btnGoBack = viewBinding.btnGoBackChat
     }
 }

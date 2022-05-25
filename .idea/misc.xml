@@ -7,14 +7,17 @@
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_register.xml" value="0.22826086956521738" />
-        <entry key="..\:/BeeApp/app/src/main/res/layout/activity_user.xml" value="0.2" />
-        <entry key="..\:/BeeApp/app/src/main/res/layout/fragment_chats.xml" value="0.225" />
-        <entry key="..\:/BeeApp/app/src/main/res/layout/fragment_groups.xml" value="0.225" />
+        <entry key="..\:/BeeApp/app/src/main/res/layout/activity_user.xml" value="0.16032608695652173" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/received_layout.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/sent_layout.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/user_layout.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/menu/menu.xml" value="0.35" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.228" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/custom_button.xml" value="0.463" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.228" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.228" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.228" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.228" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/recived_message.xml" value="0.228" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/rv_background.xml" value="0.421" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/sent_message.xml" value="0.228" />

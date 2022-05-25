@@ -1,59 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatActivity">
+    tools:context=".ChatActivity"
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearL3"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="99"
+        android:orientation="vertical"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        <Button
-            android:id="@+id/btnGoBackChat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_baseline_arrow_back_24" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_marginTop="1dp" />
+    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_below="@+id/linearL3"
-        android:layout_marginTop="1dp" />
 
     <LinearLayout
         android:id="@+id/linearL2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="100"
-        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="2dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_marginBottom="5dp"
+        android:background="@color/white"
 
         >
+
         <EditText
             android:id="@+id/edMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="85"
-            android:hint="Mensaje"
-            android:background="@drawable/rv_background"
-            android:paddingStart="20dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="5dp"
-            />
+            android:layout_weight="85"
+            android:background="@drawable/rv_background"
+            android:hint="Mensaje"
+            android:paddingStart="20dp" />
+
         <ImageView
             android:id="@+id/ivSendButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="15"
-            />
+            android:src="@drawable/submit" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

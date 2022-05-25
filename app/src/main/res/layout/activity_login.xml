@@ -34,6 +34,7 @@
         android:inputType="textEmailAddress"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
+        android:textColor="@color/black"
         />
 
 
@@ -50,6 +51,7 @@
         android:inputType="textPassword"
         android:background="@drawable/text_entry"
         android:fontFamily="@font/press_start_2p"
+        android:textColor="@color/black"
          />
 
     <androidx.appcompat.widget.AppCompatButton
