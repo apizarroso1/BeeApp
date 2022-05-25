@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
     private fun displayUser(){
         startActivity(Intent(this, UserActivity::class.java))
         finish()
+        //
 
     }
 
