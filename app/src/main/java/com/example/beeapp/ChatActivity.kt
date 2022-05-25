@@ -53,7 +53,7 @@ class ChatActivity : AppCompatActivity() {
         initView()
 
         messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, messageList)
+        messageAdapter = MessageAdapter(this, messageList,username!!)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
 
