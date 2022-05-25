@@ -6,13 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearL3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnGoBackChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_arrow_back_24" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
 
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/linearL3"
+        android:layout_marginTop="1dp" />
 
     <LinearLayout
         android:id="@+id/linearL2"
