@@ -19,10 +19,16 @@
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/user_border.xml" value="0.421" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_chat.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_main2.xml" value="0.35190217391304346" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_user.xml" value="0.4234375" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_user_profile.xml" value="0.4234375" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/content_main.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_chats.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_first.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_groups.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_second.xml" value="0.3885416666666667" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/sent_layout.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/user_layout.xml" value="0.316796875" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/menu/menu.xml" value="0.4270833333333333" />
