@@ -8,4 +8,7 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always"/>
     <item android:id="@+id/logout" android:title="Log Out"/>
+
+    <item android:id="@+id/add_friend"
+        />
 </menu>
