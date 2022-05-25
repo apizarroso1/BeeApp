@@ -4,10 +4,8 @@ package com.example.beeapp.model
      var username: String? = null,
      var email: String? = null,
      var uid: String? = null,
-     var profilePicture: String? = null
-
-
-
+     var profilePicture: String? = null,
+     var contacts: ArrayList<String>? = null
  )
 
 
