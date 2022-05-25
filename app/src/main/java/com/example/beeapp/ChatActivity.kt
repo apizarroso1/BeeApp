@@ -59,7 +59,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-        //
+        //cargar los mensajes de un chat
         dbRef.child("chats").child(senderRoom!!).child("messages")
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,8 +77,6 @@ class ChatActivity : AppCompatActivity() {
                     }catch (e:Exception){
 
                     }
-
-
                     messageAdapter.notifyDataSetChanged()
                 }
 
