@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         auth = FirebaseAuth.getInstance()
+
+        checkLoggedUser()
 
         loginEmail = findViewById(R.id.loginEmail)
         loginPassword = findViewById(R.id.loginPassword)
@@ -46,6 +49,13 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun checkLoggedUser(){
+        if(auth.currentUser == null){
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 
     private fun login(email: String, password: String) {
