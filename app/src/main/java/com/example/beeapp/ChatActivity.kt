@@ -3,12 +3,12 @@ package com.example.beeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.databinding.ActivityChatBinding
-import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.model.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class ChatActivity : AppCompatActivity() {
@@ -28,6 +27,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var dbRef: DatabaseReference
+
+    private lateinit var btnGoBack: Button
 
     var recieverRoom: String? = null
     var senderRoom: String? = null
@@ -94,6 +95,11 @@ class ChatActivity : AppCompatActivity() {
             edMessage.setText("")
         }
 
+        btnGoBack.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
 
     }
 
@@ -101,7 +107,6 @@ class ChatActivity : AppCompatActivity() {
         edMessage = viewBinding.edMessage
         rvMessage = viewBinding.rvMessage
         ivSendButton = viewBinding.ivSendButton
-
-
+        btnGoBack = viewBinding.btnGoBackChat
     }
 }

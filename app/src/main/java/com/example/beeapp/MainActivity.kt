@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -107,9 +105,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayUser(){
-        //startActivity(Intent(this, UserActivity::class.java))
-        //finish()
-        Toast.makeText(this, "Si va", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, UserActivity::class.java))
+        finish()
 
     }
 
