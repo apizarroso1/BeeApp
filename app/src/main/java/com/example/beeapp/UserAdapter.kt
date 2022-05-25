@@ -14,18 +14,20 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
 
-
+    //inflamos el el view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false)
 
         return UserViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser = userList[position]
 
         holder.tvUsername.text = currentUser.username
 
+        //al pulsar en el card te lleva a ala activiada chat
         holder.itemView.setOnClickListener{
             val intent = Intent(context, ChatActivity::class.java)
 

@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(User::class.java)
 
                     if (auth.currentUser?.uid.equals(currentUser?.uid) ){
-
                         tvUsername.text = currentUser?.username
                     }
 

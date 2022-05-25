@@ -58,6 +58,8 @@ class ChatsFragment : Fragment() {
         }
 
     }
+
+    //se añaden los usuarios a la lista de usuarios
     private fun rvChats(){
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
