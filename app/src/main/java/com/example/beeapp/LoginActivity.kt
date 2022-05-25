@@ -52,8 +52,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoggedUser(){
-        if(auth.currentUser == null){
-            startActivity(Intent(this, LoginActivity::class.java))
+        if(auth.currentUser != null){
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
