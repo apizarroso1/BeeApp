@@ -11,7 +11,6 @@ import android.widget.Toast
 
 import com.example.beeapp.databinding.ActivityUserBinding
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.util.*
 
 class UserActivity : AppCompatActivity() {

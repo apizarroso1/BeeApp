@@ -41,7 +41,7 @@ class AddContactActivity : AppCompatActivity() {
     private fun initRV() {
         // Storage -> arraylist
         rvUsers.layoutManager = LinearLayoutManager(this)
-        adapter = ContactAdapter(users) { addContact(it) }
+        adapter = ContactAdapter(this,users) { addContact(it) }
         rvUsers.adapter = adapter
     }
 

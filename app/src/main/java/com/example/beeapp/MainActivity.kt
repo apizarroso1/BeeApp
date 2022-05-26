@@ -81,24 +81,28 @@ class MainActivity : AppCompatActivity() {
     private fun loadProfilePicture(){
 
         var imageRef: String? = null
+        try {
             dbRef.child("users")
                 .addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+                    override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (postSnapshot in snapshot.children){
-                    val currentUser = postSnapshot.getValue(User::class.java)
+                        for (postSnapshot in snapshot.children) {
+                            val currentUser = postSnapshot.getValue(User::class.java)
 
-                    if (auth.currentUser?.uid.equals(currentUser?.uid) ){
-                        imageRef = currentUser?.profilePicture
+                            if (auth.currentUser?.uid.equals(currentUser?.uid)) {
+                                imageRef = currentUser?.profilePicture
+                            }
+                            Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
+                        }
                     }
-                    Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                //NADA
-            }
-        })
 
+                    override fun onCancelled(error: DatabaseError) {
+                        //NADA
+                    }
+                })
+        }catch (e:Exception){
+            e.stackTrace
+        }
     }
 
     private fun tvUsername(){
