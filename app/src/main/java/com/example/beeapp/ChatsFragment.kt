@@ -34,7 +34,7 @@ class ChatsFragment : Fragment() {
 
         // Inflate the layout for this fragment
 
-         val view: View = inflater.inflate(R.layout.fragment_chats, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_chats, container, false)
         rvChats = view.findViewById(R.id.rvChats)
         auth = FirebaseAuth.getInstance()
         dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
