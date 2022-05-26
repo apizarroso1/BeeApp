@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.model.User
 import com.google.android.material.tabs.TabLayout
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,9 +31,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var goUserButton: ImageView
     private lateinit var tvUsername:TextView
     private lateinit var viewBinding: ActivityMainBinding
-
+    private lateinit var ivProfilePicture:ImageView
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var storage: StorageReference
 
     private lateinit var tempList: ArrayList<User>
 
@@ -61,14 +66,41 @@ class MainActivity : AppCompatActivity() {
     private fun initVar(){
         auth = FirebaseAuth.getInstance()
         dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        storage = Firebase.storage.reference
         goUserButton = viewBinding.mainGoUserButton
-        tvUsername = viewBinding.tvUsername
 
+        tvUsername = viewBinding.tvUsername
+        ivProfilePicture = viewBinding.ivUserImage
+        loadProfilePicture()
         fragmentAdapter = ViewPagerAdapter(this)
 
 
 
     }
+
+    private fun loadProfilePicture(){
+
+        var imageRef: String? = null
+            dbRef.child("users")
+                .addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (postSnapshot in snapshot.children){
+                    val currentUser = postSnapshot.getValue(User::class.java)
+
+                    if (auth.currentUser?.uid.equals(currentUser?.uid) ){
+                        imageRef = currentUser?.profilePicture
+                    }
+                    Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                //NADA
+            }
+        })
+
+    }
+
     private fun tvUsername(){
 
 

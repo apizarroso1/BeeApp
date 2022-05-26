@@ -12,18 +12,20 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/press_start_2p"
         android:text="Register an account"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        android:layout_weight="14"
+        />
 
     <EditText
         android:id="@+id/registerUsername"
         android:layout_width="320dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -32,12 +34,13 @@
         android:hint="username"
         android:inputType="textEmailAddress"
         android:paddingStart="20dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:layout_weight="14"/>
 
     <EditText
         android:id="@+id/registerEmail"
         android:layout_width="320dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/registerUsername"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -46,12 +49,13 @@
         android:hint="email"
         android:inputType="textEmailAddress"
         android:paddingStart="20dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:layout_weight="14"/>
 
     <EditText
         android:id="@+id/registerPassword"
         android:layout_width="320dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/registerEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -61,12 +65,13 @@
         android:inputType="textPassword"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
+        android:layout_weight="14"
         />
 
     <EditText
         android:id="@+id/registerRepeatPassword"
         android:layout_width="320dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/registerPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -76,6 +81,7 @@
         android:inputType="textPassword"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
+        android:layout_weight="14"
 
         />
 
@@ -83,19 +89,20 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerRegisterButton"
         android:layout_width="160dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/registerRepeatPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/press_start_2p"
         android:text="ACCEPT"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_weight="14"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerGoLoginButton"
         android:layout_width="160dp"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
         android:layout_below="@id/registerRegisterButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -104,6 +111,7 @@
         android:background="@drawable/custom_button"
         android:fontFamily="@font/press_start_2p"
         android:text="I already have an account"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_weight="14"/>
 
 </LinearLayout>

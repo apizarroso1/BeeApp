@@ -1,12 +1,18 @@
 package com.example.beeapp
 
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.provider.MediaStore
 import android.widget.ImageView
+import android.widget.Toast
 
 import com.example.beeapp.databinding.ActivityUserBinding
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.*
 
 class UserActivity : AppCompatActivity() {
     private lateinit var ivProfilePicture: ImageView
@@ -38,7 +44,42 @@ class UserActivity : AppCompatActivity() {
 
     }
 
+    var selectedImage: Uri? = null
+
     fun editProfilePicture(){
+
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        startActivityForResult(intent, 3)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && data != null)
+        {
+            selectedImage = data.data
+            ivProfilePicture.setImageURI(selectedImage)
+
+
+            upploadImage()
+        }
+
+    }
+
+    private fun upploadImage(){
+        val filename = UUID.randomUUID().toString()
+        val ref =FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        ref.putFile(selectedImage!!)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Foto guardada",Toast.LENGTH_LONG).show()
+                ref.downloadUrl.addOnSuccessListener {
+                    it.toString()
+
+                }
+            }
+
 
     }
 

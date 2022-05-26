@@ -8,14 +8,14 @@
 
     <ImageView
         android:id="@+id/ivProfilePicture"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@color/honey"
+        android:background="@drawable/image_selector"
         />
 
     <TextView

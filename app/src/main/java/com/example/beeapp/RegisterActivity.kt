@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -23,12 +24,17 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerGoLoginButton: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var storage: FirebaseStorage
+
+    private val DEFAULT_PROFILE_PICTURE: String = "/images/default_profile.png"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
+
 
         registerUsername = findViewById(R.id.registerUsername)
         registerEmail = findViewById(R.id.registerEmail)
@@ -86,7 +92,16 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun addUserToDataBase(username: String, email: String, uid: String) {
-        dbRef.child("users").child(uid).setValue(User(username,email,uid))
+
+
+        storage.reference.child(DEFAULT_PROFILE_PICTURE).downloadUrl.addOnSuccessListener {
+
+            dbRef.child("users").child(uid).setValue(User(username,email,uid,it.toString()))
+        }
+
+
+
+
 
     }
 }
