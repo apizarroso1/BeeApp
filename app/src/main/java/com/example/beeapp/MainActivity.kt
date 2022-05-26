@@ -150,7 +150,6 @@ class MainActivity : AppCompatActivity() {
 
             R.id.add_friend ->{
                 startActivity(Intent(this, AddContactActivity::class.java))
-                finish()
             }
 
             /*R.id.search_action -> {
