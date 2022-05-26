@@ -1,8 +1,12 @@
 package com.example.beeapp
 
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 
 import android.widget.ImageView
 
@@ -33,13 +37,32 @@ class UserActivity : AppCompatActivity() {
     }
 
     fun initListeners(){
-        ivProfilePicture.setOnClickListener{editProfilePicture()}
+        ivProfilePicture.setOnClickListener{
+            editProfilePicture()}
         ivEditUsername.setOnClickListener{editUsername()}
 
     }
 
     fun editProfilePicture(){
 
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+
+        startActivityForResult(intent,0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null)
+        {
+            val uri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+
+            val bitmapDrawable = BitmapDrawable(bitmap)
+            ivProfilePicture.setBackgroundDrawable(bitmapDrawable)
+
+        }
     }
 
     fun editUsername(){
