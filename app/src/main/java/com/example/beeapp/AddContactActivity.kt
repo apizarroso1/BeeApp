@@ -53,14 +53,8 @@ class AddContactActivity : AppCompatActivity() {
     private fun initRV() {
         loadUsers()
         rvUsers.layoutManager = LinearLayoutManager(this)
-        adapter = ContactAdapter(this,users) { addContact(it) }
+        adapter = ContactAdapter(this,users)
         rvUsers.adapter = adapter
-    }
-
-    private fun addContact(uId: String) {
-        //users.remove() mediante id
-        adapter.notifyDataSetChanged()
-        //TODO("Add user to contact list + create chat")
     }
 
     private fun initListeners() {
