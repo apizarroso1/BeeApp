@@ -3,14 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/BeeApp/app/src/main/res/layout/activity_add_contact.xml" value="0.3723958333333333" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_chat.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_register.xml" value="0.22826086956521738" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/activity_user.xml" value="0.16032608695652173" />
-        <entry key="..\:/BeeApp/app/src/main/res/layout/contact_layout.xml" value="0.37135416666666665" />
-        <entry key="..\:/BeeApp/app/src/main/res/layout/fragment_chats.xml" value="0.3723958333333333" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/received_layout.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/sent_layout.xml" value="0.23697916666666666" />
         <entry key="..\:/BeeApp/app/src/main/res/layout/user_layout.xml" value="0.23697916666666666" />
@@ -26,6 +23,7 @@
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/rv_background.xml" value="0.421" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/sent_message.xml" value="0.228" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/drawable/user_border.xml" value="0.421" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_add_contact.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_chat.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
@@ -38,6 +36,7 @@
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_first.xml" value="0.3885416666666667" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_groups.xml" value="0.3885416666666667" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/fragment_second.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/recieved_layout.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/sent_layout.xml" value="0.3061594202898551" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/layout/user_layout.xml" value="0.316796875" />
         <entry key="..\:/Users/vanua/Desktop/BeeApp/app/src/main/res/menu/menu.xml" value="0.4270833333333333" />
