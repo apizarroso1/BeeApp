@@ -13,6 +13,6 @@
     <item android:id="@+id/add_friend"
         android:title="Add Friend"
         app:showAsAction="always"
-        android:icon="@drawable/ic_baseline_downhill_skiing_24"
+        android:icon="@drawable/ic_baseline_person_add_24"
         />
 </menu>

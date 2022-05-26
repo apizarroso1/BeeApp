@@ -116,6 +116,11 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
 
+            R.id.add_friend ->{
+                startActivity(Intent(this, AddContactActivity::class.java))
+                finish()
+            }
+
             /*R.id.search_action -> {
                 val actionView = item.actionView as SearchView
                 actionView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
