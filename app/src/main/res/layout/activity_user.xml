@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="160dp"
         android:layout_height="160dp"
+        app:civ_border_color="@color/honey"
+        app:civ_border_width="4dp"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

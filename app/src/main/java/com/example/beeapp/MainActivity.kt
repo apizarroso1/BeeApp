@@ -28,7 +28,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var goUserButton: ImageView
+    private lateinit var mainGoUserButton: ImageView
     private lateinit var tvUsername:TextView
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var ivProfilePicture:ImageView
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         storage = Firebase.storage.reference
-        goUserButton = viewBinding.mainGoUserButton
+        mainGoUserButton = viewBinding.mainGoUserButton
 
         tvUsername = viewBinding.tvUsername
         ivProfilePicture = viewBinding.ivUserImage
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                                 imageRef = currentUser?.profilePicture
                             }
                             try {
-                                Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
+                                Glide.with(this@MainActivity).load(imageRef).into(mainGoUserButton)
                             }catch (e: Exception){
                                 e.stackTrace
                             }
@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners(){
-        goUserButton.setOnClickListener { displayUser() }
+        mainGoUserButton.setOnClickListener { displayUser() }
     }
 
     private fun displayUser(){
