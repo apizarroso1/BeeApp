@@ -23,10 +23,8 @@ class ChatsFragment : Fragment() {
     private lateinit var adapter: UserAdapter
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
-    private lateinit var rvChats:RecyclerView
-    companion object{
-        private const val ARG_OBJECT = "object"
-    }
+    private lateinit var rvChats: RecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +36,8 @@ class ChatsFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_chats, container, false)
         rvChats = view.findViewById(R.id.rvChats)
         auth = FirebaseAuth.getInstance()
-        dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        dbRef =
+            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
 
         userList = ArrayList()
@@ -51,45 +50,40 @@ class ChatsFragment : Fragment() {
 
 
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
-        activity?.let {
-
-        }
-
-    }
 
     //se añaden los usuarios a la lista de usuarios
-    private fun rvChats(){
+    private fun rvChats() {
 
         var contactsUidList: MutableList<String> = ArrayList()
 
-        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts").addValueEventListener(object  : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                contactsUidList.clear()
-                for (postSnapshot in snapshot.children){
-                    val currentUid = postSnapshot.key
-                    contactsUidList.add(currentUid!!)
+        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    contactsUidList.clear()
+                    for (postSnapshot in snapshot.children) {
+                        val currentUid = postSnapshot.key
+                        contactsUidList.add(currentUid!!)
 
 
+                    }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Database","cancelled request")
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("Database", "cancelled request")
+                }
 
-        })
-        Log.d("lista",contactsUidList.firstOrNull().toString())
+            })
 
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
-                for (postSnapshot in snapshot.children){
+                for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
 
-                    if (auth.currentUser?.uid!= currentUser?.uid && contactsUidList.contains(currentUser?.uid.toString())){
+                    if (auth.currentUser?.uid != currentUser?.uid && contactsUidList.contains(
+                            currentUser?.uid.toString()
+                        )
+                    ) {
                         userList.add(currentUser!!)
 
                     }
@@ -99,7 +93,7 @@ class ChatsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("Database","cancelled request")
+                Log.d("Database", "cancelled request")
             }
 
         })

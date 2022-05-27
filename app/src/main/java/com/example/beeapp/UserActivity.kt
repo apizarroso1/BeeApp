@@ -31,7 +31,6 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user)
 
         viewBinding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -40,6 +39,7 @@ class UserActivity : AppCompatActivity() {
         initView()
         initListeners()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     fun initView(){

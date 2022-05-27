@@ -99,9 +99,5 @@ class RegisterActivity : AppCompatActivity() {
             dbRef.child("users").child(uid).setValue(User(username,email,uid,it.toString()))
         }
 
-
-
-
-
     }
 }

@@ -5,8 +5,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.beeapp.model.User
 
 class UserAdapter(val context: Context, val userList: ArrayList<User>) :
@@ -25,6 +27,7 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
         val currentUser = userList[position]
 
         holder.tvUsername.text = currentUser.username
+        Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
 
         //al pulsar en el card te lleva a ala activiada chat
         holder.itemView.setOnClickListener{
@@ -44,5 +47,6 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
     class UserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         val tvUsername = itemView.findViewById<TextView>(R.id.tvUsername)
+        val ivProfilePicture = itemView.findViewById<ImageView>(R.id.ivProfilePicture)
     }
 }

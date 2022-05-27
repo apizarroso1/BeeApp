@@ -42,7 +42,8 @@ class ChatActivity : AppCompatActivity() {
         val username = intent.getStringExtra("username")
         val recieverUid = intent.getStringExtra("uid")
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        dbRef =
+            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
 
 
@@ -55,28 +56,27 @@ class ChatActivity : AppCompatActivity() {
         initView()
 
         messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, messageList,username!!)
+        messageAdapter = MessageAdapter(this, messageList, username!!)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
 
 
-
         //cargar los mensajes de un chat
         dbRef.child("chats").child(senderRoom!!).child("messages")
-            .addValueEventListener(object : ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     messageList.clear()
 
-                    for (postSnapshot in snapshot.children){
+                    for (postSnapshot in snapshot.children) {
 
                         val message = postSnapshot.getValue(Message::class.java)
                         messageList.add(message!!)
 
                     }
                     try {
-                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount-1)
-                    }catch (e:Exception){
+                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
+                    } catch (e: Exception) {
 
                     }
                     messageAdapter.notifyDataSetChanged()
@@ -89,10 +89,10 @@ class ChatActivity : AppCompatActivity() {
             })
 
         //añadimos el mensaje a la base de datos
-        ivSendButton.setOnClickListener{
+        ivSendButton.setOnClickListener {
 
             val message = edMessage.text.toString().trim()
-            val messageObject = Message(senderUid,message)
+            val messageObject = Message(senderUid, message)
 
             dbRef.child("chats").child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
@@ -101,8 +101,6 @@ class ChatActivity : AppCompatActivity() {
                 }
             edMessage.setText("")
         }
-
-
 
 
     }
