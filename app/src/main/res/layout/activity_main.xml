@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="10" />
 
         <TextView
             android:id="@+id/tvUsername"
@@ -38,12 +38,12 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20" />
+            android:layout_weight="15" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="30"
             android:layout_height="match_parent"
+            android:layout_weight="30"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -54,8 +54,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70"
-                >
+                android:layout_weight="70">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivUserImage"
@@ -79,6 +78,7 @@
                     app:layout_constraintTop_toTopOf="@id/ivUserImage" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
