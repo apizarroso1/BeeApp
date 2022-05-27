@@ -92,7 +92,11 @@ class MainActivity : AppCompatActivity() {
                             if (auth.currentUser?.uid.equals(currentUser?.uid)) {
                                 imageRef = currentUser?.profilePicture
                             }
-                            Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
+                            try {
+                                Glide.with(this@MainActivity).load(imageRef).into(ivProfilePicture)
+                            }catch (e: Exception){
+                                e.stackTrace
+                            }
                         }
                     }
 
