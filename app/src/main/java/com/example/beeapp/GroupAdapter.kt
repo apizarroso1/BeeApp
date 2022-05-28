@@ -29,8 +29,8 @@ class GroupAdapter(val context: Context, val groupList: ArrayList<Group>) :
         holder.itemView.setOnClickListener {
             val intent = Intent(context, GroupActivity::class.java)
 
-            intent.putExtra("username", currentGroup.gName)
-            intent.putExtra("uid", currentGroup.groupId)
+            intent.putExtra("groupname", currentGroup.gName)
+            intent.putExtra("groupid", currentGroup.groupId)
 
             context.startActivity(intent)
 

@@ -17,7 +17,8 @@
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".GroupActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".AddContactActivity"
             android:exported="false"

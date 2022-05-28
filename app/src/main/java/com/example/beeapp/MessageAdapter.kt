@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.model.Message
 import com.google.firebase.auth.FirebaseAuth
 
-class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,val username: String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,val username: String?=null,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
 
     val ITEM_RECEIVED = 1
     val ITEM_SENT = 2
@@ -28,6 +30,8 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currMessage = messageList[position]
 
+        val username = usernameList?.get(currMessage.senderId)
+
         if (holder.javaClass == SentViewHolder::class.java){
             val viewHolder = holder as SentViewHolder
             viewHolder.sentMessage.text = currMessage.text
@@ -35,7 +39,11 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
         }else{
             val viewHolder = holder as ReceivedViewHolder
             viewHolder.receivedMessage.text = currMessage.text
-            viewHolder.senderUser.text = username
+            if(username != null) {
+                viewHolder.senderUser.text = username
+            }else{
+                viewHolder.senderUser.text = currMessage.senderId
+            }
         }
     }
 

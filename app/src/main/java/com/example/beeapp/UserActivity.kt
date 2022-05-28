@@ -35,11 +35,9 @@ class UserActivity : AppCompatActivity() {
         viewBinding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
         initView()
         initListeners()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     fun initView(){

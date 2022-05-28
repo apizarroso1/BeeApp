@@ -48,7 +48,6 @@ class ChatsFragment : Fragment() {
         rvChats()
         return view
 
-
     }
 
     //se añaden los usuarios a la lista de usuarios
@@ -63,8 +62,6 @@ class ChatsFragment : Fragment() {
                     for (postSnapshot in snapshot.children) {
                         val currentUid = postSnapshot.key
                         contactsUidList.add(currentUid!!)
-
-
                     }
                 }
 
@@ -73,6 +70,8 @@ class ChatsFragment : Fragment() {
                 }
 
             })
+
+
 
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -97,6 +96,7 @@ class ChatsFragment : Fragment() {
             }
 
         })
+
     }
 
 
