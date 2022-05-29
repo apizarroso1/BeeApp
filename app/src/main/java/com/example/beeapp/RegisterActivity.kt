@@ -8,13 +8,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.beeapp.model.User
-import com.google.android.gms.tasks.Task
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.concurrent.Semaphore
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -27,7 +29,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
     private lateinit var storage: FirebaseStorage
-    private var success: Boolean = true
 
     private val DEFAULT_PROFILE_PICTURE: String = "/images/default_profile.png"
 
@@ -46,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registerRegisterButton)
         registerGoLoginButton = findViewById(R.id.registerGoLoginButton)
 
+
         registerButton.setOnClickListener {
             val username = registerUsername.text.toString()
             val email = registerEmail.text.toString()
@@ -54,7 +56,14 @@ class RegisterActivity : AppCompatActivity() {
 
             if (checkEmpty(username,email, password, repeatPassword)){
                 if (password == repeatPassword){
-                    register(username,email, password)
+                    checkUsernameAvailable(username,object :FirebaseCallback{
+                        override fun onCallback(success: Boolean) {
+                            if (success){
+                                register(username,email, password,success)
+                            }
+                        }
+                    })
+
                 } else {
                     Toast.makeText(
                         applicationContext,
@@ -70,7 +79,6 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
         registerGoLoginButton.setOnClickListener{
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -78,13 +86,11 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun register(username:String, email: String, password: String) {
+    private fun register(username:String, email: String, password: String,success: Boolean) {
 
-
-        checkUsernameAvailable(username)
         Log.e("FUERA DEL BUCLE LLAMADA", "Username already in use $success")
 
-       if (success){
+
            auth.createUserWithEmailAndPassword(email, password)
                .addOnCompleteListener(this) { task ->
                    if (task.isSuccessful) {
@@ -100,14 +106,15 @@ class RegisterActivity : AppCompatActivity() {
                        Toast.makeText(applicationContext, "Register failed", Toast.LENGTH_LONG).show()
                    }
                }
-       } else {
-           Toast.makeText(applicationContext, "Register failed", Toast.LENGTH_LONG).show()
-       }
+
     }
 
-    private fun checkUsernameAvailable(username: String){
+    private interface FirebaseCallback{
+         fun onCallback(success:Boolean)
+    }
 
-
+    private fun checkUsernameAvailable(username: String,firebaseCallback: FirebaseCallback){
+        var success = true
 
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun  onDataChange(snapshot: DataSnapshot) {
@@ -118,20 +125,22 @@ class RegisterActivity : AppCompatActivity() {
                         if (currentUser.username == username){
 
                             success = false
-                            Log.e("DENTRO DEL BUCLEFUNCION", "Username already in use $success")
+                            Toast.makeText(applicationContext, "Username in use", Toast.LENGTH_LONG).show()
                             break
+
                         }
                     }
 
+
                 }
+                firebaseCallback.onCallback(success)
+
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("ERROR", "Something went wrong")
             }
 
         })
-
-        Log.e("FUERA DEL BUCLE FUNCION", "Username already in use $success")
 
     }
 
