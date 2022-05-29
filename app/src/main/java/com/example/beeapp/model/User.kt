@@ -6,8 +6,6 @@ package com.example.beeapp.model
      var uid: String? = null,
      var profilePicture: String? = null
 
-
-
  )
 
 
