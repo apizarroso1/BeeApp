@@ -1,6 +1,7 @@
 package com.example.beeapp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,8 +71,11 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e("ERROR", "Something went wrong")
                 }
             })
+
+
 
     }
 
