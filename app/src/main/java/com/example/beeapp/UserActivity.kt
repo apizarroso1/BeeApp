@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 
@@ -24,25 +25,35 @@ import java.util.*
 
 class UserActivity : AppCompatActivity() {
     private lateinit var ivProfilePicture: ImageView
-    private lateinit var ivEditUsername: ImageView
     private lateinit var viewBinding: ActivityUserBinding
+    private lateinit var tvUsername:TextView
+    private lateinit var tvEmail:TextView
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var username:String
+    private lateinit var email:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewBinding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
+        username= intent.getStringExtra("username").toString()
+        email= intent.getStringExtra("email").toString()
         initView()
         initListeners()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     fun initView(){
+
         ivProfilePicture = viewBinding.ivProfilePicture
-        ivEditUsername = viewBinding.ivEditUsername
+        tvUsername = viewBinding.textView2
+        tvEmail = viewBinding.textView3
+        tvUsername.text = "Username: $username"
+        tvEmail.text = "Email: $email"
+
         var imageRef: String? = null
         dbRef =
             Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
@@ -75,7 +86,6 @@ class UserActivity : AppCompatActivity() {
 
     fun initListeners(){
         ivProfilePicture.setOnClickListener{editProfilePicture()}
-        ivEditUsername.setOnClickListener{editUsername()}
 
     }
 
@@ -112,13 +122,7 @@ class UserActivity : AppCompatActivity() {
                     dbRef.child("users").child(auth.currentUser?.uid.toString()).child("profilePicture").setValue(it.toString())
                 }
             }
-
-
-
-
     }
 
-    fun editUsername(){
 
-    }
 }

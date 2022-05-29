@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3"
+    android:gravity="top"
+    android:orientation="vertical"
     tools:context=".UserActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        app:civ_border_color="@color/honey"
-        app:civ_border_width="4dp"
+        android:layout_gravity="center"
         android:layout_marginTop="68dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/image_selector"
-        />
+        app:civ_border_color="@color/black"
+        app:civ_border_width="4dp" />
+
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="50dp"
         android:text="Username"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture"
-        app:layout_constraintVertical_bias="0.113" />
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="50dp"
+        android:text="Email"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
 
     <ImageView
-        android:id="@+id/ivEditUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture" />
+        android:padding="100dp"
+        android:src="@drawable/beeup" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

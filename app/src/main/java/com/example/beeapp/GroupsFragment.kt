@@ -22,7 +22,6 @@ import com.google.firebase.ktx.Firebase
 
 
 class GroupsFragment : Fragment() {
-    private lateinit var userList: ArrayList<User>
     private lateinit var groupList: ArrayList<Group>
 
     private lateinit var adapter: GroupAdapter
@@ -74,7 +73,6 @@ class GroupsFragment : Fragment() {
                     val group = postSnapshot.getValue(Group::class.java)
                     if (group?.users!!.contains(auth.currentUser?.uid.toString())) {
                         groupList.add(group)
-                        Log.e("Lo que sea", groupList.toString())
                     }
                 }
                 adapter.notifyDataSetChanged()

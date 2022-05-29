@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
     private lateinit var storage: StorageReference
-
-    private lateinit var tempList: ArrayList<User>
+    private lateinit var loggedUser: String
+    private lateinit var loggedUserEmail: String
 
     private lateinit var fragmentAdapter: ViewPagerAdapter
     private lateinit var pager: ViewPager2
@@ -120,7 +120,9 @@ class MainActivity : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(User::class.java)
 
                     if (auth.currentUser?.uid.equals(currentUser?.uid) ){
-                        tvUsername.text = currentUser?.username
+                        loggedUserEmail = currentUser?.email.toString()
+                        loggedUser = currentUser?.username.toString()
+                        tvUsername.text = loggedUser
                     }
                 }
             }
@@ -137,7 +139,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayUser(){
-        startActivity(Intent(this, UserActivity::class.java))
+        val intent = Intent(this, UserActivity::class.java)
+        intent.putExtra("username",loggedUser)
+        intent.putExtra("email",loggedUserEmail)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

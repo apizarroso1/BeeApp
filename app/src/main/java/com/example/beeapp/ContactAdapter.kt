@@ -43,7 +43,12 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
             Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         auth = FirebaseAuth.getInstance()
 
-        holder.btnAddContact.setOnClickListener { addContact(contacts[position].uid.toString(),contacts[position].username.toString()) }
+        holder.btnAddContact.setOnClickListener {
+            addContact(
+                contacts[position].uid.toString(),
+                contacts[position].username.toString()
+            )
+        }
 
         holder.tvUsername.text = contacts[position].username
 
@@ -54,12 +59,12 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
                     for (postSnapshot in snapshot.children) {
                         val currentUser = postSnapshot.getValue(User::class.java)
 
-                        try{
+                        try {
                             if (contacts[holder.adapterPosition].uid.equals(currentUser?.uid)) {
                                 imageRef = currentUser?.profilePicture
                             }
                             Glide.with(context).load(imageRef).into(holder.ivProfilePicture)
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             e.stackTrace
                         }
 
@@ -73,8 +78,9 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
     }
 
     fun addContact(uId: String, username: String) {
-        Toast.makeText(context, "funciono", Toast.LENGTH_LONG).show()
-        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts").child(uId).setValue(username)
+        Toast.makeText(context, "Contact Added", Toast.LENGTH_LONG).show()
+        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts").child(uId)
+            .setValue(username)
     }
 
     override fun getItemCount() = contacts.size

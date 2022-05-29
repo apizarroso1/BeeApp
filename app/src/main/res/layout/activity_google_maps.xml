@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/background3">
 
     <fragment
         android:id="@+id/map"
@@ -12,11 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:context=".GoogleMapsActivity"
-        android:layout_weight="50"/>
-    <RelativeLayout
+        android:layout_weight="50" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="50"
-        />
+        android:layout_weight="10"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:text="Description"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:background="@drawable/rv_background"
+        android:layout_margin="20dp"
+        >
+
+
+
+    </LinearLayout>
 
 </LinearLayout>
