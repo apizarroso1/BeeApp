@@ -30,7 +30,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currMessage = messageList[position]
 
-        val username = usernameList?.get(currMessage.senderId)
+        val usernameGroup = usernameList?.get(currMessage.senderId)
 
         if (holder.javaClass == SentViewHolder::class.java){
             val viewHolder = holder as SentViewHolder
@@ -42,7 +42,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
             if(username != null) {
                 viewHolder.senderUser.text = username
             }else{
-                viewHolder.senderUser.text = currMessage.senderId
+                viewHolder.senderUser.text = usernameGroup
             }
         }
     }

@@ -8,11 +8,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.beeapp.model.User
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.util.concurrent.Semaphore
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -78,7 +80,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register(username:String, email: String, password: String) {
 
-       if (checkUsernameAvailable(username)){
+
+        checkUsernameAvailable(username)
+        Log.e("FUERA DEL BUCLE LLAMADA", "Username already in use $success")
+
+       if (success){
            auth.createUserWithEmailAndPassword(email, password)
                .addOnCompleteListener(this) { task ->
                    if (task.isSuccessful) {
@@ -99,29 +105,34 @@ class RegisterActivity : AppCompatActivity() {
        }
     }
 
-    private fun checkUsernameAvailable(username: String): Boolean{
+    private fun checkUsernameAvailable(username: String){
+
+
+
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+            override fun  onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children){
                     val currentUser = postSnapshot.getValue(User::class.java)
 
                     if (currentUser != null) {
                         if (currentUser.username == username){
-                            Toast.makeText(applicationContext, "Username already in use " + success.toString(), Toast.LENGTH_LONG).show()
+
                             success = false
+                            Log.e("DENTRO DEL BUCLEFUNCION", "Username already in use $success")
+                            break
                         }
                     }
+
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("ERROR", "Something went wrong")
             }
 
         })
-        Toast.makeText(applicationContext, success.toString() , Toast.LENGTH_LONG).show()
-        return success
 
-        TODO("No sigo perdiendo el tiempo en esto que seguramente puedas solucionar tú en nada: el valor de la variable vuelve a true al salir del metodo")
+        Log.e("FUERA DEL BUCLE FUNCION", "Username already in use $success")
+
     }
 
     private fun checkEmpty(username:String, email: String, password: String, repeatPassword: String): Boolean {
