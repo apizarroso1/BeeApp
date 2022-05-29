@@ -10,6 +10,7 @@
     android:gravity="center"
     android:background="@drawable/background3">
 
+
     <EditText
         android:id="@+id/edGroupName"
         android:layout_width="match_parent"
