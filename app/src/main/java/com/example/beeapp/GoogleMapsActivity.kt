@@ -21,6 +21,9 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityGoogleMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val groupName = intent.getStringExtra("groupname").toString()
+
+        supportActionBar?.title= "Mapa: $groupName"
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment

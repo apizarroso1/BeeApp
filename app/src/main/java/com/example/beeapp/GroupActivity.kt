@@ -1,8 +1,11 @@
 package com.example.beeapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +29,7 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<Message>
     private lateinit var usernameList: HashMap<String,String>
     private lateinit var dbRef: DatabaseReference
+    private lateinit var groupName:String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +39,9 @@ class GroupActivity : AppCompatActivity() {
 
         viewBinding = ActivityGroupBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val groupName = intent.getStringExtra("groupname")
+         groupName = intent.getStringExtra("groupname").toString()
         val groupId = intent.getStringExtra("groupid")
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
         dbRef =
@@ -124,5 +129,21 @@ class GroupActivity : AppCompatActivity() {
         edMessage = viewBinding.edMessage
         rvMessage = viewBinding.rvMessage
         ivSendButton = viewBinding.ivSendButton
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.group_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.goToMap -> {
+                val intent = Intent(this, GoogleMapsActivity::class.java)
+                intent.putExtra("groupname",groupName)
+                startActivity(intent)
+                finish()
+            }
+        }
+        return true
     }
 }

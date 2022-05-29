@@ -35,7 +35,8 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        dbRef =
+            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
 
@@ -54,21 +55,24 @@ class RegisterActivity : AppCompatActivity() {
             val password = registerPassword.text.toString()
             val repeatPassword = registerRepeatPassword.text.toString()
 
-            if (checkEmpty(username,email, password, repeatPassword)){
-                if (password == repeatPassword){
-                    checkUsernameAvailable(username,object :FirebaseCallback{
+            if (checkEmpty(username, email, password, repeatPassword)) {
+                if (password == repeatPassword) {
+                    checkUsernameAvailable(username, object : FirebaseCallback {
                         override fun onCallback(success: Boolean) {
-                            if (success){
-                                register(username,email, password,success)
+                            if (success) {
+                                register(username, email, password, success)
                                 Toast.makeText(
                                     applicationContext,
                                     "Account successfully created",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                comprobacion=1
-                            }
-                            else if(comprobacion==0) {
-                                Toast.makeText(applicationContext, "Username in use", Toast.LENGTH_LONG).show()
+                                comprobacion = 1
+                            } else if (comprobacion == 0) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Username in use",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
                     })
@@ -88,46 +92,46 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
             }
         }
-        registerGoLoginButton.setOnClickListener{
+        registerGoLoginButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
 
         }
     }
 
-    private fun register(username:String, email: String, password: String,success: Boolean) {
+    private fun register(username: String, email: String, password: String, success: Boolean) {
 
         Log.e("FUERA DEL BUCLE LLAMADA", "Username already in use $success")
 
 
-           auth.createUserWithEmailAndPassword(email, password)
-               .addOnCompleteListener(this) { task ->
-                   if (task.isSuccessful) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
 
-                       addUserToDataBase(username,email, auth.currentUser?.uid!!)
-                       startActivity(Intent(this, MainActivity::class.java))
-                       finish()
-                   } else {
-                       Toast.makeText(applicationContext, "Register failed", Toast.LENGTH_LONG).show()
-                   }
-               }
+                    addUserToDataBase(username, email, auth.currentUser?.uid!!)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(applicationContext, "Register failed", Toast.LENGTH_LONG).show()
+                }
+            }
 
     }
 
-    private interface FirebaseCallback{
-         fun onCallback(success:Boolean)
+    private interface FirebaseCallback {
+        fun onCallback(success: Boolean)
     }
 
-    private fun checkUsernameAvailable(username: String,firebaseCallback: FirebaseCallback){
+    private fun checkUsernameAvailable(username: String, firebaseCallback: FirebaseCallback) {
         var success = true
 
         dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun  onDataChange(snapshot: DataSnapshot) {
-                for (postSnapshot in snapshot.children){
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
 
                     if (currentUser != null) {
-                        if (currentUser.username == username){
+                        if (currentUser.username == username) {
 
                             success = false
                             break
@@ -141,6 +145,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.e("ERROR", "Something went wrong")
             }
@@ -149,13 +154,18 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun checkEmpty(username:String, email: String, password: String, repeatPassword: String): Boolean {
+    private fun checkEmpty(
+        username: String,
+        email: String,
+        password: String,
+        repeatPassword: String
+    ): Boolean {
         return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty()
     }
 
     private fun addUserToDataBase(username: String, email: String, uid: String) {
         storage.reference.child(DEFAULT_PROFILE_PICTURE).downloadUrl.addOnSuccessListener {
-            dbRef.child("users").child(uid).setValue(User(username,email,uid,it.toString()))
+            dbRef.child("users").child(uid).setValue(User(username, email, uid, it.toString()))
         }
 
     }

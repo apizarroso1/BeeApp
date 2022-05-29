@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddContactActivity"
-    android:background="@drawable/background3"
+    android:background="@drawable/background2"
     android:orientation="vertical"
+    android:padding="40dp"
     >
 
 
@@ -22,5 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchView"
-        android:layout_weight="90"/>
+        android:layout_weight="90"
+        android:padding="5dp"/>
 </LinearLayout>
