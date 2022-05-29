@@ -147,6 +147,10 @@ class GroupActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+            android.R.id.home ->{
+                onBackPressed()
+                return true
+            }
 
         }
         return true
