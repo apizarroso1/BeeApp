@@ -29,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
     private lateinit var storage: FirebaseStorage
-
+    private var comprobacion: Int = 0
     private val DEFAULT_PROFILE_PICTURE: String = "/images/default_profile.png"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +60,15 @@ class RegisterActivity : AppCompatActivity() {
                         override fun onCallback(success: Boolean) {
                             if (success){
                                 register(username,email, password,success)
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Account successfully created",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                comprobacion=1
+                            }
+                            else if(comprobacion==0) {
+                                Toast.makeText(applicationContext, "Username in use", Toast.LENGTH_LONG).show()
                             }
                         }
                     })
@@ -94,11 +103,7 @@ class RegisterActivity : AppCompatActivity() {
            auth.createUserWithEmailAndPassword(email, password)
                .addOnCompleteListener(this) { task ->
                    if (task.isSuccessful) {
-                       Toast.makeText(
-                           applicationContext,
-                           "Account successfully created",
-                           Toast.LENGTH_LONG
-                       ).show()
+
                        addUserToDataBase(username,email, auth.currentUser?.uid!!)
                        startActivity(Intent(this, MainActivity::class.java))
                        finish()
@@ -125,7 +130,6 @@ class RegisterActivity : AppCompatActivity() {
                         if (currentUser.username == username){
 
                             success = false
-                            Toast.makeText(applicationContext, "Username in use", Toast.LENGTH_LONG).show()
                             break
 
                         }
@@ -134,6 +138,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 }
                 firebaseCallback.onCallback(success)
+
 
             }
             override fun onCancelled(error: DatabaseError) {

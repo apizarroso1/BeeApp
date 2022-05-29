@@ -58,7 +58,12 @@ class UserActivity : AppCompatActivity() {
                         if (auth.currentUser?.uid.equals(currentUser?.uid)) {
                             imageRef = currentUser?.profilePicture
                         }
-                        Glide.with(this@UserActivity).load(imageRef).into(ivProfilePicture)
+                        try {
+                            Glide.with(this@UserActivity).load(imageRef).into(ivProfilePicture)
+
+                        }catch (e:Exception){
+                            e.stackTrace
+                        }
                     }
                 }
 
