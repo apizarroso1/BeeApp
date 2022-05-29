@@ -69,7 +69,6 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
 
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("ERROR", "Something went wrong")
                 }
