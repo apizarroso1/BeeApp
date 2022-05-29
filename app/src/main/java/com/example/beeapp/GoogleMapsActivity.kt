@@ -24,6 +24,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val groupName = intent.getStringExtra("groupname").toString()
 
         supportActionBar?.title= "Mapa: $groupName"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
