@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                 val actionView = item.actionView as SearchView
                 actionView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
                     override fun onQueryTextSubmit(p0: String?): Boolean {
-                        TODO("Not yet implemented")
+                        Log.e("ERROR", "Something went wrong")
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                             rvChats.adapter!!.notifyDataSetChanged()
                         }
 
-                        TODO("No modifica el rv por algún motivo")
+                        ("No modifica el rv por algún motivo")
                         return false
                     }
                 })

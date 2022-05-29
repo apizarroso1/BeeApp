@@ -2,6 +2,7 @@ package com.example.beeapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,7 +71,7 @@ class AddContactActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("ERROR", "Something went wrong")
             }
 
         })
