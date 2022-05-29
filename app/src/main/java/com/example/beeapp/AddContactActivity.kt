@@ -46,7 +46,6 @@ class AddContactActivity : AppCompatActivity() {
 
     fun initView(){
         rvUsers = viewBinding.rvContacts
-        initListeners()
         initRV()
     }
 
@@ -55,10 +54,6 @@ class AddContactActivity : AppCompatActivity() {
         rvUsers.layoutManager = LinearLayoutManager(this)
         adapter = ContactAdapter(this,users)
         rvUsers.adapter = adapter
-    }
-
-    private fun initListeners() {
-        //TODO("Not yet implemented")
     }
 
     private fun loadUsers(){
@@ -70,7 +65,6 @@ class AddContactActivity : AppCompatActivity() {
 
                     if (auth.currentUser?.uid!= currentUser?.uid){
                         users.add(currentUser!!)
-
                     }
                 }
                 adapter.notifyDataSetChanged()
