@@ -40,6 +40,7 @@ class GroupActivity : AppCompatActivity() {
         viewBinding = ActivityGroupBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
          groupName = intent.getStringExtra("groupname").toString()
         val groupId = intent.getStringExtra("groupid")
@@ -49,7 +50,6 @@ class GroupActivity : AppCompatActivity() {
 
 
         supportActionBar?.title = groupName
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initView()
         messageList = ArrayList()
         usernameList = getUsernames(groupId!!)
@@ -99,6 +99,10 @@ class GroupActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
     private fun getUsernames(groupId: String): HashMap<String,String> {
 
         var usernames = HashMap<String,String>()
@@ -143,6 +147,7 @@ class GroupActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
         }
         return true
     }
