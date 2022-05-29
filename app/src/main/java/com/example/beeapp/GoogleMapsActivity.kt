@@ -2,6 +2,8 @@ package com.example.beeapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,6 +17,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityGoogleMapsBinding
+    private lateinit var tvDescription:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,11 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
         val groupName = intent.getStringExtra("groupname").toString()
 
+        val description = intent.getStringExtra("description").toString()
+        Log.e("MAPACTIVITY",description)
+
+        tvDescription = binding.tvDescription
+        tvDescription.text = description
         supportActionBar?.title= "Mapa: $groupName"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

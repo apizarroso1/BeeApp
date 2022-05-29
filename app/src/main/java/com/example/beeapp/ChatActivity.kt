@@ -1,15 +1,12 @@
 package com.example.beeapp
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityChatBinding
 import com.example.beeapp.model.Message
 import com.google.firebase.auth.FirebaseAuth

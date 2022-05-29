@@ -1,14 +1,15 @@
-package com.example.beeapp
+package com.example.beeapp.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.beeapp.GroupActivity
+import com.example.beeapp.R
 import com.example.beeapp.model.Group
 
 
@@ -31,6 +32,9 @@ class GroupAdapter(val context: Context, val groupList: ArrayList<Group>) :
 
             intent.putExtra("groupname", currentGroup.gName)
             intent.putExtra("groupid", currentGroup.groupId)
+            intent.putExtra("description",currentGroup.gDescription.toString())
+
+            Log.e("DESCRIPCION",currentGroup.gDescription.toString())
 
             context.startActivity(intent)
 

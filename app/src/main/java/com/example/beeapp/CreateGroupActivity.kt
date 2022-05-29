@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.adapter.AddToGroupAdapter
 import com.example.beeapp.databinding.ActivityCreateGroupBinding
 import com.example.beeapp.model.Group
 import com.example.beeapp.model.User

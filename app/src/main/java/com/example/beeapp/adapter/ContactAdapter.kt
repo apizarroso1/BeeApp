@@ -1,8 +1,6 @@
-package com.example.beeapp
+package com.example.beeapp.adapter
 
 import android.content.Context
-import android.media.Image
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beeapp.R
 import com.example.beeapp.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -30,7 +28,7 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ContactAdapter.ContactViewHolder {
+    ): ContactViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.contact_layout, parent, false)
 

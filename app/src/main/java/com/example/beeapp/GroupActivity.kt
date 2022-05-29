@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityGroupBinding
 import com.example.beeapp.model.Message
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +31,7 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var usernameList: HashMap<String,String>
     private lateinit var dbRef: DatabaseReference
     private lateinit var groupName:String
+    private lateinit var description:String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,7 @@ class GroupActivity : AppCompatActivity() {
 
          groupName = intent.getStringExtra("groupname").toString()
         val groupId = intent.getStringExtra("groupid")
+        description = intent.getStringExtra("description").toString()
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
         dbRef =
             Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
@@ -144,6 +147,7 @@ class GroupActivity : AppCompatActivity() {
             R.id.goToMap -> {
                 val intent = Intent(this, GoogleMapsActivity::class.java)
                 intent.putExtra("groupname",groupName)
+                intent.putExtra("description",description)
                 startActivity(intent)
                 finish()
             }

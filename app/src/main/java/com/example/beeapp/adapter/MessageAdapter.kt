@@ -1,4 +1,4 @@
-package com.example.beeapp
+package com.example.beeapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.R
 import com.example.beeapp.model.Message
 import com.google.firebase.auth.FirebaseAuth
 
