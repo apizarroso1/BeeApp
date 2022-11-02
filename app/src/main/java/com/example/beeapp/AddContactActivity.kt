@@ -52,6 +52,7 @@ class AddContactActivity : AppCompatActivity() {
         rvUsers.layoutManager = LinearLayoutManager(this)
         adapter = ContactAdapter(this,users)
         rvUsers.adapter = adapter
+
     }
 
     private fun loadUsers(){

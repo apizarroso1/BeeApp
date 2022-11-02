@@ -8,7 +8,7 @@ import com.example.beeapp.ChatsFragment
 import com.example.beeapp.GroupsFragment
 
 
-class ViewPagerAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fragment) {
+class   ViewPagerAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fragment) {
 
     companion object{
         private const val ARG_OBJECT = "object"

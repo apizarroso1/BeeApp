@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout = viewBinding.tabLayout
         val tabLayoutMediator = TabLayoutMediator(tabLayout,pager,TabLayoutMediator.TabConfigurationStrategy{
             tab, position -> when(position){
-                0-> { tab.text = "Grupos" }
+                0-> { tab.text = "Groups" }
                 1-> { tab.text = "Chats" }
             }
         })
