@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginGoRegisterButton: Button
     private lateinit var auth: FirebaseAuth
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -73,5 +74,8 @@ class LoginActivity : AppCompatActivity() {
     private fun checkEmpty(email: String, password: String): Boolean {
         return email.isNotEmpty() && password.isNotEmpty()
     }
+
+
+
 
 }

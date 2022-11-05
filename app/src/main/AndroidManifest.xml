@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeApp">
+        <activity
+            android:name=".Prueba"
+            android:exported="true"
+            ><intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
+        <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -67,12 +74,8 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
