@@ -29,7 +29,7 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
         val currentUser = userList[position]
 
         holder.tvUsername.text = currentUser.username
-        Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
+       // Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
 
         //al pulsar en el card te lleva a ala activiada chat
         holder.itemView.setOnClickListener{

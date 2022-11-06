@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                             val currentUser = postSnapshot.getValue(User::class.java)
 
                             if (auth.currentUser?.uid.equals(currentUser?.uid)) {
-                                imageRef = currentUser?.profilePicture
+                                //imageRef = currentUser?.profilePicture
                             }
                             try {
                                 Glide.with(this@MainActivity).load(imageRef).into(mainGoUserButton)

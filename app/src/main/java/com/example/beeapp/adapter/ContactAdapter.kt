@@ -60,7 +60,7 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
 
                         try {
                             if (contacts[holder.adapterPosition].uid.equals(currentUser?.uid)) {
-                                imageRef = currentUser?.profilePicture
+                               // imageRef = currentUser?.profilePicture
                             }
                             Glide.with(context).load(imageRef).into(holder.ivProfilePicture)
                         } catch (e: Exception) {

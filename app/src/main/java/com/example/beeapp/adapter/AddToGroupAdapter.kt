@@ -35,7 +35,7 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
         val currentUser = userList[position]
         val dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         holder.tvUsername.text = currentUser.username
-        Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
+       // Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
 
 
         holder.btnAddToGroup.setOnClickListener{
