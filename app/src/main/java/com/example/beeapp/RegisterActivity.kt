@@ -1,5 +1,6 @@
 package com.example.beeapp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,19 +26,10 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerButton: Button
     private lateinit var registerGoLoginButton: Button
     private var apiInterface:ApiInterface = RetrofitService().getRetrofit().create()
-   /* //private lateinit var auth: FirebaseAuth
-    //private lateinit var dbRef: DatabaseReference
-    //private lateinit var storage: FirebaseStorage
-    //private var comprobacion: Int = 0
-    //private val DEFAULT_PROFILE_PICTURE: String = "/images/default_profile.png"
-    */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        /*dbRef =
-            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
-        auth = FirebaseAuth.getInstance()
-        storage = FirebaseStorage.getInstance()*/
 
 
         registerUsername = findViewById(R.id.registerUsername)
@@ -55,38 +47,28 @@ class RegisterActivity : AppCompatActivity() {
             val repeatPassword = registerRepeatPassword.text.toString()
 
             if (checkEmpty(username, email, password, repeatPassword)) {
-                if (password == repeatPassword) {
 
-                   register(username, email, password)
+                if(checkEmailValid(email)){
+                    if (password == repeatPassword) {
 
+                        register(username, email, password)
 
-                /*checkUsernameAvailable(username, object : FirebaseCallback {
-                        override fun onCallback(success: Boolean) {
-                            if (success) {
-                                register(username, email, password, success)
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Account successfully created",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                comprobacion = 1
-                            } else if (comprobacion == 0) {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Username in use",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-                    })*/
-
-                } else {
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "Passwords don't match",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }else{
                     Toast.makeText(
                         applicationContext,
-                        "Passwords don't match",
+                        "Invalid Email",
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
+
             } else {
                 Toast.makeText(
                     applicationContext,
@@ -108,79 +90,47 @@ class RegisterActivity : AppCompatActivity() {
 
         var user = User(null,username,email,password)
 
+
+
         apiInterface.insertUser(user).enqueue(object:Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                Toast.makeText(
-                    applicationContext,
-                    "Account successfully created",
-                    Toast.LENGTH_LONG
-                ).show()
+
+                    if (response.code()==400){
+                        Toast.makeText(
+                            applicationContext,
+                            "Username or email already in use",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }else{
+                        Toast.makeText(
+                            applicationContext,
+                            "Account successfully created ",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                        finish()
+
+
+                    }
+
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
                 Toast.makeText(
                     applicationContext,
-                    "Username or email in use",
+                    "Something went wrong",
                     Toast.LENGTH_LONG
                 ).show()
                 Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
             }
         })
 
-
-
-
-        //Log.e("FUERA DEL BUCLE LLAMADA", "Username already in use $success")
-
-
-       /* auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-
-                    addUserToDataBase(username, email, auth.currentUser?.uid!!)
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(applicationContext, "Register failed", Toast.LENGTH_LONG).show()
-                }
-            }*/
-
     }
 
-    /*private interface FirebaseCallback {
-        fun onCallback(success: Boolean)
-    }*/
+    private fun checkEmailValid(email:String):Boolean{
 
-    private fun checkUsernameAvailable(username: String){//, firebaseCallback: FirebaseCallback) {
-        //var success = true
-
-        /*dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (postSnapshot in snapshot.children) {
-                    val currentUser = postSnapshot.getValue(User::class.java)
-
-                    if (currentUser != null) {
-                        if (currentUser.username == username) {
-
-                            success = false
-                            break
-
-                        }
-                    }
-
-
-                }
-                firebaseCallback.onCallback(success)
-
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("ERROR", "Something went wrong")
-            }
-
-        })*/
-
+        return email.matches(Regex("^[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\$"))
     }
 
     private fun checkEmpty(
@@ -192,10 +142,4 @@ class RegisterActivity : AppCompatActivity() {
         return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty()
     }
 
-    /* private fun addUserToDataBase(username: String, email: String, uid: String) {
-       storage.reference.child(DEFAULT_PROFILE_PICTURE).downloadUrl.addOnSuccessListener {
-            dbRef.child("users").child(uid).setValue(User(username, email, uid, it.toString()))
-        }
-
-    }*/
 }

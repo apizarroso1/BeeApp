@@ -7,7 +7,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.beeapp.model.User
+import com.example.beeapp.service.ApiInterface
+import com.example.beeapp.service.RetrofitService
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
+import java.util.logging.Level
+import java.util.logging.Logger
 
 
 class LoginActivity : AppCompatActivity() {
@@ -16,14 +25,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginPassword: EditText
     private lateinit var loginButton: Button
     private lateinit var loginGoRegisterButton: Button
-    private lateinit var auth: FirebaseAuth
-
+ //   private lateinit var auth: FirebaseAuth
+    private var apiInterface: ApiInterface = RetrofitService().getRetrofit().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        auth = FirebaseAuth.getInstance()
+ //       auth = FirebaseAuth.getInstance()
 
         checkLoggedUser()
 
@@ -53,22 +62,62 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkLoggedUser(){
-        if(auth.currentUser != null){
+
+
+        /*if(auth.currentUser != null){
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }
+        }*/
     }
-
+//Funcion login hace una consulta con el email indicado
     private fun login(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(applicationContext, "Login failed", Toast.LENGTH_LONG).show()
+
+        apiInterface.getUserByEmail(email).enqueue(object: Callback<User> {
+
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                Logger.getLogger("NO IDEA").log(Level.SEVERE, "code=${response.code()}")
+
+                if (response.code()!=200){
+                    Toast.makeText(
+                        applicationContext,
+                        "User not found",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }else{
+
+                    if(response.body()!!.password.equals(password)){
+                        Toast.makeText(
+                            applicationContext,
+                            "Logged ",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    }else{
+                        Toast.makeText(
+                            applicationContext,
+                            "Incorrect password ",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+
                 }
             }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Toast.makeText(
+                    applicationContext,
+                    "Something went wrong",
+                    Toast.LENGTH_LONG
+                ).show()
+                Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
+            }
+
+
+        })
+
     }
 
     private fun checkEmpty(email: String, password: String): Boolean {
