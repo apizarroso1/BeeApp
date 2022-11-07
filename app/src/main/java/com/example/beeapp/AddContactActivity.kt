@@ -56,7 +56,7 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     private fun loadUsers(){
-        dbRef.child("users").addValueEventListener(object : ValueEventListener {
+       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 users.clear()
                 for (postSnapshot in snapshot.children){
@@ -72,6 +72,6 @@ class AddContactActivity : AppCompatActivity() {
                 Log.e("ERROR", "Something went wrong")
             }
 
-        })
+        })*/
     }
 }

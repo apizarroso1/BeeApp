@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.example.beeapp.adapter.ViewPagerAdapter
 import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.model.User
+import com.example.beeapp.service.ApiInterface
+import com.example.beeapp.service.RetrofitService
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
@@ -23,21 +25,30 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
+import java.util.logging.Level
+import java.util.logging.Logger
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainGoUserButton: ImageView
     private lateinit var tvUsername:TextView
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var ivProfilePicture:ImageView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var storage: StorageReference
-    private lateinit var loggedUser: String
+   // private lateinit var auth: FirebaseAuth
+   // private lateinit var dbRef: DatabaseReference
+   // private lateinit var storage: StorageReference
+    private lateinit var loggedUser: User
     private lateinit var loggedUserEmail: String
 
     private lateinit var fragmentAdapter: ViewPagerAdapter
     private lateinit var pager: ViewPager2
     private lateinit var tabLayout: TabLayout
+    private lateinit var loggedUsername:String
+    private var apiInterface: ApiInterface = RetrofitService().getRetrofit().create()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,17 +72,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initVar(){
-        auth = FirebaseAuth.getInstance()
-        dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
-        storage = Firebase.storage.reference
+        //auth = FirebaseAuth.getInstance()
+       // dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+       // storage = Firebase.storage.reference
         mainGoUserButton = viewBinding.mainGoUserButton
-
         tvUsername = viewBinding.tvUsername
         ivProfilePicture = viewBinding.ivUserImage
         loadProfilePicture()
         fragmentAdapter = ViewPagerAdapter(this)
 
-
+        loggedUsername= intent.getStringExtra("username").toString()
 
     }
 
@@ -79,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         var imageRef: String? = null
         try {
-            dbRef.child("users")
+            /*dbRef.child("users")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -100,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onCancelled(error: DatabaseError) {
                         //NADA
                     }
-                })
+                })*/
         }catch (e:Exception){
             e.stackTrace
         }
@@ -108,8 +118,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun tvUsername(){
 
+        apiInterface.getUserByUsername(loggedUsername).enqueue(object: Callback<User>{
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                //loggedUser = response.body()!!
+                tvUsername.text = response.body()!!.username
+            }
 
-        dbRef.child("users").addValueEventListener(object : ValueEventListener {
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
+            }
+        })
+
+       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (postSnapshot in snapshot.children){
@@ -126,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("ERROR", "Something went wrong")
             }
 
-        })
+        })*/
 
     }
 
@@ -136,8 +156,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayUser(){
         val intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("username",loggedUser)
-        intent.putExtra("email",loggedUserEmail)
+        intent.putExtra("username",loggedUsername)
+        //intent.putExtra("email",loggedUserEmail)
         startActivity(intent)
     }
 
@@ -150,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId){
             R.id.logout ->{
-                auth.signOut()
+               // auth.signOut()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }

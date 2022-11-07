@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide
 
 import com.example.beeapp.databinding.ActivityUserBinding
 import com.example.beeapp.model.User
+import com.example.beeapp.service.ApiInterface
+import com.example.beeapp.service.RetrofitService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,17 +23,24 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 
 class UserActivity : AppCompatActivity() {
     private lateinit var ivProfilePicture: ImageView
     private lateinit var viewBinding: ActivityUserBinding
     private lateinit var tvUsername:TextView
-    private lateinit var tvEmail:TextView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
+    private lateinit var tvMood:TextView
+   // private lateinit var auth: FirebaseAuth
+   // private lateinit var dbRef: DatabaseReference
     private lateinit var username:String
-    private lateinit var email:String
+    private var mood:String = ""
+    private var apiInterface: ApiInterface = RetrofitService().getRetrofit().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,27 +48,42 @@ class UserActivity : AppCompatActivity() {
         viewBinding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         username= intent.getStringExtra("username").toString()
-        email= intent.getStringExtra("email").toString()
+        //email= intent.getStringExtra("email").toString()
+        initData()
         initView()
         initListeners()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
     }
 
+    fun initData(){
+        apiInterface.getUserByUsername(username).enqueue(object: Callback<User>{
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                mood = response.body()!!.mood.orEmpty()
+                Logger.getLogger("NO IDEA").log(Level.SEVERE, "mood: $mood")
+                tvMood.text = "Mood: $mood"
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
+            }
+        })
+    }
     fun initView(){
 
         ivProfilePicture = viewBinding.ivProfilePicture
-        tvUsername = viewBinding.textView2
-        tvEmail = viewBinding.textView3
+        tvUsername = viewBinding.tvUsername
+        tvMood = viewBinding.tvMood
         tvUsername.text = "Username: $username"
-        tvEmail.text = "Email: $email"
+        tvMood.text = "Mood: $mood"
 
         var imageRef: String? = null
-        dbRef =
-            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
-        auth = FirebaseAuth.getInstance()
+        //dbRef =
+       //     Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+       // auth = FirebaseAuth.getInstance()
 
-        dbRef.child("users")
+       /* dbRef.child("users")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -80,7 +104,7 @@ class UserActivity : AppCompatActivity() {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
-            })
+            })*/
 
     }
 
@@ -112,16 +136,16 @@ class UserActivity : AppCompatActivity() {
 
     private fun upploadImage(){
         val filename = UUID.randomUUID().toString()
-        val ref =FirebaseStorage.getInstance().getReference("/images/$filename")
+      //  val ref =FirebaseStorage.getInstance().getReference("/images/$filename")
 
-        ref.putFile(selectedImage!!)
+       /* ref.putFile(selectedImage!!)
             .addOnSuccessListener {
                 Toast.makeText(this,"Foto guardada",Toast.LENGTH_LONG).show()
                 ref.downloadUrl.addOnSuccessListener {
 
-                    dbRef.child("users").child(auth.currentUser?.uid.toString()).child("profilePicture").setValue(it.toString())
+                   // dbRef.child("users").child(auth.currentUser?.uid.toString()).child("profilePicture").setValue(it.toString())
                 }
-            }
+            }*/
     }
 
 

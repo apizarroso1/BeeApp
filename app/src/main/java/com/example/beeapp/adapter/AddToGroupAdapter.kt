@@ -40,7 +40,7 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
 
         holder.btnAddToGroup.setOnClickListener{
 
-            dbRef.child("users").addValueEventListener(object: ValueEventListener {
+            /*dbRef.child("users").addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(postSnapshot in snapshot.children){
 
@@ -56,7 +56,7 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
                     Log.e("ERROR","Something went wrong")
                 }
 
-            })
+            })*/
         }
 
     }

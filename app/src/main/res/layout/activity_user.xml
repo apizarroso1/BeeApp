@@ -21,7 +21,7 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -30,13 +30,14 @@
         android:textColor="@color/black"
         android:textSize="25sp" />
 
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginStart="50dp"
-        android:text="Email"
+        android:text="mood"
         android:textColor="@color/black"
         android:textSize="25sp" />
 

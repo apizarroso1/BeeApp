@@ -74,7 +74,7 @@ class ChatsFragment : Fragment() {
 
 
 
-        dbRef.child("users").addValueEventListener(object : ValueEventListener {
+       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 for (postSnapshot in snapshot.children) {
@@ -96,7 +96,7 @@ class ChatsFragment : Fragment() {
                 Log.d("Database", "cancelled request")
             }
 
-        })
+        })*/
 
     }
 

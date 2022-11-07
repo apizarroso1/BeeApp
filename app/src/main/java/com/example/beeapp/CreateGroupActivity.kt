@@ -122,7 +122,7 @@ class CreateGroupActivity : AppCompatActivity() {
         //despues busca entre los usuarios de la base de datos los que tienen el id
         // y los mete en la lista de objetos de la clase User para luego ser mostrados
         // en items en el recycler view
-        dbRef.child("users").addValueEventListener(object : ValueEventListener {
+       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 contactList.clear()
                 for (postSnapshot in snapshot.children) {
@@ -147,7 +147,7 @@ class CreateGroupActivity : AppCompatActivity() {
                 Log.d("Database", "cancelled request")
             }
 
-        })
+        })*/
     }
 
 

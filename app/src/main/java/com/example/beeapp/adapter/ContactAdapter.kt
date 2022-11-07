@@ -51,7 +51,7 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
 
         holder.tvUsername.text = contacts[position].username
 
-        dbRef.child("users")
+       /* dbRef.child("users")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -72,7 +72,7 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("ERROR", "Something went wrong")
                 }
-            })
+            })*/
 
 
 

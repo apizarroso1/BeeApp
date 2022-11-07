@@ -92,7 +92,9 @@ class LoginActivity : AppCompatActivity() {
                             "Logged ",
                             Toast.LENGTH_LONG
                         ).show()
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("username",response.body()!!.username)
+                        startActivity(intent)
                         finish()
                     }else{
                         Toast.makeText(
@@ -101,8 +103,6 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-
-
                 }
             }
 
