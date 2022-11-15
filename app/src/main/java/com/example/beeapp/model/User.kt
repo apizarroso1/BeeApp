@@ -8,9 +8,9 @@ data class User(
     var username: String,
     var email: String,
     var password: String,
-    var profilePicture: String? = null,
+    var profilePicture: String,
     var mood: String,
-    var phone: String? = null,
+    var phone: String
 ) {
 
 
@@ -18,8 +18,8 @@ data class User(
 
 
     //constructor() : this(null, "", "", "", "", "Not mood", "")
-    constructor(uid:String,username: String, email: String, password: String) :
-            this(uid, username, email, password, "", "Not mood", "")
+    constructor(id:String,username: String, email: String, password: String) :
+            this(id, username, email, password, "", "Not mood", "")
 
     constructor(user: User) : this(
         user.id,

@@ -31,8 +31,7 @@ class UserActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityUserBinding
     private lateinit var tvUsername:TextView
     private lateinit var tvMood:TextView
-   // private lateinit var auth: FirebaseAuth
-   // private lateinit var dbRef: DatabaseReference
+
     private lateinit var username:String
     private var mood:String = ""
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
@@ -45,7 +44,6 @@ class UserActivity : AppCompatActivity() {
         viewBinding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         username=loggedUser.username //intent.getStringExtra("username").toString()
-        //email= intent.getStringExtra("email").toString()
 
         initView()
         initData()
@@ -85,21 +83,21 @@ class UserActivity : AppCompatActivity() {
                             "Mood changed",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Mood changed").log(Level.SEVERE, "code:${response.code()}")
+                        Logger.getLogger("Mood changed").log(Level.INFO, "code:${response.code()}")
                     }else {
                         Toast.makeText(
                             applicationContext,
-                            "Couldn't change the mood, response code:${response.code()}",
+                            "Couldn't change the mood",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Couldn't change the mood").log(Level.SEVERE, "Couldn't change the mood, response code:${response.code()}")
+                        Logger.getLogger("Couldn't change the mood").log(Level.WARNING, "code=${response.code()}")
 
 
                     }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Logger.getLogger("ERROR trying to change the mood").log(Level.SEVERE, "Unknown ERROR",t)
+                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unknown ERROR trying to change the mood",t)
                 }
             })
 
