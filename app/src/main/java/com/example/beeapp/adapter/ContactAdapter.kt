@@ -44,7 +44,7 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
 
         holder.btnAddContact.setOnClickListener {
             addContact(
-                contacts[position].uid.toString(),
+                contacts[position].id.toString(),
                 contacts[position].username.toString()
             )
         }
@@ -78,9 +78,9 @@ class ContactAdapter(val context: Context, private val contacts: ArrayList<User>
 
     }
 
-    fun addContact(uId: String, username: String) {
+    fun addContact(id: String, username: String) {
         Toast.makeText(context, "Contact Added", Toast.LENGTH_LONG).show()
-        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts").child(uId)
+        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts").child(id)
             .setValue(username)
     }
 

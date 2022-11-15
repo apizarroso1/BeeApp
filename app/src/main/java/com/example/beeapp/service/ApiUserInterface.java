@@ -8,10 +8,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface ApiInterface {
+public interface ApiUserInterface {
+
 
     @GET("user/consult")
     Call<List<User>> getUsers();
@@ -25,9 +27,10 @@ public interface ApiInterface {
     @GET("user/consult/{id}")
     Call<User> getUserById(@Path("id") Integer id);
 
-
     @POST("user/insert")
     Call<User> insertUser(@Body User user);
 
+    @PUT("user/update")
+    Call<User> updateUser(@Body User user);
 
 }

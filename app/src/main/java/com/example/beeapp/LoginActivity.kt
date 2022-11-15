@@ -8,9 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beeapp.model.User
-import com.example.beeapp.service.ApiInterface
+import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
-import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +25,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var loginGoRegisterButton: Button
  //   private lateinit var auth: FirebaseAuth
-    private var apiInterface: ApiInterface = RetrofitService().getRetrofit().create()
+    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+
+    companion object {
+        lateinit var loggedUser: User
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,11 +75,11 @@ class LoginActivity : AppCompatActivity() {
 //Funcion login hace una consulta con el email indicado
     private fun login(email: String, password: String) {
 
-        apiInterface.getUserByEmail(email).enqueue(object: Callback<User> {
+        apiUserInterface.getUserByEmail(email).enqueue(object: Callback<User> {
 
             override fun onResponse(call: Call<User>, response: Response<User>) {
 
-                Logger.getLogger("NO IDEA").log(Level.SEVERE, "code=${response.code()}")
+
 
                 if (response.code()!=200){
                     Toast.makeText(
@@ -84,16 +87,19 @@ class LoginActivity : AppCompatActivity() {
                         "User not found",
                         Toast.LENGTH_LONG
                     ).show()
+                    Logger.getLogger("User not found").log(Level.SEVERE, "code=${response.code()}")
                 }else{
 
                     if(response.body()!!.password.equals(password)){
+
                         Toast.makeText(
                             applicationContext,
                             "Logged ",
                             Toast.LENGTH_LONG
                         ).show()
+                        loggedUser = response.body()!!
+                        Logger.getLogger("USER LOGGED").log(Level.SEVERE, "${response.body()}")
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("username",response.body()!!.username)
                         startActivity(intent)
                         finish()
                     }else{
@@ -112,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
                     "Something went wrong",
                     Toast.LENGTH_LONG
                 ).show()
-                Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
+                Logger.getLogger("Error trying to loggin").log(Level.SEVERE, "ERROR",t)
             }
 
 

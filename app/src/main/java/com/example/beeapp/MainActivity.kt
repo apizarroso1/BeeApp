@@ -3,28 +3,18 @@ package com.example.beeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ViewPagerAdapter
 import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.model.User
-import com.example.beeapp.service.ApiInterface
+import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,20 +24,17 @@ import java.util.logging.Logger
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainGoUserButton: ImageView
-    private lateinit var tvUsername:TextView
+    private lateinit var tvUsername: TextView
     private lateinit var viewBinding: ActivityMainBinding
-    private lateinit var ivProfilePicture:ImageView
-   // private lateinit var auth: FirebaseAuth
-   // private lateinit var dbRef: DatabaseReference
-   // private lateinit var storage: StorageReference
-    private lateinit var loggedUser: User
-    private lateinit var loggedUserEmail: String
+    private lateinit var ivProfilePicture: ImageView
+
+
 
     private lateinit var fragmentAdapter: ViewPagerAdapter
     private lateinit var pager: ViewPager2
     private lateinit var tabLayout: TabLayout
-    private lateinit var loggedUsername:String
-    private var apiInterface: ApiInterface = RetrofitService().getRetrofit().create()
+
+    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,36 +43,40 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+
         initVar()
         pager = viewBinding.pager
         pager.adapter = fragmentAdapter
         tabLayout = viewBinding.tabLayout
-        val tabLayoutMediator = TabLayoutMediator(tabLayout,pager,TabLayoutMediator.TabConfigurationStrategy{
-            tab, position -> when(position){
-                0-> { tab.text = "Groups" }
-                1-> { tab.text = "Chats" }
+        val tabLayoutMediator = TabLayoutMediator(
+            tabLayout,
+            pager
+        ) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "Groups"
+                }
+                1 -> {
+                    tab.text = "Chats"
+                }
             }
-        })
+        }
         tabLayoutMediator.attach()
         initListeners()
-        tvUsername()
+
     }
 
-    private fun initVar(){
-        //auth = FirebaseAuth.getInstance()
-       // dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
-       // storage = Firebase.storage.reference
+    private fun initVar() {
         mainGoUserButton = viewBinding.mainGoUserButton
         tvUsername = viewBinding.tvUsername
         ivProfilePicture = viewBinding.ivUserImage
         loadProfilePicture()
         fragmentAdapter = ViewPagerAdapter(this)
-
-        loggedUsername= intent.getStringExtra("username").toString()
+        tvUsername.text = loggedUser.username
 
     }
 
-    private fun loadProfilePicture(){
+    private fun loadProfilePicture() {
 
         var imageRef: String? = null
         try {
@@ -111,71 +102,64 @@ class MainActivity : AppCompatActivity() {
                         //NADA
                     }
                 })*/
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.stackTrace
         }
     }
 
-    private fun tvUsername(){
+    private fun tvUsername() {
 
-        apiInterface.getUserByUsername(loggedUsername).enqueue(object: Callback<User>{
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                //loggedUser = response.body()!!
-                tvUsername.text = response.body()!!.username
-            }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Logger.getLogger("NO IDEA").log(Level.SEVERE, "ERROR",t)
-            }
-        })
+        //tvUsername.text = response.body()!!.username ERROR AL INTENTAR VOLVER DESDE OTRA ACTIVITY
 
-       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (postSnapshot in snapshot.children){
-                    val currentUser = postSnapshot.getValue(User::class.java)
+        /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
+             override fun onDataChange(snapshot: DataSnapshot) {
 
-                    if (auth.currentUser?.uid.equals(currentUser?.uid) ){
-                        loggedUserEmail = currentUser?.email.toString()
-                        loggedUser = currentUser?.username.toString()
-                        tvUsername.text = loggedUser
-                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("ERROR", "Something went wrong")
-            }
+                 for (postSnapshot in snapshot.children){
+                     val currentUser = postSnapshot.getValue(User::class.java)
 
-        })*/
+                     if (auth.currentUser?.uid.equals(currentUser?.uid) ){
+                         loggedUserEmail = currentUser?.email.toString()
+                         loggedUser = currentUser?.username.toString()
+                         tvUsername.text = loggedUser
+                     }
+                 }
+             }
+             override fun onCancelled(error: DatabaseError) {
+                 Log.e("ERROR", "Something went wrong")
+             }
+
+         })*/
 
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
         mainGoUserButton.setOnClickListener { displayUser() }
     }
 
-    private fun displayUser(){
+    private fun displayUser() {
         val intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("username",loggedUsername)
+        intent.putExtra("username", loggedUser.username)
         //intent.putExtra("email",loggedUserEmail)
         startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
+        menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when (item.itemId){
-            R.id.logout ->{
-               // auth.signOut()
+        when (item.itemId) {
+            R.id.logout -> {
+                // auth.signOut()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
 
-            R.id.add_friend ->{
+            R.id.add_friend -> {
                 startActivity(Intent(this, AddContactActivity::class.java))
             }
 
