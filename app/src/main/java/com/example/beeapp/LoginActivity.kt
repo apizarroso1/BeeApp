@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
                         "User not found",
                         Toast.LENGTH_LONG
                     ).show()
-                    Logger.getLogger("User not found").log(Level.WARNING, "code=${response.code()}")
+                    Logger.getLogger("User not found").log(Level.SEVERE, "code=${response.code()}")
                 }else{
 
                     if(response.body()!!.password.equals(password)){
@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                         loggedUser = response.body()!!
-                        Logger.getLogger("USER LOGGED").log(Level.INFO, "${response.body()}")
+                        Logger.getLogger("USER LOGGED").log(Level.SEVERE, "${response.body()}")
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()

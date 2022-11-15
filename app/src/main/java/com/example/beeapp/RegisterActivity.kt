@@ -102,14 +102,14 @@ class RegisterActivity : AppCompatActivity() {
                             "Username or email already in use",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Couldnt create the account").log(Level.WARNING, "code=${response.code()}")
+                        Logger.getLogger("Couldnt create the account").log(Level.SEVERE, "code=${response.code()}")
                     }else{
                         Toast.makeText(
                             applicationContext,
                             "Account successfully created ",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Account created").log(Level.INFO, "code=${response.code()}")
+                        Logger.getLogger("Account created").log(Level.SEVERE, "code=${response.code()}")
                         startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                         finish()
 

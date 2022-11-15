@@ -8,7 +8,7 @@ data class User(
     var username: String,
     var email: String,
     var password: String,
-    var profilePicture: String,
+    var picture: String,
     var mood: String,
     var phone: String
 ) {
@@ -26,7 +26,7 @@ data class User(
         user.username,
         user.email,
         user.password,
-        user.profilePicture,
+        user.picture,
         user.mood,
         user.phone
     )

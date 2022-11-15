@@ -55,8 +55,6 @@ class UserActivity : AppCompatActivity() {
 
     private fun initData(){
 
-
-
         mood = loggedUser.mood
         tvMood.text = "$mood"
         dialog = AlertDialog.Builder(this).create()
@@ -83,14 +81,14 @@ class UserActivity : AppCompatActivity() {
                             "Mood changed",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Mood changed").log(Level.INFO, "code:${response.code()}")
+                        Logger.getLogger("Mood changed").log(Level.SEVERE, "code:${response.code()}")
                     }else {
                         Toast.makeText(
                             applicationContext,
                             "Couldn't change the mood",
                             Toast.LENGTH_LONG
                         ).show()
-                        Logger.getLogger("Couldn't change the mood").log(Level.WARNING, "code=${response.code()}")
+                        Logger.getLogger("Couldn't change the mood").log(Level.SEVERE, "code=${response.code()}")
 
 
                     }

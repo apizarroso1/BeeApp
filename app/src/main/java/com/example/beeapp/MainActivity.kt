@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayUser() {
         val intent = Intent(this, UserActivity::class.java)
-        intent.putExtra("username", loggedUser.username)
+        //intent.putExtra("username", loggedUser.username)
         //intent.putExtra("email",loggedUserEmail)
         startActivity(intent)
     }
