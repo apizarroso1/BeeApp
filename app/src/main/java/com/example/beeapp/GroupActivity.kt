@@ -29,7 +29,7 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var usernameList: HashMap<String,String>
-    private lateinit var dbRef: DatabaseReference
+   // private lateinit var dbRef: DatabaseReference
     private lateinit var groupName:String
     private lateinit var description:String
 
@@ -48,8 +48,8 @@ class GroupActivity : AppCompatActivity() {
         val groupId = intent.getStringExtra("groupid")
         description = intent.getStringExtra("description").toString()
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        dbRef =
-            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+       // dbRef =
+    //        Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
 
         supportActionBar?.title = groupName
@@ -62,7 +62,7 @@ class GroupActivity : AppCompatActivity() {
 
 
         //cargar los mensajes de un chat
-        dbRef.child("groupchats").child(groupId!!).child("messages")
+       /* dbRef.child("groupchats").child(groupId!!).child("messages")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -86,7 +86,7 @@ class GroupActivity : AppCompatActivity() {
                     Log.e("ERROR", "Something went wrong")
                 }
 
-            })
+            })*/
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
@@ -94,10 +94,10 @@ class GroupActivity : AppCompatActivity() {
             val message = edMessage.text.toString().trim()
             val messageObject = Message(senderUid, message)
 
-            dbRef.child("groupchats").child(groupId!!).child("messages").push()
+           /* dbRef.child("groupchats").child(groupId!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     edMessage.setText("")
-                }
+                }*/
 
         }
     }
@@ -110,7 +110,7 @@ class GroupActivity : AppCompatActivity() {
 
         var usernames = HashMap<String,String>()
 
-        dbRef.child("groups").child(groupId).child("users")
+       /* dbRef.child("groups").child(groupId).child("users")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -126,7 +126,7 @@ class GroupActivity : AppCompatActivity() {
                     Log.e("ERROR", "Something went wrong")
                 }
 
-            })
+            })*/
 
         return usernames
 

@@ -25,8 +25,8 @@ class GroupsFragment : Fragment() {
     private lateinit var groupList: ArrayList<Group>
 
     private lateinit var adapter: GroupAdapter
-    private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
+   // private lateinit var auth: FirebaseAuth
+    //private lateinit var dbRef: DatabaseReference
     private lateinit var rvGroups: RecyclerView
     private lateinit var btnGoCreateGroup: Button
     override fun onCreateView(
@@ -35,9 +35,9 @@ class GroupsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_groups, container, false)
-        auth = FirebaseAuth.getInstance()
-        dbRef =
-            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        //auth = FirebaseAuth.getInstance()
+     //   dbRef =
+     //       Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         groupList = ArrayList()
         adapter = GroupAdapter(requireContext(), groupList)
         rvGroups = view.findViewById(R.id.rvGroups)
@@ -66,7 +66,7 @@ class GroupsFragment : Fragment() {
     private fun rvGroups() {
 
 
-        dbRef.child("groups").addValueEventListener(object : ValueEventListener {
+        /*dbRef.child("groups").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 groupList.clear()
                 for (postSnapshot in snapshot.children) {
@@ -83,7 +83,7 @@ class GroupsFragment : Fragment() {
             }
 
 
-        })
+        })*/
 
     }
 }

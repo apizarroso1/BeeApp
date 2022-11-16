@@ -1,6 +1,8 @@
 package com.example.beeapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -27,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvUsername: TextView
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var ivProfilePicture: ImageView
-
 
 
     private lateinit var fragmentAdapter: ViewPagerAdapter
@@ -144,6 +145,13 @@ class MainActivity : AppCompatActivity() {
         //intent.putExtra("email",loggedUserEmail)
         startActivity(intent)
     }
+    private fun logout(){
+        var preferences: SharedPreferences = getSharedPreferences("credentials", Context.MODE_PRIVATE)
+        var editor = preferences.edit()
+        editor.clear()
+        editor.commit()
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
@@ -154,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.logout -> {
-                // auth.signOut()
+                logout()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }

@@ -1,6 +1,8 @@
 package com.example.beeapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -24,10 +26,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginPassword: EditText
     private lateinit var loginButton: Button
     private lateinit var loginGoRegisterButton: Button
- //   private lateinit var auth: FirebaseAuth
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
 
     companion object {
+        //objeto de la clase User que se usará durante el resto de la ejecución de la app para no tener que hacer continuamente llamadas a la api
         lateinit var loggedUser: User
     }
 
@@ -35,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
- //       auth = FirebaseAuth.getInstance()
 
+        //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()
 
         loginEmail = findViewById(R.id.loginEmail)
@@ -45,18 +47,26 @@ class LoginActivity : AppCompatActivity() {
         loginGoRegisterButton = findViewById(R.id.loginGoRegisterButton)
 
         loginButton.setOnClickListener {
+
             val email = loginEmail.text.toString()
             val password = loginPassword.text.toString()
 
+            //Se comprueba que al pulsar el boton de login haya o no campos vacíos
             if (checkEmpty(email, password)) {
+
+                //En caso de que no los haya se intenta iniciar sesión
                 login(email, password)
             } else {
+
+                //Se muestra por pantalla al usuario que hay campos vacíos
                 Toast.makeText(applicationContext, "There are empty fields", Toast.LENGTH_LONG)
                     .show()
             }
         }
 
         loginGoRegisterButton.setOnClickListener {
+
+            //Al pulsar el boton de registrarse se inicia la actividad para registrar a un usuario
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
 
@@ -66,66 +76,129 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkLoggedUser(){
 
+        var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
+        var username = preferences.getString("username","No info")
 
-        /*if(auth.currentUser != null){
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }*/
+        Logger.getLogger("SharedPreferences").log(Level.SEVERE, "$username")
+
+        //Se comprueba si hay info en las sharedPreferences
+        if(!username.equals("No info")){
+
+            //En caso afirmativo se produce una llamada a la api para buscar un usuario usando el username
+            apiUserInterface.getUserByUsername(username).enqueue(object: Callback<User>{
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                    if (response.code()==200){
+                        loggedUser = response.body()!!
+
+                        //Log para saber que se ha encontrado una sesión iniciada
+                        Logger.getLogger("Sesion found").log(Level.SEVERE, "${response.body()}")
+
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    //Log para saber que error se ha producido
+                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to get User",t)
+                }
+            })
+
+
+        }else{
+            Logger.getLogger("Sesion not found").log(Level.SEVERE, "Try to login")
+        }
+
     }
-//Funcion login hace una consulta con el email indicado
+
+
+
+    private fun saveSession(){
+        var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
+        var username = loggedUser.username
+
+        var editor = preferences.edit()
+
+        //Se guarda en las sharedPreferences el username del usuario loggeado
+        editor.putString("username",username)
+
+        editor.commit()
+
+    }
+    //Funcion login hace una consulta con el email indicado
     private fun login(email: String, password: String) {
 
+        //Llamada a la api para buscar un usuario usando el email
         apiUserInterface.getUserByEmail(email).enqueue(object: Callback<User> {
 
             override fun onResponse(call: Call<User>, response: Response<User>) {
 
 
+                //Se comprueba primero que la respuesta sea que se ha encontrado al usuario
+                if (response.code()==200){
 
-                if (response.code()!=200){
-                    Toast.makeText(
-                        applicationContext,
-                        "User not found",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    Logger.getLogger("User not found").log(Level.SEVERE, "code=${response.code()}")
-                }else{
-
+                    //Se comprueba que la contraseña sea la correcta para iniciar sesión
                     if(response.body()!!.password.equals(password)){
-
+                        //Se muestra por pantalla al usuario que ha iniciado sesión
                         Toast.makeText(
                             applicationContext,
                             "Logged ",
                             Toast.LENGTH_LONG
                         ).show()
+
+                        //Se cargan los datos al objeto de la clase User desde la base de datos
                         loggedUser = response.body()!!
+                        //Log para saber que la respuesta ha sido la esperada
                         Logger.getLogger("USER LOGGED").log(Level.SEVERE, "${response.body()}")
+
+                        //Se guarda la sesión
+                        saveSession()
+                        //Se pasa a la pantalla de la Main Activity
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else{
+                        //Se muestra en pantalla que la contraseña no es correcta
                         Toast.makeText(
                             applicationContext,
                             "Incorrect password ",
                             Toast.LENGTH_LONG
                         ).show()
                     }
+
+                }else{
+                    //Se muestra por pantalla al usuario que el email introducido no corresponde con ningún usuario registrado
+                    Toast.makeText(
+                        applicationContext,
+                        "User not found",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    //Log para saber que la respuesta es la esperada al no haber encontrado al usuario
+                    Logger.getLogger("User not found").log(Level.SEVERE, "code=${response.code()}")
+
+
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
+                //En caso de que el error sea del server se avisa que algo ha ido mal
                 Toast.makeText(
                     applicationContext,
                     "Something went wrong",
                     Toast.LENGTH_LONG
                 ).show()
-                Logger.getLogger("ERROR").log(Level.SEVERE, "Unknown ERROR trying to loggin",t)
+                //Log para saber que error se ha producido
+                Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to loggin",t)
             }
 
 
         })
 
     }
-
+    //Función para comprobar que los campos no están vacíos
     private fun checkEmpty(email: String, password: String): Boolean {
         return email.isNotEmpty() && password.isNotEmpty()
     }
