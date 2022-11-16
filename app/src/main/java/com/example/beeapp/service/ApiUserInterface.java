@@ -25,7 +25,7 @@ public interface ApiUserInterface {
     Call<User> getUserByEmail(@Query("email") String email);
 
     @GET("user/consult/{id}")
-    Call<User> getUserById(@Path("id") Integer id);
+    Call<User> getUserById(@Path("id") String id);
 
     @POST("user/insert")
     Call<User> insertUser(@Body User user);

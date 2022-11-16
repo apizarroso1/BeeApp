@@ -77,15 +77,15 @@ class LoginActivity : AppCompatActivity() {
     private fun checkLoggedUser(){
 
         var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
-        var username = preferences.getString("username","No info")
+        var id = preferences.getString("userid","No info")
 
-        Logger.getLogger("SharedPreferences").log(Level.SEVERE, "$username")
+        Logger.getLogger("SharedPreferences").log(Level.SEVERE, "$id")
 
         //Se comprueba si hay info en las sharedPreferences
-        if(!username.equals("No info")){
+        if(!id.equals("No info")){
 
             //En caso afirmativo se produce una llamada a la api para buscar un usuario usando el username
-            apiUserInterface.getUserByUsername(username).enqueue(object: Callback<User>{
+            apiUserInterface.getUserById(id).enqueue(object: Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
 
                     if (response.code()==200){
@@ -118,12 +118,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveSession(){
         var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
-        var username = loggedUser.username
+        var id = loggedUser.id
 
         var editor = preferences.edit()
 
         //Se guarda en las sharedPreferences el username del usuario loggeado
-        editor.putString("username",username)
+        editor.putString("userid",id)
 
         editor.commit()
 
