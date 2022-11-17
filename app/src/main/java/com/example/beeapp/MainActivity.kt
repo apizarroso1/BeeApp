@@ -3,12 +3,15 @@ package com.example.beeapp
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ViewPagerAdapter
 import com.example.beeapp.databinding.ActivityMainBinding
@@ -66,85 +69,45 @@ class MainActivity : AppCompatActivity() {
         initListeners()
 
     }
-
+    //Función que se encarga de inicializar las variables y demás
     private fun initVar() {
+        //Se enlazan los elementos del layout con sus variables en el codigo
         mainGoUserButton = viewBinding.mainGoUserButton
         tvUsername = viewBinding.tvUsername
         ivProfilePicture = viewBinding.ivUserImage
-        loadProfilePicture()
         fragmentAdapter = ViewPagerAdapter(this)
+
+        //Se carga el username
         tvUsername.text = loggedUser.username
-
+        //Se carga la foto de perfil
+        loadProfilePicture()
     }
-
+    //Función que se encarga de cargar la foto de perfil
     private fun loadProfilePicture() {
 
-        var imageRef: String? = null
         try {
-            /*dbRef.child("users")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
+            var imageBytes = loggedUser.picture
 
-                        for (postSnapshot in snapshot.children) {
-                            val currentUser = postSnapshot.getValue(User::class.java)
+            var profilePicture: Bitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes!!.size)
+            Glide.with(this@MainActivity).load(profilePicture).into(mainGoUserButton)
 
-                            if (auth.currentUser?.uid.equals(currentUser?.uid)) {
-                                //imageRef = currentUser?.profilePicture
-                            }
-                            try {
-                                Glide.with(this@MainActivity).load(imageRef).into(mainGoUserButton)
-                            }catch (e: Exception){
-                                e.stackTrace
-                            }
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        //NADA
-                    }
-                })*/
         } catch (e: Exception) {
-            e.stackTrace
+            Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to load the picture",e)
         }
     }
 
-    private fun tvUsername() {
 
 
-        //tvUsername.text = response.body()!!.username ERROR AL INTENTAR VOLVER DESDE OTRA ACTIVITY
-
-
-        /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
-             override fun onDataChange(snapshot: DataSnapshot) {
-
-                 for (postSnapshot in snapshot.children){
-                     val currentUser = postSnapshot.getValue(User::class.java)
-
-                     if (auth.currentUser?.uid.equals(currentUser?.uid) ){
-                         loggedUserEmail = currentUser?.email.toString()
-                         loggedUser = currentUser?.username.toString()
-                         tvUsername.text = loggedUser
-                     }
-                 }
-             }
-             override fun onCancelled(error: DatabaseError) {
-                 Log.e("ERROR", "Something went wrong")
-             }
-
-         })*/
-
-    }
-
+    //Función que se encarga de inicializar los listeners
     private fun initListeners() {
         mainGoUserButton.setOnClickListener { displayUser() }
     }
-
+    //Función que se encarga de iniciar la actividad de UserActivity
     private fun displayUser() {
         val intent = Intent(this, UserActivity::class.java)
-        //intent.putExtra("username", loggedUser.username)
-        //intent.putExtra("email",loggedUserEmail)
         startActivity(intent)
     }
+    //Función que se encarga de cerrar la sesión del usuario
     private fun logout(){
         var preferences: SharedPreferences = getSharedPreferences("credentials", Context.MODE_PRIVATE)
         var editor = preferences.edit()
@@ -152,12 +115,12 @@ class MainActivity : AppCompatActivity() {
         editor.commit()
 
     }
-
+    //Función que se encarga de crear la barra del menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-
+    //Función que se encarga de las funciónes de cada elemento del menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {

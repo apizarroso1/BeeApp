@@ -16,10 +16,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.BeeApp">
-        <activity
-            android:name=".Prueba"
-            android:exported="false"
-            ></activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

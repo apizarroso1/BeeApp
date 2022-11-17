@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
+    //Función que se encarga de ver si hay una sesión iniciada
     private fun checkLoggedUser(){
 
         var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         loggedUser = response.body()!!
 
                         //Log para saber que se ha encontrado una sesión iniciada
-                        Logger.getLogger("Sesion found").log(Level.SEVERE, "${response.body()}")
+                        Logger.getLogger("Session found").log(Level.SEVERE, "${response.body()}")
 
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-
+    //Función que se encarga de guardar la sesión
     private fun saveSession(){
         var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
         var id = loggedUser.id
@@ -191,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 //Log para saber que error se ha producido
-                Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to loggin",t)
+                Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to login",t)
             }
 
 
