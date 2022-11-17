@@ -15,17 +15,18 @@ data class User(
     var password: String,
     var mood: String,
     var phone: String,
+    var contacts: Set<String>,
     var picture: ByteArray?=null
 
 ) {
 
 
-    //var contactUids: Set<String>? = null,
+
 
 
 
     constructor(id:String,username: String, email: String, password: String) :
-            this(id, username, email, password, "Not mood", "", null)
+            this(id, username, email, password, "Not mood", "", HashSet<String>(), null)
 
     constructor(user: User) : this(
         user.id,
@@ -34,6 +35,7 @@ data class User(
         user.password,
         user.mood,
         user.phone,
+        user.contacts,
         user.picture
 
     )
