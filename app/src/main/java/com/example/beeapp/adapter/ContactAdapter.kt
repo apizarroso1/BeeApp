@@ -52,6 +52,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
 
         holder.btnAddContact.setOnClickListener {
             addContact(
+                contacts[position],
                 contacts[position].id
                 //,contacts[position].username
             )
@@ -61,26 +62,41 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
 
     }
 
-    fun addContact(id: String) {
+    fun addContact(contact:User,id: String) {
 
         if(!loggedUser.contacts.contains(id)){
 
             loggedUser.addContact(id)
 
+            contact.addContact(loggedUser.id)
+
             apiUserInterface.updateUser(loggedUser).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
-                        Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added? ${response.code()}")
+                        Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added in logged User? ${response.code()}")
                         Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR updating user ",t)
+                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR updating logged user",t)
+                }
+            })
+
+            apiUserInterface.updateUser(contact).enqueue(object : Callback<User>{
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if(response.code()==202) {
+                        Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added in new contact? ${response.code()}")
+                        Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR updating contact user",t)
                 }
             })
         }else{
-            Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact Couldn't be added ")
+            Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact Couldn't be added")
             Toast.makeText(context, "Contact already added", Toast.LENGTH_LONG).show()
         }
 
