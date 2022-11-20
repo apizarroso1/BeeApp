@@ -11,6 +11,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputFilter
 import android.util.Base64
 import android.widget.EditText
 import android.widget.ImageView
@@ -85,6 +86,7 @@ class UserActivity : AppCompatActivity() {
         dialog = AlertDialog.Builder(this).create()
         dialog.setTitle("Mood")
         editMood = EditText(this)
+        editMood.filters += InputFilter.LengthFilter(120)
         setEditMoodButton()
         dialog.setView(editMood)
 
@@ -186,7 +188,6 @@ class UserActivity : AppCompatActivity() {
             var byteArrayOutputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream)
             var bytes = byteArrayOutputStream.toByteArray()
-            //var imageString = Base64.encodeToString(bytes,Base64.DEFAULT)
 
             loggedUser.picture = bytes
 

@@ -27,10 +27,14 @@ public interface ApiUserInterface {
     @GET("user/consult/{id}")
     Call<User> getUserById(@Path("id") String id);
 
+    @GET("user/searchusers")
+    Call<List<User>> searchUser(@Query("username") String username);
+
     @POST("user/insert")
     Call<User> insertUser(@Body User user);
 
     @PUT("user/update")
     Call<User> updateUser(@Body User user);
+
 
 }

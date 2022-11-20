@@ -10,14 +10,19 @@
     android:padding="40dp"
     >
 
-
-
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/svContacts"
+        app:queryHint="Enter the username"
+        android:background="@drawable/user_border"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/searchView"
+        android:background="@drawable/user_border"
         android:layout_weight="90"
-        android:padding="5dp"/>
+        android:layout_marginTop="10dp"
+        android:padding="15dp"/>
 </LinearLayout>

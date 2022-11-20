@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
-    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,8 +88,9 @@ class MainActivity : AppCompatActivity() {
         try {
             var imageBytes = loggedUser.picture
 
-            var profilePicture: Bitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes!!.size)
-            Glide.with(this@MainActivity).load(profilePicture).into(mainGoUserButton)
+            //var profilePicture: Bitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes!!.size)
+            //Glide.with(this@MainActivity).load(profilePicture).into(mainGoUserButton)
+            mainGoUserButton.setImageBitmap(BitmapFactory.decodeByteArray(loggedUser.picture,0,loggedUser.picture!!.size))
 
         } catch (e: Exception) {
             Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to load the picture",e)

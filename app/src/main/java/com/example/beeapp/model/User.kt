@@ -15,7 +15,7 @@ data class User(
     var password: String,
     var mood: String,
     var phone: String,
-    var contacts: Set<String>,
+    var contacts: MutableSet<String>,
     var picture: ByteArray?=null
 
 ) {
@@ -39,6 +39,14 @@ data class User(
         user.picture
 
     )
+
+    override fun toString(): String {
+        return "User(id='$id', username='$username', email='$email', password='$password', mood='$mood', phone='$phone', contacts=$contacts)"
+    }
+    fun addContact(newContactId:String){
+        this.contacts.add(newContactId)
+    }
+
 }
 
 
