@@ -36,7 +36,7 @@ class AddContactActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Add a contact"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        
         initView()
     }
 
