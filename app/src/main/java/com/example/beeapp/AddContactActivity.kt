@@ -91,28 +91,6 @@ class AddContactActivity : AppCompatActivity() {
                     }
                 })
 
-                /*apiUserInterface.searchUser(query).enqueue(object : Callback<MutableList<User>>{
-                    override fun onResponse(
-                        call: Call<MutableList<User>>,
-                        response: Response<MutableList<User>>
-                    ) {
-                        Logger.getLogger("TRYING").log(Level.SEVERE, "Amo a ver")
-                        try{
-                            users.clear()
-                            users.addAll(response.body()!!)
-                            Logger.getLogger("ListUser").log(Level.SEVERE, "$users")
-                            adapter.notifyDataSetChanged()
-                        }catch (e:Exception){
-                            Logger.getLogger("ERROR").log(Level.SEVERE, "No se que ha pasado",e)
-                        }
-
-
-                    }
-
-                    override fun onFailure(call: Call<MutableList<User>>, t: Throwable) {
-                        Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to search users",t)
-                    }
-                })*/
 
                 return false
             }
