@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityGroupBinding
 import com.example.beeapp.model.Message
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class GroupActivity : AppCompatActivity() {
     private lateinit var rvMessage: RecyclerView
@@ -90,9 +94,11 @@ class GroupActivity : AppCompatActivity() {
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
+            var message = edMessage.text.toString().trim()
 
-            val message = edMessage.text.toString().trim()
-            val messageObject = Message(senderUid, message)
+            var msgId = UUID.randomUUID().toString();
+
+            var messageObject = Message(msgId, loggedUser.id,groupId, message)
 
            /* dbRef.child("groupchats").child(groupId!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {

@@ -1,6 +1,6 @@
 package com.example.beeapp.model
 
-data class Group(
+data class Event(
     var groupId: String? = null,
     var gName: String? = null,
     var gDescription: String? = null,

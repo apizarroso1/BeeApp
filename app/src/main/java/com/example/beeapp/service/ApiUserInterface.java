@@ -3,6 +3,7 @@ package com.example.beeapp.service;
 import com.example.beeapp.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,6 +30,9 @@ public interface ApiUserInterface {
 
     @GET("user/searchusers")
     Call<List<User>> searchUser(@Query("username") String username);
+
+    @GET("user/getcontacts")
+    Call<List<User>> findContacts(@Query("userIds")Set<String> userIds);
 
     @POST("user/insert")
     Call<User> insertUser(@Body User user);

@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.GroupActivity
 import com.example.beeapp.R
-import com.example.beeapp.model.Group
+import com.example.beeapp.model.Event
 
 
-class GroupAdapter(val context: Context, val groupList: ArrayList<Group>) :
+class GroupAdapter(val context: Context, val eventList: ArrayList<Event>) :
     RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.group_layout, parent, false)
@@ -22,7 +22,7 @@ class GroupAdapter(val context: Context, val groupList: ArrayList<Group>) :
     }
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-        val currentGroup = groupList[position]
+        val currentGroup = eventList[position]
 
         holder.tvGroupName.text = currentGroup.gName
 
@@ -41,7 +41,7 @@ class GroupAdapter(val context: Context, val groupList: ArrayList<Group>) :
         }
     }
 
-    override fun getItemCount() = groupList.size
+    override fun getItemCount() = eventList.size
 
     class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

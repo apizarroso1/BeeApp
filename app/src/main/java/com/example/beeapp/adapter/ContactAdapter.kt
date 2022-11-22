@@ -1,9 +1,8 @@
 package com.example.beeapp.adapter
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
+import android.net.http.HttpResponseCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,31 +11,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
+import com.example.beeapp.model.Chat
 import com.example.beeapp.model.User
+import com.example.beeapp.service.ApiChatInterface
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import retrofit2.http.HTTP
+import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
-import kotlin.math.log
+import kotlin.collections.HashSet
 
 class ContactAdapter(val context: Context, private val contacts: MutableList<User>) :
     RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+    private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -54,7 +50,6 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
             addContact(
                 contacts[position],
                 contacts[position].id
-                //,contacts[position].username
             )
         }
 
@@ -62,13 +57,32 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
 
     }
 
-    fun addContact(contact:User,id: String) {
+    fun addContact(user:User,id: String) {
 
         if(!loggedUser.contacts.contains(id)){
 
             loggedUser.addContact(id)
 
-            contact.addContact(loggedUser.id)
+            user.addContact(loggedUser.id)
+
+            var participants = HashSet<String>()
+            participants.add( loggedUser.id)
+            participants.add( user.id)
+
+            var chat = Chat(UUID.randomUUID().toString(),participants,HashSet())
+
+            apiChatInterface.insertChat(chat).enqueue(object : Callback<Chat>{
+                override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                    if(response.code()==201) {
+                        Logger.getLogger("CHAT").log(Level.SEVERE, "Chat created ${response.code()}")
+                        Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Chat>, t: Throwable) {
+                    Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR creating chat",t)
+                }
+            })
 
             apiUserInterface.updateUser(loggedUser).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
@@ -83,7 +97,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
                 }
             })
 
-            apiUserInterface.updateUser(contact).enqueue(object : Callback<User>{
+            apiUserInterface.updateUser(user).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
                         Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added in new contact? ${response.code()}")

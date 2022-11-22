@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.adapter.AddToGroupAdapter
 import com.example.beeapp.databinding.ActivityCreateGroupBinding
-import com.example.beeapp.model.Group
+import com.example.beeapp.model.Event
 import com.example.beeapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -93,7 +93,7 @@ class CreateGroupActivity : AppCompatActivity() {
 
 
         dbRef.child("groups").child(group)
-            .setValue(Group(group, groupName, description, addToGroupList))
+            .setValue(Event(group, groupName, description, addToGroupList))
         finish()
     }
 

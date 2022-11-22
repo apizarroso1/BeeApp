@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityChatBinding
 import com.example.beeapp.model.Message
@@ -16,6 +17,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
 
@@ -25,11 +28,11 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityChatBinding
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
-    private lateinit var dbRef: DatabaseReference
+   // private lateinit var dbRef: DatabaseReference
 
 
-    var recieverRoom: String? = null
-    var senderRoom: String? = null
+   // var recieverRoom: String? = null
+   // var senderRoom: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,14 +41,14 @@ class ChatActivity : AppCompatActivity() {
 
         val username = intent.getStringExtra("username")
         val recieverUid = intent.getStringExtra("uid")
-        val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        dbRef =
-            Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+        //val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+        //dbRef =
+          //  Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
 
 
-        senderRoom = recieverUid + senderUid
-        recieverRoom = senderUid + recieverUid
+        //senderRoom = recieverUid + senderUid
+        //recieverRoom = senderUid + recieverUid
 
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -59,7 +62,7 @@ class ChatActivity : AppCompatActivity() {
 
 
         //cargar los mensajes de un chat
-        dbRef.child("chats").child(senderRoom!!).child("messages")
+        /*dbRef.child("chats").child(senderRoom!!).child("messages")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -83,19 +86,22 @@ class ChatActivity : AppCompatActivity() {
 
                 }
 
-            })
+            })*/
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
 
-            val message = edMessage.text.toString().trim()
-            val messageObject = Message(senderUid, message)
+            var message = edMessage.text.toString().trim()
 
-            dbRef.child("chats").child(senderRoom!!).child("messages").push()
+            var msgId = UUID.randomUUID().toString();
+
+            var messageObject = Message(msgId,loggedUser.id,recieverUid!!, message)
+
+            /*dbRef.child("chats").child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     dbRef.child("chats").child(recieverRoom!!).child("messages").push()
                         .setValue(messageObject)
-                }
+                }*/
             edMessage.setText("")
         }
 

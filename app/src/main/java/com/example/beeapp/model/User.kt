@@ -1,11 +1,8 @@
 package com.example.beeapp.model
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import java.io.InputStream
+
 import java.util.*
-import java.util.logging.Level
-import java.util.logging.Logger
+
 
 
 data class User(
@@ -35,7 +32,7 @@ data class User(
         user.password,
         user.mood,
         user.phone,
-        user.contacts,
+        HashSet<String>(),
         user.picture
 
     )

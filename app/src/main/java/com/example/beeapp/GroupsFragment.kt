@@ -2,7 +2,6 @@ package com.example.beeapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +10,11 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.adapter.GroupAdapter
-import com.example.beeapp.model.Group
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.example.beeapp.model.Event
 
 
 class GroupsFragment : Fragment() {
-    private lateinit var groupList: ArrayList<Group>
+    private lateinit var eventList: ArrayList<Event>
 
     private lateinit var adapter: GroupAdapter
    // private lateinit var auth: FirebaseAuth
@@ -38,8 +30,8 @@ class GroupsFragment : Fragment() {
         //auth = FirebaseAuth.getInstance()
      //   dbRef =
      //       Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
-        groupList = ArrayList()
-        adapter = GroupAdapter(requireContext(), groupList)
+        eventList = ArrayList()
+        adapter = GroupAdapter(requireContext(), eventList)
         rvGroups = view.findViewById(R.id.rvGroups)
         btnGoCreateGroup = view.findViewById(R.id.btnGoCreateGroup)
 
@@ -68,11 +60,11 @@ class GroupsFragment : Fragment() {
 
         /*dbRef.child("groups").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                groupList.clear()
+                eventList.clear()
                 for (postSnapshot in snapshot.children) {
-                    val group = postSnapshot.getValue(Group::class.java)
+                    val group = postSnapshot.getValue(Event::class.java)
                     if (group?.users!!.contains(auth.currentUser?.uid.toString())) {
-                        groupList.add(group)
+                        eventList.add(group)
                     }
                 }
                 adapter.notifyDataSetChanged()

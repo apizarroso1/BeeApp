@@ -35,11 +35,11 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
 
         if (holder.javaClass == SentViewHolder::class.java){
             val viewHolder = holder as SentViewHolder
-            viewHolder.sentMessage.text = currMessage.text
+            viewHolder.sentMessage.text = currMessage.body
 
         }else{
             val viewHolder = holder as ReceivedViewHolder
-            viewHolder.receivedMessage.text = currMessage.text
+            viewHolder.receivedMessage.text = currMessage.body
             if(username != null) {
                 viewHolder.senderUser.text = username
             }else{
