@@ -102,6 +102,9 @@ class ChatActivity : AppCompatActivity() {
                     dbRef.child("chats").child(recieverRoom!!).child("messages").push()
                         .setValue(messageObject)
                 }*/
+
+
+
             edMessage.setText("")
         }
 

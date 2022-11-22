@@ -26,6 +26,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import java.util.logging.Level
+import java.util.logging.Logger
 
 
 class ChatsFragment : Fragment() {
@@ -56,7 +58,7 @@ class ChatsFragment : Fragment() {
         rvChats.layoutManager = LinearLayoutManager(requireContext())
         rvChats.adapter = adapter
         loadContacts()
-       // rvChats()
+        rvChats()
         return view
 
     }
@@ -66,8 +68,11 @@ class ChatsFragment : Fragment() {
         apiUserInterface.findContacts(loggedUser.contacts).enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
-                contactList.addAll(response.body()!!)
-                adapter.notifyDataSetChanged()
+                if(!response.body().isNullOrEmpty()){
+                    contactList.addAll(response.body()!!)
+                    adapter.notifyDataSetChanged()
+                }
+
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
@@ -80,17 +85,18 @@ class ChatsFragment : Fragment() {
     //se añaden los usuarios a la lista de usuarios
     private fun rvChats() {
 
-        var chatsIdList: MutableList<Chat> = ArrayList()
+        var chatsIdList: MutableList<String> = ArrayList()
 
-        apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<Chat>>{
-            override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
+        apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<String>>{
+            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
 
-            chatsIdList.addAll(response.body()!!)
+                chatsIdList.addAll(response.body()!!)
 
+                Logger.getLogger("ListChats").log(Level.SEVERE, "$chatsIdList code=${response.code()}")
 
             }
 
-            override fun onFailure(call: Call<List<Chat>>, t: Throwable) {
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })
