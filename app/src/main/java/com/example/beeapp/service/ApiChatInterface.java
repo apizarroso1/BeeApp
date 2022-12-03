@@ -22,7 +22,7 @@ public interface ApiChatInterface {
     Call<Chat> getChatById(@Path("id") String id);
 
     @GET("chat/findallchats")
-    Call<List<String>> findAllChatsFromUser(@Query("userId") String userId);
+    Call<List<Chat>> findAllChatsFromUser(@Query("userId") String userId);
 
     @POST("chat/insert")
     Call<Chat> insertChat(@Body Chat chat);

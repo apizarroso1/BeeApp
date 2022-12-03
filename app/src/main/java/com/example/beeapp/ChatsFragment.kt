@@ -85,10 +85,10 @@ class ChatsFragment : Fragment() {
     //se añaden los usuarios a la lista de usuarios
     private fun rvChats() {
 
-        var chatsIdList: MutableList<String> = ArrayList()
+        var chatsIdList: MutableList<Chat> = ArrayList()
 
-        apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<String>>{
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+        apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<Chat>>{
+            override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
 
                 chatsIdList.addAll(response.body()!!)
 
@@ -96,7 +96,7 @@ class ChatsFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Chat>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })

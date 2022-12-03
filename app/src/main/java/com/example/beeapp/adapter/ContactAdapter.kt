@@ -65,9 +65,12 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
 
             user.addContact(loggedUser.id)
 
+            /*var participants = HashMap<String,String>()
+            participants[loggedUser.id] = loggedUser.username
+            participants[user.id] = user.username*/
             var participants = HashSet<String>()
-            participants.add( loggedUser.id)
-            participants.add( user.id)
+            participants.add(loggedUser.id)
+            participants.add(user.id)
 
             var chat = Chat(UUID.randomUUID().toString(),participants,HashSet())
 
