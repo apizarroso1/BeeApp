@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -16,6 +17,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import java.io.PrintWriter
+import java.net.Socket
+import java.util.*
+import java.util.concurrent.Executors
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -37,6 +42,16 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+
+        /*Executors.newSingleThreadExecutor().execute{
+            val socket = Socket("localhost",50000)
+            val scanner = Scanner(socket.getInputStream())
+            val printWriter = PrintWriter(socket.getOutputStream())
+            while(scanner.hasNextLine()){
+                Log.d("Scanner", scanner.nextLine())
+            }
+        }*/
 
         //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()

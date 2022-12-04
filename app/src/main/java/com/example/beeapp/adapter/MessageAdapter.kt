@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.R
 import com.example.beeapp.model.Message
-import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.auth.FirebaseAuth
 
 class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,val username: String?=null,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -48,7 +48,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
+    /*override fun getItemViewType(position: Int): Int {
 
         val currentMessage = messageList[position]
 
@@ -58,7 +58,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
         }else{
             return ITEM_RECEIVED
         }
-    }
+    }*/
     override fun getItemCount(): Int {
 
         return messageList.size

@@ -38,7 +38,7 @@ import java.io.InputStream
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
-import kotlin.math.log
+
 
 class UserActivity : AppCompatActivity() {
     private lateinit var ivProfilePicture: ImageView

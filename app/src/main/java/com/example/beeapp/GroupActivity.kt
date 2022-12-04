@@ -14,13 +14,13 @@ import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityGroupBinding
 import com.example.beeapp.model.Message
-import com.google.firebase.auth.FirebaseAuth
+/*import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.Firebase*/
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -51,7 +51,7 @@ class GroupActivity : AppCompatActivity() {
          groupName = intent.getStringExtra("groupname").toString()
         val groupId = intent.getStringExtra("groupid")
         description = intent.getStringExtra("description").toString()
-        val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+       // val senderUid = FirebaseAuth.getInstance().currentUser?.uid
        // dbRef =
     //        Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 

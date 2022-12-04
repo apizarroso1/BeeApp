@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+//import com.bumptech.glide.Glide
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ViewPagerAdapter
 import com.example.beeapp.databinding.ActivityMainBinding
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadProfilePicture() {
 
         try {
-            var imageBytes = loggedUser.picture
+            //var imageBytes = loggedUser.picture
 
             //var profilePicture: Bitmap = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes!!.size)
             //Glide.with(this@MainActivity).load(profilePicture).into(mainGoUserButton)

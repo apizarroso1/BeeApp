@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.beeapp.R
 import com.example.beeapp.model.User
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+//import com.google.firebase.database.DataSnapshot
+//import com.google.firebase.database.DatabaseError
+//import com.google.firebase.database.ValueEventListener
+//import com.google.firebase.database.ktx.database
+//import com.google.firebase.ktx.Firebase
 
 class AddToGroupAdapter(val context: Context, val userList: ArrayList<User>, val addToGroupList: MutableMap<String,String>):
 RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
@@ -33,7 +33,7 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
         position: Int
     ) {
         val currentUser = userList[position]
-        val dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+       // val dbRef = Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         holder.tvUsername.text = currentUser.username
        // Glide.with(context).load(currentUser.profilePicture).into(holder.ivProfilePicture)
 

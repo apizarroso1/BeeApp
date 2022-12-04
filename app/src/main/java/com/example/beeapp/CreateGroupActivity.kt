@@ -12,14 +12,14 @@ import com.example.beeapp.adapter.AddToGroupAdapter
 import com.example.beeapp.databinding.ActivityCreateGroupBinding
 import com.example.beeapp.model.Event
 import com.example.beeapp.model.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+//import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.database.DataSnapshot
+//import com.google.firebase.database.DatabaseError
+//import com.google.firebase.database.DatabaseReference
+//import com.google.firebase.database.ValueEventListener
+//import com.google.firebase.database.ktx.database
+//import com.google.firebase.ktx.Firebase
+//import com.google.firebase.storage.FirebaseStorage
 
 
 class CreateGroupActivity : AppCompatActivity() {
@@ -29,10 +29,10 @@ class CreateGroupActivity : AppCompatActivity() {
     private lateinit var btnCreateGroup: Button
     private lateinit var rvGroupContacts: RecyclerView
     private lateinit var viewBinding: ActivityCreateGroupBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
+    //private lateinit var auth: FirebaseAuth
+    //private lateinit var dbRef: DatabaseReference
     private lateinit var group: String
-    private lateinit var storage: FirebaseStorage
+    //private lateinit var storage: FirebaseStorage
     private lateinit var adapter: AddToGroupAdapter
     //lista de id+nombre de los contactos agregados al grupo
     private lateinit var addToGroupList: MutableMap<String, String>
@@ -46,13 +46,13 @@ class CreateGroupActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         supportActionBar?.title = "Create a group"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        dbRef =
+        /*dbRef =
             Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
 
         //creamos un id nuevo para el grupo que queremos crear
-        group = dbRef.child("groups").push().key.toString()
+        group = dbRef.child("groups").push().key.toString()*/
 
 
         addToGroupList = HashMap()
@@ -92,8 +92,8 @@ class CreateGroupActivity : AppCompatActivity() {
         val description = edGroupDescription.text.toString()
 
 
-        dbRef.child("groups").child(group)
-            .setValue(Event(group, groupName, description, addToGroupList))
+        /*dbRef.child("groups").child(group)
+            .setValue(Event(group, groupName, description, addToGroupList))*/
         finish()
     }
 
@@ -103,7 +103,7 @@ class CreateGroupActivity : AppCompatActivity() {
         var contactsUidList: MutableList<String> = ArrayList()
 
         //primero busca en la base de datos los id de los contactos agregados
-        dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts")
+       /* dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     contactsUidList.clear()
@@ -117,7 +117,7 @@ class CreateGroupActivity : AppCompatActivity() {
                     Log.d("Database", "cancelled request")
                 }
 
-            })
+            })*/
 
         //despues busca entre los usuarios de la base de datos los que tienen el id
         // y los mete en la lista de objetos de la clase User para luego ser mostrados
