@@ -90,7 +90,7 @@ class ChatsFragment : Fragment() {
         apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<Chat>>{
             override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
 
-                chatsIdList.addAll(response.body()!!)
+               // chatsIdList.addAll(response.body()!!)
 
                 Logger.getLogger("ListChats").log(Level.SEVERE, "$chatsIdList code=${response.code()}")
 
