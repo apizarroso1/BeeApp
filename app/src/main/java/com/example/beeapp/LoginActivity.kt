@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
+import okhttp3.OkHttpClient
+import okhttp3.WebSocket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,14 +46,7 @@ class LoginActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
-        /*Executors.newSingleThreadExecutor().execute{
-            val socket = Socket("localhost",50000)
-            val scanner = Scanner(socket.getInputStream())
-            val printWriter = PrintWriter(socket.getOutputStream())
-            while(scanner.hasNextLine()){
-                Log.d("Scanner", scanner.nextLine())
-            }
-        }*/
+        
 
         //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()

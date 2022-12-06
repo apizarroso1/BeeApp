@@ -18,8 +18,12 @@ import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
+import com.example.beeapp.service.SocketListener
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.WebSocket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fragmentAdapter: ViewPagerAdapter
     private lateinit var pager: ViewPager2
     private lateinit var tabLayout: TabLayout
+
 
 
 
