@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
 import com.example.beeapp.model.Message
+import java.util.logging.Level
+import java.util.logging.Logger
+
 //import com.google.firebase.auth.FirebaseAuth
 
-class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,val username: String?=null,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(val context: Context, var messageList: ArrayList<Message>,val username: String?=null,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
 
@@ -48,17 +52,17 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>,v
         }
     }
 
-    /*override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int {
 
         val currentMessage = messageList[position]
 
-        if (FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)){
+        if (loggedUser.id.equals(currentMessage.senderId)){
             return ITEM_SENT
 
         }else{
             return ITEM_RECEIVED
         }
-    }*/
+    }
     override fun getItemCount(): Int {
 
         return messageList.size

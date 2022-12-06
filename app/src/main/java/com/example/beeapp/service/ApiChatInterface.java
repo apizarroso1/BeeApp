@@ -1,6 +1,7 @@
 package com.example.beeapp.service;
 
 import com.example.beeapp.model.Chat;
+import com.example.beeapp.model.Message;
 import com.example.beeapp.model.User;
 
 import java.util.List;
@@ -25,11 +26,15 @@ public interface ApiChatInterface {
     Call<List<Chat>> findAllChatsFromUser(@Query("userId") String userId);
 
     @GET("chat/findchat")
-    Call<Chat> findChat(@Query("userId1") String userId1,@Query("userId2") String userId2);
+    Call<Chat> findChat(@Query("id1") String id1,@Query("id2") String id2);
+
+    @GET("chat/getmessages")
+    Call<Set<Message>> getMessages(@Query("chat") Chat chat);
 
     @POST("chat/insert")
     Call<Chat> insertChat(@Body Chat chat);
 
     @PUT("chat/update")
     Call<Chat> updateChat(@Body Chat chat);
+
 }

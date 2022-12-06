@@ -38,6 +38,9 @@ class ChatsFragment : Fragment() {
     private lateinit var rvChats: RecyclerView
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+    var chatsList: MutableList<Chat> = ArrayList()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,19 +61,21 @@ class ChatsFragment : Fragment() {
         rvChats.layoutManager = LinearLayoutManager(requireContext())
         rvChats.adapter = adapter
         loadContacts()
-        rvChats()
+        //rvChats()
         return view
 
     }
-
+    //se añaden los usuarios a la lista de usuarios
     private fun loadContacts() {
 
         apiUserInterface.findContacts(loggedUser.contacts).enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-
+                Logger.getLogger("ContactList").log(Level.SEVERE, "Contacts=${response.body()}, code=${response.code()}")
                 if(!response.body().isNullOrEmpty()){
                     contactList.addAll(response.body()!!)
                     adapter.notifyDataSetChanged()
+
+
                 }
 
             }
@@ -82,17 +87,17 @@ class ChatsFragment : Fragment() {
 
     }
 
-    //se añaden los usuarios a la lista de usuarios
+
     private fun rvChats() {
 
-        var chatsIdList: MutableList<Chat> = ArrayList()
+
 
         apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<Chat>>{
             override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
 
-               // chatsIdList.addAll(response.body()!!)
+                chatsList.addAll(response.body()!!)
 
-                Logger.getLogger("ListChats").log(Level.SEVERE, "$chatsIdList code=${response.code()}")
+                Logger.getLogger("ListChats").log(Level.SEVERE, "$chatsList code=${response.code()}")
 
             }
 

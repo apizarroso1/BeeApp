@@ -26,6 +26,7 @@ import retrofit2.http.HTTP
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
+import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
 class ContactAdapter(val context: Context, private val contacts: MutableList<User>) :
@@ -72,7 +73,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
             participants.add(loggedUser.id)
             participants.add(user.id)
 
-            var chat = Chat(UUID.randomUUID().toString(),participants,HashSet())
+            var chat = Chat(UUID.randomUUID().toString(),participants, ArrayList())
 
             apiChatInterface.insertChat(chat).enqueue(object : Callback<Chat>{
                 override fun onResponse(call: Call<Chat>, response: Response<Chat>) {

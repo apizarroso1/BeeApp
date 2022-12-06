@@ -43,7 +43,8 @@
         <activity
             android:name=".CreateGroupActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".GroupActivity"
             android:exported="false"
@@ -51,7 +52,8 @@
         <activity
             android:name=".AddContactActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ChatActivity"
             android:exported="false"

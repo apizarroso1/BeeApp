@@ -44,8 +44,6 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
             intent.putExtra("uid", currentUser.id)
 
 
-
-
             context.startActivity(intent)
 
         }
