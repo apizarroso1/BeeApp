@@ -46,13 +46,9 @@ class ChatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
 
         val view: View = inflater.inflate(R.layout.fragment_chats, container, false)
         rvChats = view.findViewById(R.id.rvChats)
-        //auth = FirebaseAuth.getInstance()
-        //dbRef =
-        //    Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
 
         contactList = arrayListOf()
@@ -87,7 +83,7 @@ class ChatsFragment : Fragment() {
 
     }
 
-
+/*
     private fun rvChats() {
 
 
@@ -108,49 +104,8 @@ class ChatsFragment : Fragment() {
 
 
 
-        /*dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    contactsUidList.clear()
-                    for (postSnapshot in snapshot.children) {
-                        val currentUid = postSnapshot.key
-                        contactsUidList.add(currentUid!!)
-                    }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("Database", "cancelled request")
-                }
-
-            })*/
-
-
-
-       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                for (postSnapshot in snapshot.children) {
-                    val currentUser = postSnapshot.getValue(User::class.java)
-
-                    if (auth.currentUser?.uid != currentUser?.uid && contactsUidList.contains(
-                            currentUser?.uid.toString()
-                        )
-                    ) {
-                        userList.add(currentUser!!)
-
-                    }
-
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Database", "cancelled request")
-            }
-
-        })*/
-
-    }
+    }*/
 
 
 }

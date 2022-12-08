@@ -1,10 +1,11 @@
 package com.example.beeapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.LoginActivity.Companion.loggedUser
@@ -13,20 +14,24 @@ import com.example.beeapp.databinding.ActivityChatBinding
 import com.example.beeapp.model.Chat
 import com.example.beeapp.model.Message
 import com.example.beeapp.service.*
+import com.example.beeapp.service.Const.TAG
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import org.java_websocket.client.WebSocketClient
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.net.URI
-
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.dto.StompMessage
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.collections.ArrayList
+
 
 class ChatActivity : AppCompatActivity() {
 
@@ -35,29 +40,27 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var ivSendButton: ImageView
     private lateinit var viewBinding: ActivityChatBinding
     private lateinit var messageAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Message>
+    private lateinit var messageList: MutableList<Message>
 
     private lateinit var webSocket: WebSocket
     private lateinit var webSocketClient:WebSocketClient;
-    private lateinit var receiverUid:String
+    private lateinit var receiverId:String
     private lateinit var username:String
 
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private lateinit var chat: Chat
 
+    private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Const.address)
+
+    @SuppressWarnings("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
 
-        //val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        //dbRef =
-          //  Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
 
-        //instantiateWebSocket ()
-
-        receiverUid = intent.getStringExtra("uid")!!
+        receiverId = intent.getStringExtra("uid")!!
         username = intent.getStringExtra("username")!!
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -65,11 +68,45 @@ class ChatActivity : AppCompatActivity() {
 
         initView()
 
-        messageList= ArrayList()
 
 
 
-        apiChatInterface.findChat(loggedUser.id,receiverUid ).enqueue(object :Callback<Chat>{
+
+
+        stompClient.connect()
+        StompUtils.lifecycle(stompClient)
+
+        //Subscripcion al endpoint para recibir mensaje
+
+        stompClient.topic(Const.chatResponse.replace(Const.placeholder, loggedUser.id))
+            .subscribe { stompMessage: StompMessage ->
+                val jsonObject = JSONObject(stompMessage.payload)
+                Log.i(TAG, "Receive: $jsonObject")
+                runOnUiThread {
+                    try {
+                        var message = Message(jsonObject.getString("senderId"),
+                            jsonObject.getString("receiverId"),jsonObject.getString("body"))
+
+
+                        messageList.add(message)
+
+
+
+
+                        refreshChat()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+
+
+
+
+        messageList= mutableListOf()
+
+        apiChatInterface.findChat(loggedUser.id,receiverId ).enqueue(object :Callback<Chat>{
             override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
                 try {
                     chat = response.body()!!
@@ -82,7 +119,6 @@ class ChatActivity : AppCompatActivity() {
                     } catch (e: Exception) {
 
                     }
-                    Logger.getLogger("ChatMessages").log(Level.SEVERE, "$messageList")
                 }catch (e:Exception)
                 {
                     Logger.getLogger("ChatError").log(Level.SEVERE, "${response.code()}",e)
@@ -91,113 +127,62 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Chat>, t: Throwable) {
-                TODO("Not yet implemented")
+                Logger.getLogger("ChatError").log(Level.SEVERE, "Error trying to connect",t)
             }
         })
 
-        messageAdapter = MessageAdapter(this, messageList, username!!)
+
+
+
+        messageAdapter = MessageAdapter(this, messageList)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
 
-        //cargar los mensajes de un chat
-        /*dbRef.child("chats").child(senderRoom!!).child("messages")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
 
-                    messageList.clear()
 
-                    for (postSnapshot in snapshot.children) {
-
-                        val message = postSnapshot.getValue(Message::class.java)
-                        messageList.add(message!!)
-
-                    }
-                    try {
-                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
-                    } catch (e: Exception) {
-
-                    }
-                    messageAdapter.notifyDataSetChanged()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-
-            })*/
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
-
             sendMessage()
         }
 
 
     }
-    private fun connectWebSocket(){
-        var uri: URI
-        try{
-            uri = URI("ws://192.168.1.67:8080/privatechat")
-        }catch (e:Exception)
-        {
-            return
+
+    private fun refreshChat() {
+
+        messageAdapter.notifyItemInserted(messageList.size-1)
+        try {
+            rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
+        } catch (e: Exception) {
+
         }
 
-        webSocketClient = MyWebSocketClient(uri)
-
-        webSocketClient.connect()
-
     }
+
 
     private fun sendMessage(){
         var message = edMessage.text.toString().trim()
 
-        var msgId = UUID.randomUUID().toString();
+        if(message!="") {
 
-        var messageObject = Message(msgId,loggedUser.id,receiverUid!!, message)
-
-        messageList.add(messageObject)
+            var messageObject = Message(loggedUser.id, receiverId, message)
 
 
-
-        chat.messages = messageList
-
-        apiChatInterface.updateChat(chat).enqueue(object :Callback<Chat>{
-            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
-                if (response.code()==202){
-                    Logger.getLogger("Message sent").log(Level.SEVERE, "code:${response.code()}")
-
-                    messageList.clear()
-                    messageList.addAll(response.body()!!.messages)
-                    try {
-                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
-                    } catch (e: Exception) {
-
-                    }
-                    messageAdapter.notifyDataSetChanged()
-                    Logger.getLogger("MessageList").log(Level.SEVERE, "$messageList")
-
-                }else {
-
-                    Logger.getLogger("Error").log(Level.SEVERE, "Couldn't send the message, code=${response.code()}")
-
-                }
+            Logger.getLogger(TAG).log(Level.SEVERE, "message sent")
+            val jsonObject = JSONObject()
+            try {
+                jsonObject.put("senderId", loggedUser.id)
+                jsonObject.put("receiverId", receiverId)
+                jsonObject.put("body", messageObject.body)
+            } catch (e: JSONException) {
+                e.printStackTrace()
             }
 
-            override fun onFailure(call: Call<Chat>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
+            stompClient.send(Const.chat + "/${chat.id}", jsonObject.toString()).subscribe()
 
-        })
-
-        /*dbRef.child("chats").child(senderRoom!!).child("messages").push()
-            .setValue(messageObject).addOnSuccessListener {
-                dbRef.child("chats").child(recieverRoom!!).child("messages").push()
-                    .setValue(messageObject)
-            }*/
-
-
-        edMessage.setText("")
+            edMessage.setText("")
+        }
     }
 
 
@@ -207,12 +192,6 @@ class ChatActivity : AppCompatActivity() {
         ivSendButton = viewBinding.ivSendButton
     }
 
-    private fun instantiateWebSocket (){
-        var client = OkHttpClient()
 
-        var request = Request.Builder().url("ws://localhost:8080/privatechat").build()
-        var socketListener = SocketListener(this)
-        webSocket = client.newWebSocket(request,socketListener)
-    }
 
 }

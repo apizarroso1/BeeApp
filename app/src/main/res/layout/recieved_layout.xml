@@ -13,23 +13,24 @@
         android:gravity="start"
         >
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/recived_message">
+
             <TextView
                 android:id="@+id/tvUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="usuario"
-                android:padding="5dp"
+                android:text=""
+
                 android:paddingStart="10dp"
                 android:textColor="@color/yellow"
                 android:textStyle="bold"
                 />
-
             <TextView
-                android:layout_below="@+id/tvUser"
+
                 android:id="@+id/tvReceivedMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +44,7 @@
 
 
                 />
-        </RelativeLayout>
+        </LinearLayout>
 
 
 

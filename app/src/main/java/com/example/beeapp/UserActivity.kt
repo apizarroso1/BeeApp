@@ -22,7 +22,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
-import com.bumptech.glide.Glide
+
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 
 import com.example.beeapp.databinding.ActivityUserBinding
@@ -138,7 +138,9 @@ class UserActivity : AppCompatActivity() {
         tvUsername.text = "$username"
         tvMood.text = "$mood"
 
-        Glide.with(this@UserActivity).load(setProfilePicture()).into(ivProfilePicture)
+        //Glide.with(this@UserActivity).load(setProfilePicture()).into(ivProfilePicture)
+
+        ivProfilePicture.setImageBitmap(BitmapFactory.decodeByteArray(loggedUser.picture,0,loggedUser.picture!!.size))
 
     }
     //Función que se encarga de convertir el ByteArray en un Bitmap para cargar la imagen
