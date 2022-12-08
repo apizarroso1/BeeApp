@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +15,7 @@ import com.example.beeapp.model.Chat
 import com.example.beeapp.model.Message
 import com.example.beeapp.service.*
 import com.example.beeapp.service.Const.TAG
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.WebSocket
-import org.java_websocket.client.WebSocketClient
+
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -27,10 +24,9 @@ import retrofit2.Response
 import retrofit2.create
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.StompMessage
-import java.util.*
+
 import java.util.logging.Level
 import java.util.logging.Logger
-import kotlin.collections.ArrayList
 
 
 class ChatActivity : AppCompatActivity() {
@@ -42,8 +38,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: MutableList<Message>
 
-    private lateinit var webSocket: WebSocket
-    private lateinit var webSocketClient:WebSocketClient;
     private lateinit var receiverId:String
     private lateinit var username:String
 
