@@ -60,7 +60,7 @@ class GroupActivity : AppCompatActivity() {
         initView()
         messageList = ArrayList()
         usernameList = getUsernames(groupId!!)
-        messageAdapter = MessageAdapter(this, messageList, null, usernameList)
+        messageAdapter = MessageAdapter(this, messageList, usernameList)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
 
@@ -98,7 +98,7 @@ class GroupActivity : AppCompatActivity() {
 
             var msgId = UUID.randomUUID().toString();
 
-            var messageObject = Message(msgId, loggedUser.id,groupId, message)
+            var messageObject = Message(loggedUser.id,groupId, message)
 
            /* dbRef.child("groupchats").child(groupId!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {

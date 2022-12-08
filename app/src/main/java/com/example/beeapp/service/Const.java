@@ -1,0 +1,20 @@
+package com.example.beeapp.service;
+
+public class Const {
+    public static final String TAG = "Alex";
+    public static  final String placeholder = "placeholder";
+
+
+
+
+    // la direccion para conectar al websocket del server
+    public static final String address = "ws://192.168.1.67:8080/beeapp/websocket";
+
+
+    //El placeholder será reemplazado por el groupId correspondiente
+    public static final String group = "/group/" + placeholder;
+    public static final String groupResponse = "/g/" + placeholder;
+    public static final String chat = "/chat";
+    // El placeholder será reemplazado por el userId correspondiente
+    public static final String chatResponse = "/user/" + placeholder + "/msg";
+}

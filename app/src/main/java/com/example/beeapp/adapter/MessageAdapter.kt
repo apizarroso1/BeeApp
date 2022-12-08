@@ -14,7 +14,7 @@ import java.util.logging.Logger
 
 //import com.google.firebase.auth.FirebaseAuth
 
-class MessageAdapter(val context: Context, var messageList: ArrayList<Message>,val username: String?=null,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(val context: Context, var messageList: MutableList<Message>,val usernameList:HashMap<String,String>?=null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
 
@@ -44,11 +44,11 @@ class MessageAdapter(val context: Context, var messageList: ArrayList<Message>,v
         }else{
             val viewHolder = holder as ReceivedViewHolder
             viewHolder.receivedMessage.text = currMessage.body
-            if(username != null) {
-                viewHolder.senderUser.text = username
-            }else{
+           // if(username != null) {
+             //   viewHolder.senderUser.text = username
+            //}else{
                 viewHolder.senderUser.text = usernameGroup
-            }
+           // }
         }
     }
 
