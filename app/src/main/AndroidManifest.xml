@@ -64,7 +64,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" ></activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
