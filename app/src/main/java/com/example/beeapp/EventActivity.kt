@@ -3,7 +3,6 @@ package com.example.beeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -12,24 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
-import com.example.beeapp.databinding.ActivityGroupBinding
+import com.example.beeapp.databinding.ActivityEventBinding
 import com.example.beeapp.model.Message
-/*import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase*/
+
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class GroupActivity : AppCompatActivity() {
+class EventActivity : AppCompatActivity() {
     private lateinit var rvMessage: RecyclerView
     private lateinit var edMessage: EditText
     private lateinit var ivSendButton: ImageView
-    private lateinit var viewBinding: ActivityGroupBinding
+    private lateinit var viewBinding: ActivityEventBinding
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var usernameList: HashMap<String,String>
@@ -40,16 +33,16 @@ class GroupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_group)
+        setContentView(R.layout.activity_event)
 
 
-        viewBinding = ActivityGroupBinding.inflate(layoutInflater)
+        viewBinding = ActivityEventBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-         groupName = intent.getStringExtra("groupname").toString()
-        val groupId = intent.getStringExtra("groupid")
+         groupName = intent.getStringExtra("eventname").toString()
+        val eventId = intent.getStringExtra("eventid").toString()
         description = intent.getStringExtra("description").toString()
        // val senderUid = FirebaseAuth.getInstance().currentUser?.uid
        // dbRef =
@@ -59,7 +52,7 @@ class GroupActivity : AppCompatActivity() {
         supportActionBar?.title = groupName
         initView()
         messageList = ArrayList()
-        usernameList = getUsernames(groupId!!)
+        usernameList = getUsernames(eventId!!)
         messageAdapter = MessageAdapter(this, messageList, usernameList)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
@@ -98,7 +91,7 @@ class GroupActivity : AppCompatActivity() {
 
             var msgId = UUID.randomUUID().toString();
 
-            var messageObject = Message(loggedUser.id,groupId, message)
+            var messageObject = Message(loggedUser.id,eventId, message)
 
            /* dbRef.child("groupchats").child(groupId!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {

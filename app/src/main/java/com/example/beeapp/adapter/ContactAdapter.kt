@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
 import com.example.beeapp.model.Chat
+import com.example.beeapp.model.ChatType
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiChatInterface
 import com.example.beeapp.service.ApiUserInterface
@@ -73,12 +74,13 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
             participants.add(loggedUser.id)
             participants.add(user.id)
 
-            var chat = Chat(UUID.randomUUID().toString(),participants, ArrayList())
+            var chat = Chat(UUID.randomUUID().toString(),participants, ArrayList(),ChatType.PRIVATE)
 
             apiChatInterface.insertChat(chat).enqueue(object : Callback<Chat>{
                 override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
                     if(response.code()==201) {
-                        Logger.getLogger("CHAT").log(Level.SEVERE, "Chat created ${response.code()}")
+
+                        Logger.getLogger("CHAT").log(Level.SEVERE,"Chat created ${response.code()}")
                         Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
                     }
                 }

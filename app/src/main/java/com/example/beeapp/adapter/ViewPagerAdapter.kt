@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.beeapp.ChatsFragment
-import com.example.beeapp.GroupsFragment
+import com.example.beeapp.EventsFragment
 
 
 class   ViewPagerAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fragment) {
 
-    companion object{
-        private const val ARG_OBJECT = "object"
-    }
+
 
     override fun getItemCount(): Int = 2
 
@@ -20,12 +18,12 @@ class   ViewPagerAdapter(fragment : FragmentActivity) : FragmentStateAdapter(fra
 
         return when(position){
             0-> {
-                GroupsFragment()
+                EventsFragment()
             }
             1-> { ChatsFragment()
             }
             else->{
-                GroupsFragment()
+                EventsFragment()
             }
     }
 

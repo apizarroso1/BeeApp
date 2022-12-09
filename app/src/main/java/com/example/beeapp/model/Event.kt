@@ -1,9 +1,15 @@
 package com.example.beeapp.model
 
+import java.time.LocalDate
+import java.time.LocalTime
+
 data class Event(
-    var groupId: String? = null,
-    var gName: String? = null,
-    var gDescription: String? = null,
-    var users: MutableMap<String, String>? = HashMap(),
-    var ubication: String? = null
+    var id: String,
+    var name: String? = null,
+    var description: String? = null,
+    var attendees: Set<String>?=null ,
+    var date:LocalDate?=null,
+    var time:LocalTime?=null,
+    var location: String? = null,
+    var type: EventType
 )

@@ -63,10 +63,10 @@ dependencies {
 
     implementation 'com.github.naiksoftware:stompprotocolandroid:1.6.6'//nueva, implementacion de Stomp en websocket para android
     implementation 'io.reactivex.rxjava2:rxjava:2.2.5'//nueva,
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")//corrutinas android
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")//corrutinas android
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
 }

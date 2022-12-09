@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
     }
     //Función que se encarga de crear la barra del menu
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -147,6 +147,8 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

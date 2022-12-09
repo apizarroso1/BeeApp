@@ -41,12 +41,12 @@
             android:label="@string/title_activity_google_maps"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".CreateGroupActivity"
+            android:name=".CreateEventActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".GroupActivity"
+            android:name=".EventActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity

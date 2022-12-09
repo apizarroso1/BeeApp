@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.GroupActivity
+import com.example.beeapp.EventActivity
 import com.example.beeapp.R
 import com.example.beeapp.model.Event
 
 
-class GroupAdapter(val context: Context, val eventList: ArrayList<Event>) :
-    RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
+class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
+    RecyclerView.Adapter<EventAdapter.GroupViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.group_layout, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.event_layout, parent, false)
 
         return GroupViewHolder(view)
     }
@@ -24,17 +24,17 @@ class GroupAdapter(val context: Context, val eventList: ArrayList<Event>) :
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
         val currentGroup = eventList[position]
 
-        holder.tvGroupName.text = currentGroup.gName
+        holder.tvGroupName.text = currentGroup.name
 
         //al pulsar en el card te lleva a ala activiada chat
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, GroupActivity::class.java)
+            val intent = Intent(context, EventActivity::class.java)
 
-            intent.putExtra("groupname", currentGroup.gName)
-            intent.putExtra("groupid", currentGroup.groupId)
-            intent.putExtra("description",currentGroup.gDescription.toString())
+            intent.putExtra("eventname", currentGroup.name)
+            intent.putExtra("eventid", currentGroup.id)
+            intent.putExtra("description",currentGroup.description.toString())
 
-            Log.e("DESCRIPCION",currentGroup.gDescription.toString())
+            Log.e("DESCRIPTION",currentGroup.description.toString())
 
             context.startActivity(intent)
 
