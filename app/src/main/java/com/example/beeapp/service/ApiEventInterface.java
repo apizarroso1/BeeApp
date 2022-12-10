@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiEventInterface {
@@ -18,4 +19,7 @@ public interface ApiEventInterface {
 
     @GET("event/findallevents")
     Call<List<Event>> findAllEventsFromUser(@Query("userId") String userId);
+
+    @GET("event/consult/{id}")
+    Call<Event> getEventById(@Path("id") String id);
 }

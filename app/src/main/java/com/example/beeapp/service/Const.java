@@ -8,8 +8,8 @@ public class Const {
 
 
     // la direccion para conectar al websocket del server
-    public static final String address = "ws://192.168.1.67:8080/beeapp/websocket";
-
+    // public static final String address = "ws://192.168.1.67:8080/beeapp/websocket";
+     public static final String address = "ws://192.168.1.103:8080/beeapp/websocket";
 
     //El placeholder será reemplazado por el groupId correspondiente
     public static final String group = "/group/" + placeholder;
