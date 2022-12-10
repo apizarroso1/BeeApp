@@ -1,5 +1,6 @@
 package com.example.beeapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -22,13 +23,14 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var selectedLocation: String = ""
     private lateinit var  btnSaveLocation: Button
+    private lateinit var  btnExpenses: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityGoogleMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val eventName = intent.getStringExtra("groupName").toString()
+        val eventName = intent.getStringExtra("eventName").toString()
         val eventId = intent.getStringExtra("eventId").toString()
 
         val description = intent.getStringExtra("description").toString()
@@ -38,7 +40,14 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         supportActionBar?.title= "Mapa: $eventName"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        btnSaveLocation = findViewById(R.id.btnSaveLocation)
+        btnSaveLocation = binding.btnSaveLocation
+        btnExpenses = binding.btnExpenses
+
+        btnExpenses.setOnClickListener {
+            startActivity(Intent(this, ExpensesActivity::class.java))
+        }
+
+
         btnSaveLocation.setOnClickListener {
             if (::map.isInitialized){
                 map.setOnMapClickListener{
