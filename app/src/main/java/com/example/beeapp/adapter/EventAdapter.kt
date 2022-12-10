@@ -34,7 +34,7 @@ class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
             intent.putExtra("eventid", currentGroup.id)
             intent.putExtra("description",currentGroup.description.toString())
 
-            Log.i("DESCRIPTION",currentGroup.description.toString())
+            Log.i("EVENT","${currentGroup}")
 
             context.startActivity(intent)
 

@@ -21,7 +21,7 @@
         android:id="@+id/btnSaveLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:text="Save location" />
 
     <LinearLayout
@@ -60,5 +60,13 @@
 
 
     </LinearLayout>
+    <Button
+        android:id="@+id/btnExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Ss"
+
+        />
 
 </LinearLayout>

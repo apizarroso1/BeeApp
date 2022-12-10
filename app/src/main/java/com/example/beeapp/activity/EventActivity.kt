@@ -33,6 +33,7 @@ class EventActivity : AppCompatActivity() {
     private lateinit var usernameList: HashMap<String,String>
     private lateinit var groupName:String
     private lateinit var description:String
+    private lateinit var eventId:String
 
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
@@ -47,8 +48,8 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-         groupName = intent.getStringExtra("eventname").toString()
-        val eventId = intent.getStringExtra("eventid").toString()
+        groupName = intent.getStringExtra("eventname").toString()
+        eventId = intent.getStringExtra("eventid").toString()
         description = intent.getStringExtra("description").toString()
 
 

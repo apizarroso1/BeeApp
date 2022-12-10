@@ -1,9 +1,9 @@
 package com.example.beeapp.activity
 
 
-import android.app.AlertDialog
+
 import android.app.DatePickerDialog
-import android.app.Dialog
+
 import android.app.TimePickerDialog
 import android.os.Bundle
 
@@ -29,9 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -50,7 +48,6 @@ class CreateEventActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityCreateEventBinding
 
-    private lateinit var group: String
 
     private var type:EventType = EventType.LEISURE
 
@@ -118,11 +115,11 @@ class CreateEventActivity : AppCompatActivity() {
     }
 
     private fun setTodayDate(){
-        var cal:Calendar = Calendar.getInstance()
+        val cal:Calendar = Calendar.getInstance()
 
-        var year = cal.get(Calendar.YEAR)
-        var month = cal.get(Calendar.MONTH)
-        var day = cal.get(Calendar.DAY_OF_MONTH)
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
         val selectedDate = "$day/${month+1}/$year"
         edDate.setText(selectedDate)
 
@@ -131,18 +128,18 @@ class CreateEventActivity : AppCompatActivity() {
     private fun showTimePickerDialog(){
         val timeSetListener = TimePickerDialog.OnTimeSetListener{ _, hour, minute ->
 
-            var time = String.format(Locale.getDefault(),"%02d:%02d",hour,minute)
+            val time = String.format(Locale.getDefault(),"%02d:%02d",hour,minute)
 
             edTime.setText(time)
 
         }
 
-        var time = edTime.text.split(":")
+        val time = edTime.text.split(":")
 
-        var hour = time[0].trim().toInt()
-        var minute = time[1].trim().toInt()
+        val hour = time[0].trim().toInt()
+        val minute = time[1].trim().toInt()
 
-        var timePickerDialog = TimePickerDialog(this,timeSetListener,hour,minute,true)
+        val timePickerDialog = TimePickerDialog(this,timeSetListener,hour,minute,true)
 
         timePickerDialog.setTitle("Select Time")
         timePickerDialog.show()
@@ -159,13 +156,13 @@ class CreateEventActivity : AppCompatActivity() {
             edDate.setText(selectedDate)
         }
 
-        var date = edDate.text.split("/")
+        val date = edDate.text.split("/")
 
-        var year = date[2].trim().toInt()
-        var month = date[1].trim().toInt()-1
-        var day = date[0].trim().toInt()
+        val year = date[2].trim().toInt()
+        val month = date[1].trim().toInt()-1
+        val day = date[0].trim().toInt()
 
-        var datePickerDialog = DatePickerDialog(this,dateSetListener,year,month,day)
+        val datePickerDialog = DatePickerDialog(this,dateSetListener,year,month,day)
 
         datePickerDialog.show()
     }
@@ -202,9 +199,9 @@ class CreateEventActivity : AppCompatActivity() {
         val eventDate = edDate.text.toString()
         val eventTime = edTime.text.toString()
 
-        var chat = Chat(UUID.randomUUID().toString(),attendees,ArrayList(),ChatType.EVENT)
+        val chat = Chat(UUID.randomUUID().toString(),attendees,ArrayList(),ChatType.EVENT)
 
-        var event = Event(eventName,description,attendees,eventDate,eventTime,type,chat.id)
+        val event = Event(eventName,description,attendees,eventDate,eventTime,type,chat.id)
 
         apiEventInterface.insertEvent(event).enqueue(object :Callback<Event>{
             override fun onResponse(call: Call<Event>, response: Response<Event>) {

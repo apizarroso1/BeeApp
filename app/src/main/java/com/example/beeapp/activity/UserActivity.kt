@@ -95,7 +95,7 @@ class UserActivity : AppCompatActivity() {
 
     }
 
-    private  fun load(){
+    private fun load(){
 
             initData()
     }
@@ -194,6 +194,8 @@ class UserActivity : AppCompatActivity() {
         viewBinding.userView.visibility = View.VISIBLE
         viewBinding.progressBar.visibility = View.GONE
     }
+
+
 
     private fun loadContactInfo(){
 
