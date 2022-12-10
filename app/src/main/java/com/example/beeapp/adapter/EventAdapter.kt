@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.EventActivity
+import com.example.beeapp.activity.EventActivity
 import com.example.beeapp.R
 import com.example.beeapp.model.Event
 
@@ -34,7 +34,7 @@ class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
             intent.putExtra("eventid", currentGroup.id)
             intent.putExtra("description",currentGroup.description.toString())
 
-            Log.e("DESCRIPTION",currentGroup.description.toString())
+            Log.i("DESCRIPTION",currentGroup.description.toString())
 
             context.startActivity(intent)
 

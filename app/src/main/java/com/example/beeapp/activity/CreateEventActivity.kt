@@ -1,7 +1,11 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
+
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 
 import android.widget.Button
 import android.widget.EditText
@@ -9,14 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 import androidx.core.view.get
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.AddToGroupAdapter
 import com.example.beeapp.databinding.ActivityCreateEventBinding
-import com.example.beeapp.model.Event
-import com.example.beeapp.model.EventType
-import com.example.beeapp.model.User
+import com.example.beeapp.model.*
 import com.example.beeapp.service.ApiEventInterface
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
@@ -26,10 +29,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.util.UUID
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
-
+import kotlin.collections.ArrayList
 
 
 class CreateEventActivity : AppCompatActivity() {
@@ -39,6 +45,8 @@ class CreateEventActivity : AppCompatActivity() {
     private lateinit var btnCreateGroup: Button
     private lateinit var rvGroupContacts: RecyclerView
     private lateinit var chipGroup: ChipGroup
+    private lateinit var edDate: EditText
+    private lateinit var edTime: EditText
 
     private lateinit var viewBinding: ActivityCreateEventBinding
 
@@ -48,7 +56,7 @@ class CreateEventActivity : AppCompatActivity() {
 
     private lateinit var adapter: AddToGroupAdapter
     //lista de id+nombre de los contactos agregados al grupo
-    private lateinit var addToEventList: MutableSet<String>
+    private lateinit var attendees: MutableSet<String>
     //lista de contactos del usuario que esta creando el grupo
     private lateinit var contactList: ArrayList<User>
 
@@ -64,18 +72,23 @@ class CreateEventActivity : AppCompatActivity() {
 
 
 
-        addToEventList = mutableSetOf()
+        attendees = mutableSetOf()
 
-        addToEventList.add(loggedUser.id)
+        attendees.add(loggedUser.id)
 
         contactList = ArrayList()
-        adapter = AddToGroupAdapter(this, contactList, addToEventList)
+        adapter = AddToGroupAdapter(this, contactList, attendees)
         initView()
         rvGroupContacts.layoutManager = LinearLayoutManager(this)
         rvGroupContacts.adapter = adapter
         getContacts()
 
         btnCreateGroup.setOnClickListener { checkCreation() }
+
+        edDate.setOnClickListener{
+            showDatePickerDialog()
+        }
+        edTime.setOnClickListener { showTimePickerDialog() }
 
         chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
 
@@ -94,12 +107,67 @@ class CreateEventActivity : AppCompatActivity() {
 
                 }
             }
-                Log.d("Checked id","$type")
-                Log.d("group id","${group.checkedChipId}")
-                //Log.d("chip id","${chip.id}")
 
         }
 
+    }
+
+    private fun setDefaultTime(){
+        val time = "00:00"
+        edTime.setText(time)
+    }
+
+    private fun setTodayDate(){
+        var cal:Calendar = Calendar.getInstance()
+
+        var year = cal.get(Calendar.YEAR)
+        var month = cal.get(Calendar.MONTH)
+        var day = cal.get(Calendar.DAY_OF_MONTH)
+        val selectedDate = "$day/${month+1}/$year"
+        edDate.setText(selectedDate)
+
+    }
+
+    private fun showTimePickerDialog(){
+        val timeSetListener = TimePickerDialog.OnTimeSetListener{ _, hour, minute ->
+
+            var time = String.format(Locale.getDefault(),"%02d:%02d",hour,minute)
+
+            edTime.setText(time)
+
+        }
+
+        var time = edTime.text.split(":")
+
+        var hour = time[0].trim().toInt()
+        var minute = time[1].trim().toInt()
+
+        var timePickerDialog = TimePickerDialog(this,timeSetListener,hour,minute,true)
+
+        timePickerDialog.setTitle("Select Time")
+        timePickerDialog.show()
+
+    }
+
+
+    private fun showDatePickerDialog() {
+
+
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+
+            val selectedDate = "$day/${month+1}/$year"
+            edDate.setText(selectedDate)
+        }
+
+        var date = edDate.text.split("/")
+
+        var year = date[2].trim().toInt()
+        var month = date[1].trim().toInt()-1
+        var day = date[0].trim().toInt()
+
+        var datePickerDialog = DatePickerDialog(this,dateSetListener,year,month,day)
+
+        datePickerDialog.show()
     }
 
     //enlazamos los elementos del layout
@@ -109,13 +177,18 @@ class CreateEventActivity : AppCompatActivity() {
         edEventDescription = viewBinding.edGroupDescription
         edEventName = viewBinding.edEventName
         chipGroup = viewBinding.chipGroup
+        edDate = viewBinding.edDate
+        edTime = viewBinding.edTime
+        setTodayDate()
+        setDefaultTime()
+
     }
 
     //funcion para comprobar si el grupo tiene al menos un nombre para poder ser creado
     private fun checkCreation() {
         val groupName = edEventName.text.toString()
         if (groupName == "") {
-            Toast.makeText(this, groupName, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "No name introduced", Toast.LENGTH_LONG).show()
         } else {
             createEvent()
         }
@@ -126,9 +199,12 @@ class CreateEventActivity : AppCompatActivity() {
     private fun createEvent() {
         val eventName = edEventName.text.toString()
         val description = edEventDescription.text.toString()
-        val eventId = UUID.randomUUID().toString()
+        val eventDate = edDate.text.toString()
+        val eventTime = edTime.text.toString()
 
-        var event = Event(eventId,eventName,description,addToEventList,null,null,null,type)
+        var chat = Chat(UUID.randomUUID().toString(),attendees,ArrayList(),ChatType.EVENT)
+
+        var event = Event(eventName,description,attendees,eventDate,eventTime,type,chat.id)
 
         apiEventInterface.insertEvent(event).enqueue(object :Callback<Event>{
             override fun onResponse(call: Call<Event>, response: Response<Event>) {
@@ -166,52 +242,6 @@ class CreateEventActivity : AppCompatActivity() {
         })
 
 
-        //primero busca en la base de datos los id de los contactos agregados
-       /* dbRef.child("users").child(auth.currentUser?.uid.toString()).child("contacts")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    contactsUidList.clear()
-                    for (postSnapshot in snapshot.children) {
-                        val currentUid = postSnapshot.key
-                        contactsUidList.add(currentUid!!)
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("Database", "cancelled request")
-                }
-
-            })*/
-
-        //despues busca entre los usuarios de la base de datos los que tienen el id
-        // y los mete en la lista de objetos de la clase User para luego ser mostrados
-        // en items en el recycler view
-       /* dbRef.child("users").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                contactList.clear()
-                for (postSnapshot in snapshot.children) {
-                    val currentUser = postSnapshot.getValue(User::class.java)
-
-                    if(auth.currentUser?.uid.equals(currentUser?.uid)){
-                        addToGroupList[auth.currentUser?.uid!!] = currentUser?.username.toString()
-                    }
-                    else if (auth.currentUser?.uid != currentUser?.uid && contactsUidList.contains(
-                            currentUser?.uid.toString()
-                        )
-                    ) {
-                        contactList.add(currentUser!!)
-
-                    }
-
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Database", "cancelled request")
-            }
-
-        })*/
     }
 
 

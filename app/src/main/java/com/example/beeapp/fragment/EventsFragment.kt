@@ -1,4 +1,4 @@
-package com.example.beeapp
+package com.example.beeapp.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.activity.CreateEventActivity
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
 import com.example.beeapp.adapter.EventAdapter
 import com.example.beeapp.model.Event
 import com.example.beeapp.service.ApiEventInterface
@@ -35,7 +37,7 @@ class EventsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view: View = inflater.inflate(R.layout.fragment_events, container, false)
 
 
@@ -63,49 +65,35 @@ class EventsFragment : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
 
         rvGroups()
     }
 
-    public fun rvGroups() {
+    private fun rvGroups() {
 
-        apiEventInterface.findAllEventsFromUser(loggedUser.id).enqueue(object : Callback<List<Event>>{
-            override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
-                Logger.getLogger("rvGroups").log(Level.INFO, "Events=${response.body()}, code=${response.code()}")
+        apiEventInterface.findAllEventsFromUser(loggedUser.id)
+            .enqueue(object : Callback<List<Event>> {
+                override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
+                    Logger.getLogger("rvGroups")
+                        .log(Level.INFO, "Events=${response.body()}, code=${response.code()}")
 
-                eventList.clear()
-                eventList.addAll(response.body()!!)
+                    eventList.clear()
+                    eventList.addAll(response.body()!!)
 
-                adapter.notifyDataSetChanged()
+                    adapter.notifyDataSetChanged()
 
-            }
-
-            override fun onFailure(call: Call<List<Event>>, t: Throwable) {
-                Logger.getLogger("rvGroups").log(Level.SEVERE, "Error connecting",t)
-            }
-
-        })
-
-        /*dbRef.child("groups").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                eventList.clear()
-                for (postSnapshot in snapshot.children) {
-                    val group = postSnapshot.getValue(Event::class.java)
-                    if (group?.users!!.contains(auth.currentUser?.uid.toString())) {
-                        eventList.add(group)
-                    }
                 }
-                adapter.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("rvGroups", "Something went wrong")
-            }
+                override fun onFailure(call: Call<List<Event>>, t: Throwable) {
+                    Logger.getLogger("rvGroups").log(Level.SEVERE, "Error connecting", t)
+                }
+
+            })
 
 
-        })*/
 
     }
 }

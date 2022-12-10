@@ -1,14 +1,14 @@
-package com.example.beeapp
+package com.example.beeapp.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
 import com.example.beeapp.adapter.UserAdapter
 import com.example.beeapp.model.Chat
 import com.example.beeapp.model.User
@@ -33,8 +33,6 @@ import java.util.logging.Logger
 class ChatsFragment : Fragment() {
     private lateinit var contactList: ArrayList<User>
     private lateinit var adapter: UserAdapter
-    //private lateinit var auth: FirebaseAuth
-    //private lateinit var dbRef: DatabaseReference
     private lateinit var rvChats: RecyclerView
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
@@ -66,7 +64,7 @@ class ChatsFragment : Fragment() {
 
         apiUserInterface.findContacts(loggedUser.contacts).enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                Logger.getLogger("ContactList").log(Level.SEVERE, "Contacts=${response.body()}, code=${response.code()}")
+                Logger.getLogger("ContactList").log(Level.INFO, "Contacts=${response.body()}, code=${response.code()}")
                 if(!response.body().isNullOrEmpty()){
                     contactList.addAll(response.body()!!)
                     adapter.notifyDataSetChanged()
@@ -77,7 +75,7 @@ class ChatsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Logger.getLogger("ContactList").log(Level.SEVERE,  "ERROR trying to connect")
             }
         })
 

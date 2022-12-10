@@ -2,7 +2,6 @@ package com.example.beeapp.adapter
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.net.http.HttpResponseCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
 import com.example.beeapp.model.Chat
 import com.example.beeapp.model.ChatType
@@ -23,7 +22,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import retrofit2.http.HTTP
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -80,7 +78,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
                 override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
                     if(response.code()==201) {
 
-                        Logger.getLogger("CHAT").log(Level.SEVERE,"Chat created ${response.code()}")
+                        Logger.getLogger("CHAT").log(Level.INFO,"Chat created ${response.code()}")
                         Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -93,7 +91,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
             apiUserInterface.updateUser(loggedUser).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
-                        Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added in logged User? ${response.code()}")
+                        Logger.getLogger("ContactAdd").log(Level.INFO, "Contact added in logged User? ${response.code()}")
                         Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -106,7 +104,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
             apiUserInterface.updateUser(user).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
-                        Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact added in new contact? ${response.code()}")
+                        Logger.getLogger("ContactAdd").log(Level.INFO, "Contact added in new contact? ${response.code()}")
                         Toast.makeText(context, "Contact added", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -116,7 +114,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
                 }
             })
         }else{
-            Logger.getLogger("ContactAdd").log(Level.SEVERE, "Contact Couldn't be added")
+            Logger.getLogger("ContactAdd").log(Level.INFO, "Contact Couldn't be added")
             Toast.makeText(context, "Contact already added", Toast.LENGTH_LONG).show()
         }
 

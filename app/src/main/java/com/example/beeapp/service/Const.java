@@ -14,7 +14,7 @@ public class Const {
     //El placeholder será reemplazado por el groupId correspondiente
     public static final String group = "/group/" + placeholder;
     public static final String groupResponse = "/g/" + placeholder;
-    public static final String chat = "/chat";
+    public static final String chat = "/chat/"+placeholder;
     // El placeholder será reemplazado por el userId correspondiente
     public static final String chatResponse = "/user/" + placeholder + "/msg";
 }

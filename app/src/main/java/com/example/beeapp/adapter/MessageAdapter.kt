@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
 import com.example.beeapp.model.Message
-import java.util.logging.Level
-import java.util.logging.Logger
 
 //import com.google.firebase.auth.FirebaseAuth
 
@@ -35,7 +33,7 @@ class MessageAdapter(val context: Context, var messageList: MutableList<Message>
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currMessage = messageList[position]
 
-        val usernameGroup = usernameList?.get(currMessage.senderId)
+        val username = usernameList?.get(currMessage.senderId)
 
         if (holder.javaClass == SentViewHolder::class.java){
             val viewHolder = holder as SentViewHolder
@@ -47,7 +45,7 @@ class MessageAdapter(val context: Context, var messageList: MutableList<Message>
            // if(username != null) {
              //   viewHolder.senderUser.text = username
             //}else{
-                viewHolder.senderUser.text = usernameGroup
+                viewHolder.senderUser.text = username
            // }
         }
     }

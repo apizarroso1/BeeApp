@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:background="@drawable/background3">
+    android:padding="10dp">
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:context=".GoogleMapsActivity"
-        android:layout_weight="50" />
+        android:layout_weight="50"
+        tools:context=".activity.GoogleMapsActivity"
+        />
 
     <Button
         android:id="@+id/btnSaveLocation"
@@ -28,33 +29,34 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:gravity="center">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/black"
+            android:gravity="center"
             android:text="Description"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="25sp"
-            android:gravity="center"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:layout_weight="40"
         android:background="@drawable/rv_background"
-        android:layout_margin="20dp"
-        android:padding="15dp"
-        >
+        android:padding="15dp">
+
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="description"
-            android:textSize="16sp"
             android:textColor="@color/black"
-            />
+            android:textSize="16sp" />
 
 
     </LinearLayout>

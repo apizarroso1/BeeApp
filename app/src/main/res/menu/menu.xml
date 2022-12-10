@@ -12,10 +12,11 @@
     <item android:id="@+id/add_friend"
         android:icon="@drawable/ic_baseline_person_add_24"
         android:title="Add Friend"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/logout" android:title="Log Out"
+    <item android:id="@+id/logout"
+        android:title="Log Out"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_logout_24"/>
 

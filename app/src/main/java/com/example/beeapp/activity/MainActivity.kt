@@ -1,33 +1,25 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
 //import com.bumptech.glide.Glide
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ViewPagerAdapter
 import com.example.beeapp.databinding.ActivityMainBinding
 import com.example.beeapp.service.Const
-import com.example.beeapp.service.StompUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import org.json.JSONException
-import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
-import ua.naiksoftware.stomp.dto.StompCommand
-import ua.naiksoftware.stomp.dto.StompHeader
-import ua.naiksoftware.stomp.dto.StompMessage
-import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -112,6 +104,7 @@ class MainActivity : AppCompatActivity() {
     //Función que se encarga de iniciar la actividad de UserActivity
     private fun displayUser() {
         val intent = Intent(this, UserActivity::class.java)
+        intent.putExtra("reference", loggedUser.id)
         startActivity(intent)
     }
     //Función que se encarga de cerrar la sesión del usuario
@@ -138,17 +131,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.add_friend -> {
-
                 startActivity(Intent(this, AddContactActivity::class.java))
-
             }
-
 
         }
         return true
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        loadProfilePicture()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 
 import com.example.beeapp.R
 import com.example.beeapp.model.User
+import com.google.android.material.chip.Chip
+
 //import com.google.firebase.database.DataSnapshot
 //import com.google.firebase.database.DatabaseError
 //import com.google.firebase.database.ValueEventListener
@@ -39,24 +41,14 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
 
         holder.btnAddToGroup.setOnClickListener{
 
-            addToGroupList.add(currentUser.id)
-            /*dbRef.child("users").addValueEventListener(object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for(postSnapshot in snapshot.children){
+            if(!addToGroupList.contains(currentUser.id)) {
+                addToGroupList.add(currentUser.id)
+                holder.btnAddToGroup.text = "Added"
+            }else{
+                addToGroupList.remove(currentUser.id)
+                holder.btnAddToGroup.text = "Add"
+            }
 
-                        val user = postSnapshot.getValue(User::class.java)
-                        if(currentUser?.uid!!.equals(user?.uid)){
-                            addToGroupList[currentUser?.uid!!]=currentUser?.username!!
-                        }
-                    }
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("ERROR","Something went wrong")
-                }
-
-            })*/
         }
 
     }
@@ -67,7 +59,7 @@ RecyclerView.Adapter<AddToGroupAdapter.AddToGroupViewHolder>(){
 
         val tvUsername = itemView.findViewById<TextView>(R.id.tvUsername)
         val ivProfilePicture = itemView.findViewById<ImageView>(R.id.ivProfilePicture)
-        val btnAddToGroup = itemView.findViewById<ImageView>(R.id.btnAddToGroup)
+        val btnAddToGroup = itemView.findViewById<Chip>(R.id.btnAddToGroup)
     }
 }
 

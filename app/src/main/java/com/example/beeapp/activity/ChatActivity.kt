@@ -1,20 +1,23 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityChatBinding
 import com.example.beeapp.model.Chat
 import com.example.beeapp.model.Message
 import com.example.beeapp.service.*
-import com.example.beeapp.service.Const.TAG
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -58,7 +61,7 @@ class ChatActivity : AppCompatActivity() {
         username = intent.getStringExtra("username")!!
         supportActionBar?.title = username
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         initView()
 
@@ -75,7 +78,7 @@ class ChatActivity : AppCompatActivity() {
         stompClient.topic(Const.chatResponse.replace(Const.placeholder, loggedUser.id))
             .subscribe { stompMessage: StompMessage ->
                 val jsonObject = JSONObject(stompMessage.payload)
-                Log.i(TAG, "Receive: $jsonObject")
+                Log.i("SERVER", "Receive: $jsonObject")
                 runOnUiThread {
                     try {
                         var message = Message(jsonObject.getString("senderId"),
@@ -83,8 +86,6 @@ class ChatActivity : AppCompatActivity() {
 
 
                         messageList.add(message)
-
-
 
 
                         refreshChat()
@@ -143,6 +144,8 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun refreshChat() {
 
         messageAdapter.notifyItemInserted(messageList.size-1)
@@ -163,7 +166,7 @@ class ChatActivity : AppCompatActivity() {
             var messageObject = Message(loggedUser.id, receiverId, message)
 
 
-            Logger.getLogger(TAG).log(Level.SEVERE, "message sent")
+            Logger.getLogger("CLIENT").log(Level.SEVERE, "message sent")
             val jsonObject = JSONObject()
             try {
                 jsonObject.put("senderId", loggedUser.id)
@@ -173,7 +176,7 @@ class ChatActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-            stompClient.send(Const.chat + "/${chat.id}", jsonObject.toString()).subscribe()
+            stompClient.send(Const.chat.replace(Const.placeholder, chat.id), jsonObject.toString()).subscribe()
 
             edMessage.setText("")
         }
@@ -186,6 +189,31 @@ class ChatActivity : AppCompatActivity() {
         ivSendButton = viewBinding.ivSendButton
     }
 
+    //Función que se encarga de crear la barra del menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.chat_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    //Función que se encarga de las funciónes de cada elemento del menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        when (item.itemId) {
+            R.id.viewContact -> {
+                var intent = Intent(this, UserActivity::class.java)
+                intent.putExtra("reference", receiverId)
 
+                startActivity(intent)
+            }
+            android.R.id.home ->{
+                onBackPressed()
+                return true
+            }
+
+        }
+        return true
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

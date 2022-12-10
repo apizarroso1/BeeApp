@@ -1,11 +1,12 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ContactAdapter
 import com.example.beeapp.databinding.ActivityAddContactBinding
 import com.example.beeapp.model.User
@@ -77,10 +78,10 @@ class AddContactActivity : AppCompatActivity() {
                         if(response.code()==200){
                             users.add(response.body()!!)
                             users.removeIf {u->u.id.equals(loggedUser.id)}
-                            Logger.getLogger("ListUserE").log(Level.SEVERE, "$users")
+                            Logger.getLogger("SEARCH").log(Level.INFO, "List of users found: $users")
                             adapter.notifyDataSetChanged()
                         }else{
-                            Logger.getLogger("BUSQUEDA").log(Level.SEVERE, "No coincide la busqueda")
+                            Logger.getLogger("SEARCH").log(Level.INFO, "No coincidences")
                         }
 
                     }
@@ -108,12 +109,12 @@ class AddContactActivity : AppCompatActivity() {
                             users.clear()
                             users.addAll(response.body()!!)
                             users.removeIf {u->u.id.equals(loggedUser.id)}
-                            Logger.getLogger("ListUser").log(Level.SEVERE, "$users")
+                            Logger.getLogger("AUTOSEARCH").log(Level.INFO, "List of users found: $users")
                             adapter.notifyDataSetChanged()
                         }catch (e:Exception){
                             users.clear()
                             adapter.notifyDataSetChanged()
-                            Logger.getLogger("AUTO").log(Level.SEVERE, "No coincide con nada")
+                            Logger.getLogger("AUTOSEARCH").log(Level.INFO, "No coincidences")
                         }
 
                         if(newText.equals("")){

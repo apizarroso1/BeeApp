@@ -1,28 +1,22 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.beeapp.R
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
-import okhttp3.OkHttpClient
-import okhttp3.WebSocket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.io.PrintWriter
-import java.net.Socket
-import java.util.*
-import java.util.concurrent.Executors
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -102,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                         loggedUser = response.body()!!
 
                         //Log para saber que se ha encontrado una sesión iniciada
-                        Logger.getLogger("Session found").log(Level.SEVERE, "${response.body()}")
+                        Logger.getLogger("Session found").log(Level.INFO, "${response.body()}")
 
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
@@ -119,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         }else{
-            Logger.getLogger("Sesion not found").log(Level.SEVERE, "Try to login")
+            Logger.getLogger("Sesion not found").log(Level.INFO, "Try to login")
         }
 
     }
@@ -187,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                     //Log para saber que la respuesta es la esperada al no haber encontrado al usuario
-                    Logger.getLogger("User not found").log(Level.SEVERE, "code=${response.code()}")
+                    Logger.getLogger("User not found").log(Level.INFO, "code=${response.code()}")
 
 
                 }

@@ -32,44 +32,44 @@
             android:value="AIzaSyDaebzXTNZqToE_0KC0XJX30T9sjQuvZOY" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activity.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".GoogleMapsActivity"
+            android:name=".activity.GoogleMapsActivity"
             android:exported="false"
             android:label="@string/title_activity_google_maps"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".CreateEventActivity"
+            android:name=".activity.CreateEventActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".EventActivity"
+            android:name=".activity.EventActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".AddContactActivity"
+            android:name=".activity.AddContactActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".activity.ChatActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".UserActivity"
+            android:name=".activity.UserActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

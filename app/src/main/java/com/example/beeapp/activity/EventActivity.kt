@@ -1,4 +1,4 @@
-package com.example.beeapp
+package com.example.beeapp.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +9,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.LoginActivity.Companion.loggedUser
+import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityEventBinding
 import com.example.beeapp.model.Message
+import com.example.beeapp.service.ApiChatInterface
+import com.example.beeapp.service.ApiUserInterface
+import com.example.beeapp.service.RetrofitService
+import retrofit2.create
 
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,10 +31,11 @@ class EventActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var usernameList: HashMap<String,String>
-   // private lateinit var dbRef: DatabaseReference
     private lateinit var groupName:String
     private lateinit var description:String
 
+    private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
+    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +50,13 @@ class EventActivity : AppCompatActivity() {
          groupName = intent.getStringExtra("eventname").toString()
         val eventId = intent.getStringExtra("eventid").toString()
         description = intent.getStringExtra("description").toString()
-       // val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-       // dbRef =
-    //        Firebase.database("https://beeapp-a567b-default-rtdb.europe-west1.firebasedatabase.app").reference
+
 
 
         supportActionBar?.title = groupName
         initView()
         messageList = ArrayList()
-        usernameList = getUsernames(eventId!!)
+        usernameList = getUsernames(eventId)
         messageAdapter = MessageAdapter(this, messageList, usernameList)
         rvMessage.layoutManager = LinearLayoutManager(this)
         rvMessage.adapter = messageAdapter
@@ -108,6 +112,11 @@ class EventActivity : AppCompatActivity() {
     private fun getUsernames(groupId: String): HashMap<String,String> {
 
         var usernames = HashMap<String,String>()
+
+
+
+
+
 
        /* dbRef.child("groups").child(groupId).child("users")
             .addValueEventListener(object : ValueEventListener {

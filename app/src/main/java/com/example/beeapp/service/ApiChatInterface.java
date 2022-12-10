@@ -22,8 +22,8 @@ public interface ApiChatInterface {
     @GET("chat/consult/{id}")
     Call<Chat> getChatById(@Path("id") String id);
 
-    @GET("chat/findallchats")
-    Call<List<Chat>> findAllChatsFromUser(@Query("userId") String userId);
+    @GET("chat/findalleventchats")
+    Call<List<Chat>> findAllEventChatsFromUser(@Query("userId") String userId);
 
     @GET("chat/findchat")
     Call<Chat> findChat(@Query("id1") String id1,@Query("id2") String id2);
