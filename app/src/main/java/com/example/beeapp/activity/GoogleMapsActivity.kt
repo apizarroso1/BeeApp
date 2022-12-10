@@ -28,13 +28,14 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityGoogleMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val groupName = intent.getStringExtra("groupname").toString()
+        val eventName = intent.getStringExtra("groupName").toString()
+        val eventId = intent.getStringExtra("eventId").toString()
 
         val description = intent.getStringExtra("description").toString()
 
         tvDescription = binding.tvDescription
         tvDescription.text = description
-        supportActionBar?.title= "Mapa: $groupName"
+        supportActionBar?.title= "Mapa: $eventName"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btnSaveLocation = findViewById(R.id.btnSaveLocation)

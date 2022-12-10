@@ -31,7 +31,7 @@ class EventActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var usernameList: HashMap<String,String>
-    private lateinit var groupName:String
+    private lateinit var eventName:String
     private lateinit var description:String
     private lateinit var eventId:String
 
@@ -48,13 +48,13 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        groupName = intent.getStringExtra("eventname").toString()
+        eventName = intent.getStringExtra("eventname").toString()
         eventId = intent.getStringExtra("eventid").toString()
         description = intent.getStringExtra("description").toString()
 
 
 
-        supportActionBar?.title = groupName
+        supportActionBar?.title = eventName
         initView()
         messageList = ArrayList()
         usernameList = getUsernames(eventId)
@@ -155,8 +155,9 @@ class EventActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.goToMap -> {
                 val intent = Intent(this, GoogleMapsActivity::class.java)
-                intent.putExtra("groupname",groupName)
+                intent.putExtra("eventName",eventName)
                 intent.putExtra("description",description)
+                intent.putExtra("eventId",eventId)
                 startActivity(intent)
                 finish()
             }
