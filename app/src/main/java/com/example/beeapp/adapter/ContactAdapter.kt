@@ -38,7 +38,7 @@ class ContactAdapter(val context: Context, private val contacts: MutableList<Use
         viewType: Int
     ): ContactViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.contact_layout, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.add_contact_layout, parent, false)
 
         return ContactViewHolder(view)
     }

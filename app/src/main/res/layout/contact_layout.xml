@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:background="@drawable/user_border"
+    android:layout_marginTop="5dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:background="@drawable/rv_background"
-        android:layout_margin="2dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivProfilePicture"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_weight="20"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/black"/>
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="Nickname"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:layout_weight="65"
+        android:gravity="center_vertical"
+        />
 
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_weight="60"
-            android:gravity="center"
-            android:text="Usuario"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnAddContact"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_weight="20"
-            android:background="@drawable/ic_baseline_add_24" />
 
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ic_baseline_message_24"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ic_baseline_delete_24"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ic_baseline_more_vert_24"/>
+
+</LinearLayout>

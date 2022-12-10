@@ -14,6 +14,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.beeapp.databinding.ActivityGoogleMapsBinding
+import com.example.beeapp.model.Event
+import com.example.beeapp.service.ApiChatInterface
+import com.example.beeapp.service.ApiEventInterface
+import com.example.beeapp.service.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
 
 class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -24,6 +32,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var selectedLocation: String = ""
     private lateinit var  btnSaveLocation: Button
     private lateinit var  btnExpenses: Button
+    private var apiEventInterface: ApiEventInterface = RetrofitService().getRetrofit().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +55,8 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         btnExpenses.setOnClickListener {
             startActivity(Intent(this, ExpensesActivity::class.java))
         }
+
+
 
 
         btnSaveLocation.setOnClickListener {
