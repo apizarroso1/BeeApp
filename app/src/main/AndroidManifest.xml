@@ -41,10 +41,12 @@
             android:name=".activity.GoogleMapsActivity"
             android:exported="false"
             android:label="@string/title_activity_google_maps"
-            android:parentActivityName=".activity.EventActivity"/>
+            android:parentActivityName=".activity.EventActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.ContactActivity"
-            android:exported="false" >
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan">
 
         </activity>
         <activity
@@ -55,12 +57,14 @@
         <activity
             android:name=".activity.EventActivity"
             android:exported="false"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity"
+            />
         <activity
             android:name=".activity.AddContactActivity"
             android:exported="false"
             android:parentActivityName=".activity.MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity
             android:name=".activity.ChatActivity"
             android:exported="false"
@@ -71,16 +75,20 @@
         <activity
             android:name=".activity.UserActivity"
             android:exported="false"
-            android:parentActivityName=".activity.MainActivity" />
+            android:parentActivityName=".activity.MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.RegisterActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

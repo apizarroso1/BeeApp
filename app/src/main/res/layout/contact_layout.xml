@@ -25,6 +25,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMessage"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginHorizontal="8dp"
@@ -33,6 +34,7 @@
         android:background="@drawable/ic_baseline_message_24" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDeleteContact"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginHorizontal="8dp"
@@ -41,6 +43,7 @@
         android:background="@drawable/ic_baseline_delete_24"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnProfile"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginHorizontal="8dp"

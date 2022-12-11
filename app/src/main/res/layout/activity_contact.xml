@@ -10,7 +10,8 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUsers"
+        android:background="@drawable/rv_background"
+        android:id="@+id/rvContacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

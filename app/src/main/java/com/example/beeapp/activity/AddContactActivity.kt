@@ -1,12 +1,15 @@
 package com.example.beeapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.R
 import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
+import com.example.beeapp.adapter.AddContactAdapter
 import com.example.beeapp.adapter.ContactAdapter
 import com.example.beeapp.databinding.ActivityAddContactBinding
 import com.example.beeapp.model.User
@@ -24,7 +27,7 @@ class AddContactActivity : AppCompatActivity() {
     private lateinit var svContacts:SearchView
     private lateinit var rvUsers: RecyclerView
     private lateinit var viewBinding: ActivityAddContactBinding
-    lateinit var adapter: ContactAdapter
+    lateinit var adapter: AddContactAdapter
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
     private  var users :MutableList<User> = mutableListOf()
 
@@ -51,7 +54,7 @@ class AddContactActivity : AppCompatActivity() {
         loadUsers()
 
         rvUsers.layoutManager = LinearLayoutManager(this)
-        adapter = ContactAdapter(this,users)
+        adapter = AddContactAdapter(this,users)
         rvUsers.adapter = adapter
 
     }
@@ -134,5 +137,15 @@ class AddContactActivity : AppCompatActivity() {
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        when (item.itemId) {
+
+            android.R.id.home->{
+                onBackPressed()
+            }
+
+        }
+        return true
+    }
 }

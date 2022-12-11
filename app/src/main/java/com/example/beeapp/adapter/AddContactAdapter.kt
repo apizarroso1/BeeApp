@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity
 import com.example.beeapp.model.Chat
 import com.example.beeapp.model.ChatType
 import com.example.beeapp.model.User
@@ -28,62 +28,53 @@ import java.util.logging.Logger
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
-class ContactAdapter(val context: Context, private var contacts: MutableList<User>) :
-    RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class AddContactAdapter(val context: Context, private val contacts: MutableList<User>) :
+    RecyclerView.Adapter<AddContactAdapter.AddContactViewHolder>() {
 
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ContactViewHolder {
+    ): AddContactViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.contact_layout, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.add_contact_layout, parent, false)
 
-        return ContactViewHolder(view)
+        return AddContactViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
-      //  holder.ivProfilePicture.setImageBitmap(BitmapFactory.decodeByteArray(contacts[position].picture,0,contacts[position].picture!!.size))
+    override fun onBindViewHolder(holder: AddContactViewHolder, position: Int) {
+        holder.ivProfilePicture.setImageBitmap(BitmapFactory.decodeByteArray(contacts[position].picture,0,contacts[position].picture!!.size))
 
-        holder.btnDeleteContact.setOnClickListener {
-           /* addContact(
+        holder.btnAddContact.setOnClickListener {
+            addContact(
                 contacts[position],
                 contacts[position].id
-            )*/
+            )
         }
 
         holder.tvUsername.text = contacts[position].username
 
     }
 
-    fun filterList(filterlist: MutableList<User>) {
-        // below line is to add our filtered
-        // list in our course array list.
-        contacts = filterlist
-        // below line is to notify our adapter
-        // as change in recycler view data.
-        notifyDataSetChanged()
-    }
+    fun addContact(user: User, id: String) {
 
-    /*fun addContact(user:User,id: String) {
+        if(!LoginActivity.loggedUser.contacts.contains(id)){
 
-        if(!loggedUser.contacts.contains(id)){
+            LoginActivity.loggedUser.addContact(id)
 
-            loggedUser.addContact(id)
-
-            user.addContact(loggedUser.id)
+            user.addContact(LoginActivity.loggedUser.id)
 
             /*var participants = HashMap<String,String>()
             participants[loggedUser.id] = loggedUser.username
             participants[user.id] = user.username*/
             var participants = HashSet<String>()
-            participants.add(loggedUser.id)
+            participants.add(LoginActivity.loggedUser.id)
             participants.add(user.id)
 
-            var chat = Chat(UUID.randomUUID().toString(),participants, ArrayList(),ChatType.PRIVATE)
+            var chat = Chat(UUID.randomUUID().toString(),participants, ArrayList(), ChatType.PRIVATE)
 
-            apiChatInterface.insertChat(chat).enqueue(object : Callback<Chat>{
+            apiChatInterface.insertChat(chat).enqueue(object : Callback<Chat> {
                 override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
                     if(response.code()==201) {
 
@@ -97,7 +88,7 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
                 }
             })
 
-            apiUserInterface.updateUser(loggedUser).enqueue(object : Callback<User>{
+            apiUserInterface.updateUser(LoginActivity.loggedUser).enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
                         Logger.getLogger("ContactAdd").log(Level.INFO, "Contact added in logged User? ${response.code()}")
@@ -110,7 +101,7 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
                 }
             })
 
-            apiUserInterface.updateUser(user).enqueue(object : Callback<User>{
+            apiUserInterface.updateUser(user).enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==202) {
                         Logger.getLogger("ContactAdd").log(Level.INFO, "Contact added in new contact? ${response.code()}")
@@ -132,16 +123,14 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
 
 
 
-    }*/
+    }
 
     override fun getItemCount() = contacts.size
 
-    class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val ivProfilePicture = itemView.findViewById<ImageView>(R.id.ivProfilePicture)
+    class AddContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val ivProfilePicture = itemView.findViewById<ImageView>(R.id.ivProfilePicture)
         val tvUsername = itemView.findViewById<TextView>(R.id.tvUsername)
-        val btnDeleteContact = itemView.findViewById<Button>(R.id.btnDeleteContact)
-        val btnMessage = itemView.findViewById<Button>(R.id.btnMessage)
-        val btnProfile = itemView.findViewById<Button>(R.id.btnProfile)
+        val btnAddContact = itemView.findViewById<Button>(R.id.btnAddContact)
     }
 
 }

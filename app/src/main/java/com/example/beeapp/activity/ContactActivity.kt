@@ -1,15 +1,20 @@
 package com.example.beeapp.activity
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeapp.R
+import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.ContactAdapter
-import com.example.beeapp.databinding.ActivityAddContactBinding
 import com.example.beeapp.databinding.ActivityContactBinding
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiUserInterface
@@ -23,11 +28,12 @@ import java.util.logging.Logger
 
 class ContactActivity : AppCompatActivity() {
 
-    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
-    private  var users :MutableList<User> = mutableListOf()
+
     private lateinit var viewBinding:ActivityContactBinding
     lateinit var adapter: ContactAdapter
     private lateinit var rvContacts: RecyclerView
+    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+    private  var contacts :MutableList<User> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,97 +43,90 @@ class ContactActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Contacts"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initView()
+        getContacts()
+    }
+
+    private fun getContacts() {
+        apiUserInterface.findContacts(loggedUser.contacts).enqueue(object : Callback<List<User>>{
+
+            override fun onResponse(
+                call: Call<List<User>>,
+                response: Response<List<User>>
+            ) {
+                contacts.clear()
+
+                if(response.code()==200){
+                    contacts.addAll(response.body()!!)
+                    adapter.notifyDataSetChanged()
+                }else{
+                    Logger.getLogger("SEARCH").log(Level.INFO, "Error")
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+
+                Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to search users",t)
+            }
+        })
+    }
+
+    fun initView(){
+        rvContacts = viewBinding.rvContacts
+        rvContacts.layoutManager = LinearLayoutManager(this)
+        adapter = ContactAdapter(this,contacts)
+        rvContacts.adapter = adapter
+
     }
 
 
-
-   /* private fun loadUsers(){
-
-        svContacts.setOnQueryTextListener( object: SearchView.OnQueryTextListener{
-
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                svContacts.clearFocus()
-                // Logger.getLogger("Hola").log(Level.SEVERE, "$users")
-                apiUserInterface.getUserByUsername(query).enqueue(object : Callback<User>{
-
-                    override fun onResponse(
-                        call: Call<User>,
-                        response: Response<User>
-                    ) {
-                        users.clear()
-
-                        if(response.code()==200){
-                            users.add(response.body()!!)
-                            users.removeIf {u->u.id.equals(LoginActivity.loggedUser.id)}
-                            Logger.getLogger("SEARCH").log(Level.INFO, "List of users found: $users")
-                            adapter.notifyDataSetChanged()
-                        }else{
-                            Logger.getLogger("SEARCH").log(Level.INFO, "No coincidences")
-                        }
-
-                    }
-
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-
-                        Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to search users",t)
-                    }
-                })
-
-
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-
-                apiUserInterface.searchUser(newText).enqueue(object : Callback<MutableList<User>>{
-                    override fun onResponse(
-                        call: Call<MutableList<User>>,
-                        response: Response<MutableList<User>>
-                    ) {
-
-
-                        try{
-                            users.clear()
-                            users.addAll(response.body()!!)
-                            users.removeIf {u->u.id.equals(LoginActivity.loggedUser.id)}
-                            Logger.getLogger("AUTOSEARCH").log(Level.INFO, "List of users found: $users")
-                            adapter.notifyDataSetChanged()
-                        }catch (e:Exception){
-                            users.clear()
-                            adapter.notifyDataSetChanged()
-                            Logger.getLogger("AUTOSEARCH").log(Level.INFO, "No coincidences")
-                        }
-
-                        if(newText.equals("")){
-                            users.clear()
-                            adapter.notifyDataSetChanged()
-                        }
-
-                    }
-
-                    override fun onFailure(call: Call<MutableList<User>>, t: Throwable) {
-                        Logger.getLogger("ERROR").log(Level.SEVERE, "Unexpected ERROR trying to search users",t)
-                    }
-                })
-
-                return false
-            }
-        })
-    }*/
     //Función que se encarga de crear la barra del menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.contact_menu, menu)
+
+        val searchItem = menu.findItem(R.id.searchContact)
+        val searchView: SearchView? = searchItem?.actionView as SearchView
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                // Toast like print
+                Log.i("Search","$s")
+
+                filterContacts(s)
+
+                return false
+            }
+
+            override fun onQueryTextChange(s: String): Boolean {
+                filterContacts(s)
+                return false
+            }
+        })
+
+
         return super.onCreateOptionsMenu(menu)
+    }
+    fun filterContacts(text:String){
+        val filteredList: MutableList<User> = mutableListOf()
+        for(item in contacts){
+            if(item.username.lowercase().contains(text.lowercase())){
+                filteredList.add(item)
+            }
+        }
+       // if (filteredList.isNotEmpty()){
+            adapter.filterList(filteredList)
+       // }
+
     }
     //Función que se encarga de las funciónes de cada elemento del menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
 
-
-            R.id.searchContact -> {
-
+            android.R.id.home->{
+                onBackPressed()
             }
+
             R.id.addContact->{
 
                 startActivity(Intent(this, AddContactActivity::class.java))

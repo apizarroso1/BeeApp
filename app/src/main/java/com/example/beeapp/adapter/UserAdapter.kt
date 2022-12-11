@@ -21,9 +21,8 @@ import retrofit2.create
 class UserAdapter(val context: Context, val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
-    private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
-    //inflamos el el view
+
+    //inflamos el view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false)
 
@@ -50,10 +49,7 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
 
         }
     }
-    fun getChat(){
 
-
-    }
 
     override fun getItemCount(): Int {
         return userList.size

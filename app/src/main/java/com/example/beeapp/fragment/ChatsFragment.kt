@@ -15,13 +15,6 @@ import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiChatInterface
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
-//import com.google.firebase.auth.FirebaseAuth
-//import com.google.firebase.database.DataSnapshot
-//import com.google.firebase.database.DatabaseError
-//import com.google.firebase.database.DatabaseReference
-//import com.google.firebase.database.ValueEventListener
-//import com.google.firebase.database.ktx.database
-//import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
