@@ -18,7 +18,7 @@
         android:background="@drawable/user_border"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContacts"
+        android:id="@+id/rvUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/user_border"

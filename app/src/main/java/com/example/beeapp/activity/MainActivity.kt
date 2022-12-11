@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.add_friend -> {
-                startActivity(Intent(this, AddContactActivity::class.java))
+                startActivity(Intent(this, ContactActivity::class.java))
             }
 
         }
