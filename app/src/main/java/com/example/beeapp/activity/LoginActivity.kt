@@ -40,8 +40,6 @@ class LoginActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
-        
-
         //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()
 
@@ -134,6 +132,7 @@ class LoginActivity : AppCompatActivity() {
     }
     //Funcion login hace una consulta con el email indicado
     private fun login(email: String, password: String) {
+        val hashedPassword = RegisterActivity.toMd5Hash(password)
 
         //Llamada a la api para buscar un usuario usando el email
         apiUserInterface.getUserByEmail(email).enqueue(object: Callback<User> {
@@ -144,8 +143,8 @@ class LoginActivity : AppCompatActivity() {
                 //Se comprueba primero que la respuesta sea que se ha encontrado al usuario
                 if (response.code()==200){
 
-                    //Se comprueba que la contraseña sea la correcta para iniciar sesión
-                    if(response.body()!!.password.equals(password)){
+                    //Se comprueba que la contraseña coincida con la contraseña hasheada en el registro
+                    if(response.body()!!.password.equals(hashedPassword)){
                         //Se muestra por pantalla al usuario que ha iniciado sesión
                         Toast.makeText(
                             applicationContext,
