@@ -1,8 +1,11 @@
 package com.example.beeapp.activity
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -13,17 +16,23 @@ import com.example.beeapp.R
 import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityEventBinding
+import com.example.beeapp.model.Chat
+import com.example.beeapp.model.Event
 import com.example.beeapp.model.Message
 import com.example.beeapp.model.User
-import com.example.beeapp.service.ApiChatInterface
-import com.example.beeapp.service.ApiUserInterface
-import com.example.beeapp.service.RetrofitService
+import com.example.beeapp.service.*
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.dto.StompMessage
 
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 import kotlin.collections.HashMap
 
 class EventActivity : AppCompatActivity() {
@@ -32,16 +41,21 @@ class EventActivity : AppCompatActivity() {
     private lateinit var ivSendButton: ImageView
     private lateinit var viewBinding: ActivityEventBinding
     private lateinit var messageAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Message>
-    private lateinit var usernameList: HashMap<String,String>
+    private lateinit var messageList: MutableList<Message>
+    private var usernameList: HashMap<String,String> = HashMap()
     private lateinit var eventName:String
     private lateinit var description:String
     private lateinit var eventId:String
     private lateinit var attendees: ArrayList<String>
+    private lateinit var event: Event
+    private lateinit var chat: Chat
+
+    private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Const.address)
 
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
@@ -52,21 +66,99 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        eventName = intent.getStringExtra("eventname").toString()
-        eventId = intent.getStringExtra("eventid").toString()
-        description = intent.getStringExtra("description").toString()
-        attendees = intent.getStringArrayListExtra("attendees")!!
+        event = intent.getSerializableExtra("event") as Event
+       // eventName = intent.getStringExtra("eventname").toString()
+       // eventId = intent.getStringExtra("eventid").toString()
+       // description = intent.getStringExtra("description").toString()
+      //  attendees = intent.getStringArrayListExtra("attendees")!!
 
 
-        supportActionBar?.title = eventName
+        //supportActionBar?.title = eventName
+        supportActionBar?.title = event.name
         initView()
-        messageList = ArrayList()
-        //getUsernames()
-       // messageAdapter = MessageAdapter(this, messageList, usernameList)
-        //rvMessage.layoutManager = LinearLayoutManager(this)
-        //rvMessage.adapter = messageAdapter
 
 
+        messageList= mutableListOf()
+
+       /* apiChatInterface.getChatById().enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                try {
+                    chat = response.body()!!
+
+                    messageList.clear()
+                    messageList.addAll(chat.messages)
+                    messageAdapter.notifyDataSetChanged()
+                    try {
+                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
+                    } catch (e: Exception) {
+
+                    }
+                }catch (e:Exception)
+                {
+                    Logger.getLogger("ChatError").log(Level.SEVERE, "${response.code()}",e)
+                }
+
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+                Logger.getLogger("ChatError").log(Level.SEVERE, "Error trying to connect",t)
+            }
+        })*/
+
+        getUsernames()
+        rvMessage = viewBinding.rvMessage
+        rvMessage.layoutManager = LinearLayoutManager(this)
+
+        messageAdapter = MessageAdapter(this, messageList, usernameList)
+        rvMessage.adapter = messageAdapter
+
+        stompClient.connect()
+        StompUtils.lifecycle(stompClient)
+
+        stompClient.topic(Const.eventResponse.replace(Const.placeholder, event.id))
+            .subscribe { stompMessage: StompMessage ->
+                val jsonObject = JSONObject(stompMessage.payload)
+                Log.i("SERVER", "Receive: $jsonObject")
+                runOnUiThread {
+                    try {
+                        var message = Message(jsonObject.getString("senderId"),
+                            jsonObject.getString("receiverId"),jsonObject.getString("body"))
+
+
+                        messageList.add(message)
+
+
+                        refreshChat()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+        apiChatInterface.getChatById(event.chatId).enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                try {
+                    chat = response.body()!!
+
+                    messageList.clear()
+                    messageList.addAll(chat.messages)
+                    messageAdapter.notifyDataSetChanged()
+                    try {
+                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
+                    } catch (e: Exception) {
+
+                    }
+                }catch (e:Exception)
+                {
+                    Logger.getLogger("ChatError").log(Level.SEVERE, "${response.code()}",e)
+                }
+
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+                Logger.getLogger("ChatError").log(Level.SEVERE, "Error trying to connect",t)
+            }
+        })
         //cargar los mensajes de un chat
        /* dbRef.child("groupchats").child(groupId!!).child("messages")
             .addValueEventListener(object : ValueEventListener {
@@ -96,38 +188,26 @@ class EventActivity : AppCompatActivity() {
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
-            var message = edMessage.text.toString().trim()
-
-            var msgId = UUID.randomUUID().toString();
-
-            var messageObject = Message(loggedUser.id,eventId, message)
-
-           /* dbRef.child("groupchats").child(groupId!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    edMessage.setText("")
-                }*/
+            sendMessage()
 
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-    private fun getUsernames() {
+    private fun getUsernames(){
 
 
-        apiUserInterface.findContacts(attendees.toSet()).enqueue(object : Callback<List<User>>{
+        apiUserInterface.findContacts(event.attendees!!.toSet()).enqueue(object : Callback<List<User>> {
+
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
-                var userList= response.body()!!
+                var userList = response.body()!!
 
-                for (user:User in userList){
+                for (user: User in userList) {
 
                     usernameList[user.id] = user.username
-
+                    messageAdapter.notifyDataSetChanged()
                 }
-
+                Log.i("USERLISTR","$usernameList")
 
 
             }
@@ -139,13 +219,51 @@ class EventActivity : AppCompatActivity() {
 
 
 
+
     }
 
     private fun initView() {
         edMessage = viewBinding.edMessage
-        rvMessage = viewBinding.rvMessage
+
         ivSendButton = viewBinding.ivSendButton
     }
+
+    private fun refreshChat() {
+
+        messageAdapter.notifyItemInserted(messageList.size-1)
+        try {
+            rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
+        } catch (e: Exception) {
+
+        }
+
+    }
+
+
+    private fun sendMessage(){
+        var message = edMessage.text.toString().trim()
+
+        if(message!="") {
+
+
+            Logger.getLogger("CLIENT").log(Level.SEVERE, "message sent")
+            val jsonObject = JSONObject()
+            try {
+                jsonObject.put("senderId", loggedUser.id)
+                jsonObject.put("receiverId", event.id)
+                jsonObject.put("body", message)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            stompClient.send(Const.event.replace(Const.placeholder, event.id), jsonObject.toString()).subscribe()
+
+            edMessage.setText("")
+        }
+    }
+
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.group_menu,menu)
         return super.onCreateOptionsMenu(menu)
@@ -155,9 +273,9 @@ class EventActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.goToMap -> {
                 val intent = Intent(this, GoogleMapsActivity::class.java)
-                intent.putExtra("eventName",eventName)
-                intent.putExtra("description",description)
-                intent.putExtra("eventId",eventId)
+                intent.putExtra("eventName",event.name)
+                intent.putExtra("description",event.description)
+                intent.putExtra("eventId",event.id)
                 startActivity(intent)
             }
             android.R.id.home ->{
@@ -166,6 +284,11 @@ class EventActivity : AppCompatActivity() {
             }
 
         }
+        return true
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
         return true
     }
 }

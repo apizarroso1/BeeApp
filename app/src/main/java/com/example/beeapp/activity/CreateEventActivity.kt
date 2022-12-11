@@ -20,11 +20,15 @@ import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.AddToGroupAdapter
 import com.example.beeapp.databinding.ActivityCreateEventBinding
 import com.example.beeapp.model.*
+import com.example.beeapp.service.ApiChatInterface
 import com.example.beeapp.service.ApiEventInterface
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
 
 import com.google.android.material.chip.ChipGroup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,6 +63,7 @@ class CreateEventActivity : AppCompatActivity() {
 
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
     private var apiEventInterface: ApiEventInterface = RetrofitService().getRetrofit().create()
+    private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -202,6 +207,17 @@ class CreateEventActivity : AppCompatActivity() {
         val chat = Chat(UUID.randomUUID().toString(),attendees,ArrayList(),ChatType.EVENT)
 
         val event = Event(eventName,description,attendees,eventDate,eventTime,type,chat.id)
+
+        CoroutineScope(Dispatchers.Main).launch { apiChatInterface.insertChat(chat).enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                Logger.getLogger("Created").log(Level.INFO, "Chat=${response.body()}, code=${response.code()}")
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+                Logger.getLogger("Event").log(Level.SEVERE, "Error connecting",t)
+            }
+        }) }
+
 
         apiEventInterface.insertEvent(event).enqueue(object :Callback<Event>{
             override fun onResponse(call: Call<Event>, response: Response<Event>) {

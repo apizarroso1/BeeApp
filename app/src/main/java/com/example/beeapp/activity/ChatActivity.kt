@@ -164,7 +164,7 @@ class ChatActivity : AppCompatActivity() {
 
         if(message!="") {
 
-            var messageObject = Message(loggedUser.id, receiverId, message)
+           // var messageObject = Message(loggedUser.id, receiverId, message)
 
 
             Logger.getLogger("CLIENT").log(Level.SEVERE, "message sent")
@@ -172,7 +172,7 @@ class ChatActivity : AppCompatActivity() {
             try {
                 jsonObject.put("senderId", loggedUser.id)
                 jsonObject.put("receiverId", receiverId)
-                jsonObject.put("body", messageObject.body)
+                jsonObject.put("body", message)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }

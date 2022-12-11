@@ -30,9 +30,10 @@ class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
         holder.itemView.setOnClickListener {
             val intent = Intent(context, EventActivity::class.java)
 
-            intent.putExtra("eventname", currentGroup.name)
-            intent.putExtra("eventid", currentGroup.id)
-            intent.putExtra("description",currentGroup.description.toString())
+            intent.putExtra("event",currentGroup)
+            //intent.putExtra("eventname", currentGroup.name)
+            //intent.putExtra("eventid", currentGroup.id)
+            //intent.putExtra("description",currentGroup.description.toString())
 
             var attendees:ArrayList<String> = ArrayList(currentGroup.attendees!!)
 

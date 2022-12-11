@@ -1,9 +1,8 @@
 package com.example.beeapp.model
 
-import java.time.LocalDate
-import java.time.LocalTime
-import java.util.UUID
 
+import java.util.UUID
+import java.io.Serializable
 data class Event(
     var id: String,
     var name: String,
@@ -15,7 +14,7 @@ data class Event(
     var type: EventType,
     var chatId: String,
     var expenses: MutableList<Expense>
-) {
+):Serializable {
     fun addExpense(expense: Expense) {
         this.expenses.add(expense)
     }
