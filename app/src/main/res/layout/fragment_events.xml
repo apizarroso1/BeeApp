@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:text="create group"
+        android:text="create event"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="20dp"
