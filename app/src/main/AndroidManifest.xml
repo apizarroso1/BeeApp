@@ -40,7 +40,8 @@
         <activity
             android:name=".activity.GoogleMapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_google_maps" />
+            android:label="@string/title_activity_google_maps"
+            android:parentActivityName=".activity.EventActivity"/>
         <activity
             android:name=".activity.ContactActivity"
             android:exported="false" >

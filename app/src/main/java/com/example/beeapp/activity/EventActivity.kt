@@ -14,13 +14,16 @@ import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.adapter.MessageAdapter
 import com.example.beeapp.databinding.ActivityEventBinding
 import com.example.beeapp.model.Message
+import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiChatInterface
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.create
 
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class EventActivity : AppCompatActivity() {
@@ -34,6 +37,7 @@ class EventActivity : AppCompatActivity() {
     private lateinit var eventName:String
     private lateinit var description:String
     private lateinit var eventId:String
+    private lateinit var attendees: ArrayList<String>
 
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
@@ -51,16 +55,16 @@ class EventActivity : AppCompatActivity() {
         eventName = intent.getStringExtra("eventname").toString()
         eventId = intent.getStringExtra("eventid").toString()
         description = intent.getStringExtra("description").toString()
-
+        attendees = intent.getStringArrayListExtra("attendees")!!
 
 
         supportActionBar?.title = eventName
         initView()
         messageList = ArrayList()
-        usernameList = getUsernames(eventId)
-        messageAdapter = MessageAdapter(this, messageList, usernameList)
-        rvMessage.layoutManager = LinearLayoutManager(this)
-        rvMessage.adapter = messageAdapter
+        //getUsernames()
+       // messageAdapter = MessageAdapter(this, messageList, usernameList)
+        //rvMessage.layoutManager = LinearLayoutManager(this)
+        //rvMessage.adapter = messageAdapter
 
 
         //cargar los mensajes de un chat
@@ -110,34 +114,30 @@ class EventActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
-    private fun getUsernames(groupId: String): HashMap<String,String> {
-
-        var usernames = HashMap<String,String>()
+    private fun getUsernames() {
 
 
+        apiUserInterface.findContacts(attendees.toSet()).enqueue(object : Callback<List<User>>{
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
+                var userList= response.body()!!
 
+                for (user:User in userList){
 
+                    usernameList[user.id] = user.username
 
-       /* dbRef.child("groups").child(groupId).child("users")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    for (postSnapshot in snapshot.children) {
-
-                        usernames[postSnapshot.key.toString()] = postSnapshot.getValue(String::class.java).toString()
-
-                    }
-                    Log.e("Usernames", usernames.toString())
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("ERROR", "Something went wrong")
-                }
 
-            })*/
 
-        return usernames
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+
+            }
+        })
+
+
 
     }
 
@@ -159,7 +159,6 @@ class EventActivity : AppCompatActivity() {
                 intent.putExtra("description",description)
                 intent.putExtra("eventId",eventId)
                 startActivity(intent)
-                finish()
             }
             android.R.id.home ->{
                 onBackPressed()

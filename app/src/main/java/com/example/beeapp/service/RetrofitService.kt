@@ -8,7 +8,7 @@ class RetrofitService {
     // ip alex->192.168.1.67:8080/beeapp/
     // ip piwi->192.168.1.103:8080/beeapp/
     // ip wedu -> 10.100.212.7
-    private val BASEURL:String="http://192.168.1.103:8080/beeapp/"
+    private val BASEURL:String="http://192.168.1.67:8080/beeapp/"
     private val retrofit:Retrofit = initializeRetrofit()
 
     private fun initializeRetrofit():Retrofit{

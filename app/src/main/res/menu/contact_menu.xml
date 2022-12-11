@@ -9,4 +9,13 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
 
         android:title="Search"/>
+
+    <item
+
+        android:id="@+id/addContact"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="Add Contact"
+        app:showAsAction="always"
+
+/>
 </menu>

@@ -71,9 +71,9 @@ class UserActivity : AppCompatActivity() {
         viewBinding.userView.visibility = View.INVISIBLE
         initView()
         //initData()
-        CoroutineScope(Dispatchers.Main).launch {
-            load()
-        }
+       // CoroutineScope(Dispatchers.Main).launch {
+        initData()
+        //}
 
     }
 
@@ -95,10 +95,10 @@ class UserActivity : AppCompatActivity() {
 
     }
 
-    private fun load(){
+    /*private fun load(){
 
             initData()
-    }
+    }*/
 
 
 
