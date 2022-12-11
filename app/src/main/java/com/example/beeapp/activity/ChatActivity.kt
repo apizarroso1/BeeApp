@@ -184,6 +184,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
 
+
     private fun initView() {
         edMessage = viewBinding.edMessage
         rvMessage = viewBinding.rvMessage

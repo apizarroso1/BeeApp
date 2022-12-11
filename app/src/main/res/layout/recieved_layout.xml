@@ -26,6 +26,7 @@
                 android:text=""
 
                 android:paddingStart="10dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@color/yellow"
                 android:textStyle="bold"
                 />

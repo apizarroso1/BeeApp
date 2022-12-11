@@ -81,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
         var preferences: SharedPreferences = getSharedPreferences("credentials",Context.MODE_PRIVATE)
         var id = preferences.getString("userid","No info")
 
-        Logger.getLogger("SharedPreferences").log(Level.SEVERE, "$id")
+        Logger.getLogger("SharedPreferences").log(Level.INFO, "$id")
 
         //Se comprueba si hay info en las sharedPreferences
         if(!id.equals("No info")){

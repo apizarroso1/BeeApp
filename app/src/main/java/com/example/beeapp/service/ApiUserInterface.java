@@ -7,6 +7,7 @@ import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -18,6 +19,8 @@ public interface ApiUserInterface {
 
     @GET("user/consult")
     Call<List<User>> getUsers();
+
+
 
     @GET("user/consultbyusername")
     Call<User> getUserByUsername(@Query("username") String username);

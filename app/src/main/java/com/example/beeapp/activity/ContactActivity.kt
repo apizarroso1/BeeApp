@@ -106,6 +106,12 @@ class ContactActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
+
+
+
+
+
+
     fun filterContacts(text:String){
         val filteredList: MutableList<User> = mutableListOf()
         for(item in contacts){
@@ -134,5 +140,10 @@ class ContactActivity : AppCompatActivity() {
 
         }
         return true
+    }
+    override fun onResume() {
+
+        super.onResume()
+        getContacts()
     }
 }
