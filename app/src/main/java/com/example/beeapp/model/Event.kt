@@ -3,6 +3,7 @@ package com.example.beeapp.model
 
 import java.util.UUID
 import java.io.Serializable
+
 data class Event(
     var id: String,
     var name: String,
@@ -14,7 +15,7 @@ data class Event(
     var type: EventType,
     var chatId: String,
     var expenses: MutableList<Expense>
-):Serializable {
+) : Serializable {
     fun addExpense(expense: Expense) {
         this.expenses.add(expense)
     }
@@ -27,12 +28,28 @@ data class Event(
         name: String,
         description: String,
         attendees: Set<String>,
-        date:String,
-        time:String,
+        date: String,
+        time: String,
         type: EventType,
         chatId: String
     ) : this(
         UUID.randomUUID().toString(), name, description, attendees, date, time, null, type, chatId,
         mutableListOf<Expense>()
+    )
+    fun changeLocation(location: String){
+        this.location = location
+    }
+
+    constructor(event: Event) : this(
+        event.id,
+        event.name,
+        event.description,
+        event.attendees,
+        event.date,
+        event.time,
+        event.location,
+        event.type,
+        event.chatId,
+        event.expenses
     )
 }

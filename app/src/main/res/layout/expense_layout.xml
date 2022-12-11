@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+
+android:layout_weight="20"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_gravity="fill_horizontal">
+<TextView
+    android:id="@+id/tvExpenseName"
+    android:layout_weight="65"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="Expense"
+    android:autoSizeMaxTextSize="30dp"
+    android:autoSizeMinTextSize="24dp"
+    android:textSize="24dp"
+    android:textColor="@color/black"
+    android:layout_gravity="start"/>
+<TextView
+    android:id="@+id/tvExpensePrice"
+    android:layout_weight="35"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:textColor="@color/black"
+    android:text="€"
+    android:textSize="24dp"
+    android:autoSizeMaxTextSize="30dp"
+    android:autoSizeMinTextSize="24dp"
+    />
+</LinearLayout>

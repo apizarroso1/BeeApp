@@ -71,7 +71,8 @@
             android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.ExpensesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.UserActivity"
             android:exported="false"

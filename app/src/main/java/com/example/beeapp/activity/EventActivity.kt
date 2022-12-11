@@ -43,17 +43,18 @@ class EventActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: MutableList<Message>
     private var usernameList: HashMap<String,String> = HashMap()
-    private lateinit var eventName:String
-    private lateinit var description:String
-    private lateinit var eventId:String
-    private lateinit var attendees: ArrayList<String>
-    private lateinit var event: Event
+
+   // private lateinit var event: Event
     private lateinit var chat: Chat
 
     private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Const.address)
 
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
+
+    companion object{
+        lateinit var event:Event
+    }
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,10 +68,7 @@ class EventActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         event = intent.getSerializableExtra("event") as Event
-       // eventName = intent.getStringExtra("eventname").toString()
-       // eventId = intent.getStringExtra("eventid").toString()
-       // description = intent.getStringExtra("description").toString()
-      //  attendees = intent.getStringArrayListExtra("attendees")!!
+
 
 
         //supportActionBar?.title = eventName
@@ -134,7 +132,7 @@ class EventActivity : AppCompatActivity() {
                     }
                 }
             }
-
+        //cargar los mensajes de un chat
         apiChatInterface.getChatById(event.chatId).enqueue(object :Callback<Chat>{
             override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
                 try {
@@ -159,32 +157,8 @@ class EventActivity : AppCompatActivity() {
                 Logger.getLogger("ChatError").log(Level.SEVERE, "Error trying to connect",t)
             }
         })
-        //cargar los mensajes de un chat
-       /* dbRef.child("groupchats").child(groupId!!).child("messages")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
 
-                    messageList.clear()
 
-                    for (postSnapshot in snapshot.children) {
-
-                        val message = postSnapshot.getValue(Message::class.java)
-                        messageList.add(message!!)
-
-                    }
-                    try {
-                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
-                    } catch (e: Exception) {
-
-                    }
-                    messageAdapter.notifyDataSetChanged()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("ERROR", "Something went wrong")
-                }
-
-            })*/
 
         //añadimos el mensaje a la base de datos
         ivSendButton.setOnClickListener {
@@ -273,9 +247,8 @@ class EventActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.goToMap -> {
                 val intent = Intent(this, GoogleMapsActivity::class.java)
-                intent.putExtra("eventName",event.name)
-                intent.putExtra("description",event.description)
-                intent.putExtra("eventId",event.id)
+
+                intent.putExtra("event",event)
                 startActivity(intent)
             }
             android.R.id.home ->{

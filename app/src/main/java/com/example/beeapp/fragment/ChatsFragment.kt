@@ -59,6 +59,7 @@ class ChatsFragment : Fragment() {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 Logger.getLogger("ContactList").log(Level.INFO, "Contacts=${response.body()}, code=${response.code()}")
                 if(!response.body().isNullOrEmpty()){
+                    contactList.clear()
                     contactList.addAll(response.body()!!)
                     adapter.notifyDataSetChanged()
 
@@ -74,8 +75,14 @@ class ChatsFragment : Fragment() {
 
     }
 
-/*
-    private fun rvChats() {
+    override fun onResume() {
+        super.onResume()
+        loadContacts()
+
+    }
+
+
+   /* private fun rvChats() {
 
 
 

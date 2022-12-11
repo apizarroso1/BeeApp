@@ -1,9 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ExpensesActivity">
+    tools:context=".activity.ExpensesActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="20dp"
+    android:background="@drawable/background3">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_weight="20"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_gravity="fill_horizontal">
+        <TextView
+            android:layout_weight="65"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Price/Person"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:layout_gravity="start"/>
+        <TextView
+            android:id="@+id/tvPpp"
+            android:layout_weight="35"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="€"
+            android:textSize="24dp"
+/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Expenses"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:gravity="center"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExpenses"
+        android:layout_weight="80"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        android:background="@drawable/rv_background"
+/>
+    <Button
+        android:id="@+id/btnAddExpenses"
+        android:layout_weight="10"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:text="Add Expenses"
+        />
+
+
+
+</LinearLayout>

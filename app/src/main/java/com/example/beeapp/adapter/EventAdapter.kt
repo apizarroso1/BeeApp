@@ -14,32 +14,30 @@ import com.example.beeapp.model.Event
 
 
 class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
-    RecyclerView.Adapter<EventAdapter.GroupViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
+    RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.event_layout, parent, false)
 
-        return GroupViewHolder(view)
+        return EventViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-        val currentGroup = eventList[position]
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        val currentEvent = eventList[position]
 
-        holder.tvGroupName.text = currentGroup.name
+        holder.tvEventName.text = currentEvent.name
 
         //al pulsar en el card te lleva a ala activiada chat
         holder.itemView.setOnClickListener {
             val intent = Intent(context, EventActivity::class.java)
 
-            intent.putExtra("event",currentGroup)
-            //intent.putExtra("eventname", currentGroup.name)
-            //intent.putExtra("eventid", currentGroup.id)
-            //intent.putExtra("description",currentGroup.description.toString())
+            intent.putExtra("event",currentEvent)
 
-            var attendees:ArrayList<String> = ArrayList(currentGroup.attendees!!)
+
+            var attendees:ArrayList<String> = ArrayList(currentEvent.attendees!!)
 
             intent.putStringArrayListExtra("attendees",attendees)
 
-            Log.i("EVENT","$currentGroup")
+            Log.i("EVENT","$currentEvent")
 
             context.startActivity(intent)
 
@@ -48,9 +46,9 @@ class EventAdapter(val context: Context, val eventList: ArrayList<Event>) :
 
     override fun getItemCount() = eventList.size
 
-    class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val tvGroupName = itemView.findViewById<TextView>(R.id.tvGroupName)
+        val tvEventName = itemView.findViewById<TextView>(R.id.tvEventName)
 
     }
 }
