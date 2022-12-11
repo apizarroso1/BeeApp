@@ -128,6 +128,10 @@ class ContactActivity : AppCompatActivity() {
             R.id.searchContact -> {
 
             }
+            R.id.addContact->{
+
+                startActivity(Intent(this, AddContactActivity::class.java))
+            }
 
         }
         return true
