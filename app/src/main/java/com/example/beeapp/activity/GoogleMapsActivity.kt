@@ -18,13 +18,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.beeapp.databinding.ActivityGoogleMapsBinding
 import com.example.beeapp.model.Event
-import com.example.beeapp.service.ApiChatInterface
-import com.example.beeapp.service.ApiEventInterface
-import com.example.beeapp.service.RetrofitService
+import com.example.beeapp.model.Message
+import com.example.beeapp.service.*
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.dto.StompMessage
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -41,6 +44,8 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var  btnSaveLocation: Button
     private lateinit var  btnExpenses: Button
     private var apiEventInterface: ApiEventInterface = RetrofitService().getRetrofit().create()
+
+    private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Const.address)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +97,31 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+
+        stompClient.connect()
+        StompUtils.lifecycle(stompClient)
+
+        /*
+        stompClient.topic(Const.chatResponse.replace(Const.placeholder, LoginActivity.loggedUser.id))
+            .subscribe { stompMessage: StompMessage ->
+                val jsonObject = JSONObject(stompMessage.payload)
+                Log.i("SERVER", "Receive: $jsonObject")
+                runOnUiThread {
+                    try {
+                        var message = Message(jsonObject.getString("senderId"),
+                            jsonObject.getString("receiverId"),jsonObject.getString("body"))
+
+
+                        messageList.add(message)
+
+
+                        refreshChat()
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            */
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
