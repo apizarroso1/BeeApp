@@ -86,7 +86,8 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     map.setOnMapClickListener {
                         map.addMarker(MarkerOptions().position(LatLng(it.latitude, it.longitude)))
                         selectedLocation = "" + it.latitude + ";" + it.longitude
-                        //video -> https://www.youtube.com/watch?v=_6EeTp4GxLo&ab_channel=Programaci%C3%B3nAndroidbyAristiDevs
+
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 17f))
                     }
                 }
             }else{
@@ -135,7 +136,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
             map.addMarker(MarkerOptions().position(marker).title("Marker in the abbyssm"))
             // Zoom 1world->20building
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 18f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 17f))
         }
     }
 
