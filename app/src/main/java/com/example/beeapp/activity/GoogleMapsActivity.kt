@@ -112,7 +112,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 LatLng(
                                     it.latitude,
                                     it.longitude
-                                ), 17f
+                                ), 15f
                             )
                         )
                         previousLocation = selectedLocation
