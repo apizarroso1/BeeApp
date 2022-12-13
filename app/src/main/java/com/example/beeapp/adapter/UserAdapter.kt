@@ -37,7 +37,7 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>) :
         Glide.with(context).load(currentUser.picture).into(holder.ivProfilePicture)
 
 
-        //al pulsar en el card te lleva a ala activiada chat
+        //al pulsar en el card te lleva a la activiada chat
         holder.itemView.setOnClickListener{
             val intent = Intent(context, ChatActivity::class.java)
 

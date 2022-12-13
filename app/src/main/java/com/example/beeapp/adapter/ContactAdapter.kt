@@ -17,6 +17,7 @@ import com.example.beeapp.activity.LoginActivity.Companion.loggedUser
 import com.example.beeapp.R
 import com.example.beeapp.activity.ChatActivity
 import com.example.beeapp.activity.UserActivity
+import com.example.beeapp.model.Chat
 
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiChatInterface
@@ -38,6 +39,7 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
 
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
     private var apiChatInterface: ApiChatInterface = RetrofitService().getRetrofit().create()
+    private lateinit var chat: Chat
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -50,6 +52,19 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
 
+        apiChatInterface.findChat(loggedUser.id,contacts[position].id).enqueue(object :Callback<Chat>{
+            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
+                if (response.code()==200) {
+                    chat = response.body()!!
+                    Log.i("ADAPTER","Chat found")
+                }
+            }
+
+            override fun onFailure(call: Call<Chat>, t: Throwable) {
+
+                Log.e("ADAPTER","Error trying to connect")
+            }
+        })
 
         holder.btnDeleteContact.setOnClickListener {
 
@@ -77,11 +92,30 @@ class ContactAdapter(val context: Context, private var contacts: MutableList<Use
                             }
 
                             override fun onFailure(call: Call<User>, t: Throwable) {
-                                Log.e("ADAPTER","ERROR trying to connect")
+                                Log.e("ADAPTER","ERROR trying to connect",t)
                             }
                         })
                         contacts.remove(contacts[position])
                         notifyDataSetChanged()
+
+                        apiChatInterface.deleteChat(chat.id).enqueue(object : Callback<String>{
+                            override fun onResponse(
+                                call: Call<String>,
+                                response: Response<String>
+                            ) {
+                                if (response.code()==200){
+                                    Log.i("ADAPTER","Chat deleted ${response.body()}")
+                                }else{
+                                    Log.i("ADAPTER","Nope ${response.code()}, Chat=${chat.id}")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<String>, t: Throwable) {
+                                Log.e("ADAPTER","Si es error de JSON ignorar",t)
+                            }
+                        })
+
+
                     }
                     .setNegativeButton("No"){dialog, id->
                         dialog.dismiss()

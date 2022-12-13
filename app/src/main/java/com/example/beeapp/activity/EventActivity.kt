@@ -78,30 +78,6 @@ class EventActivity : AppCompatActivity() {
 
         messageList= mutableListOf()
 
-       /* apiChatInterface.getChatById().enqueue(object :Callback<Chat>{
-            override fun onResponse(call: Call<Chat>, response: Response<Chat>) {
-                try {
-                    chat = response.body()!!
-
-                    messageList.clear()
-                    messageList.addAll(chat.messages)
-                    messageAdapter.notifyDataSetChanged()
-                    try {
-                        rvMessage.smoothScrollToPosition(messageAdapter.itemCount - 1)
-                    } catch (e: Exception) {
-
-                    }
-                }catch (e:Exception)
-                {
-                    Logger.getLogger("ChatError").log(Level.SEVERE, "${response.code()}",e)
-                }
-
-            }
-
-            override fun onFailure(call: Call<Chat>, t: Throwable) {
-                Logger.getLogger("ChatError").log(Level.SEVERE, "Error trying to connect",t)
-            }
-        })*/
 
         getUsernames()
         rvMessage = viewBinding.rvMessage

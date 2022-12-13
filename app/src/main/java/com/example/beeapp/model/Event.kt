@@ -36,9 +36,7 @@ data class Event(
         UUID.randomUUID().toString(), name, description, attendees, date, time, null, type, chatId,
         mutableListOf<Expense>()
     )
-    fun changeLocation(location: String){
-        this.location = location
-    }
+
 
     constructor(event: Event) : this(
         event.id,

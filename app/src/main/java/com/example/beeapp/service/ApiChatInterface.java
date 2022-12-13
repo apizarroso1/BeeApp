@@ -9,6 +9,7 @@ import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -18,6 +19,9 @@ import retrofit2.http.Query;
 public interface ApiChatInterface {
     @GET("chat/consult")
     Call<List<Chat>> getChats();
+
+    @DELETE("chat/delete/{id}")
+    Call<String> deleteChat(@Path("id") String id);
 
     @GET("chat/consult/{id}")
     Call<Chat> getChatById(@Path("id") String id);

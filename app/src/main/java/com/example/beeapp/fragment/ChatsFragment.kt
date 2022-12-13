@@ -82,28 +82,7 @@ class ChatsFragment : Fragment() {
     }
 
 
-   /* private fun rvChats() {
 
-
-
-        apiChatInterface.findAllChatsFromUser(loggedUser.id).enqueue(object : Callback<List<Chat>>{
-            override fun onResponse(call: Call<List<Chat>>, response: Response<List<Chat>>) {
-
-                chatsList.addAll(response.body()!!)
-
-                Logger.getLogger("ListChats").log(Level.SEVERE, "$chatsList code=${response.code()}")
-
-            }
-
-            override fun onFailure(call: Call<List<Chat>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-
-
-
-
-    }*/
 
 
 }
