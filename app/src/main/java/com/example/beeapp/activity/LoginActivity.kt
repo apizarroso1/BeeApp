@@ -75,6 +75,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+    private fun initView(){
+
+    }
     //Función que se encarga de ver si hay una sesión iniciada
     private fun checkLoggedUser(){
 
