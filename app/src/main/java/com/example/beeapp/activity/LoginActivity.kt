@@ -45,11 +45,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-
+        initView()
         //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()
 
-        initView()
+
 
         loginButton.setOnClickListener {
 
@@ -124,6 +124,8 @@ class LoginActivity : AppCompatActivity() {
 
         }else{
             Logger.getLogger("Sesion not found").log(Level.INFO, "Try to login")
+            viewBinding.loginView.visibility = View.VISIBLE
+            viewBinding.progressBar.visibility = View.GONE
         }
 
     }
