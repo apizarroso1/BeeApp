@@ -213,9 +213,9 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 previousLocation!!.split(";")[1].toDouble()
             )
 
-            map.addMarker(MarkerOptions().position(marker).title("Marker in the abbyssm"))
+            map.addMarker(MarkerOptions().position(marker).title(event.name))
             // Zoom 1world->20building
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 17f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15f))
         }
     }
 
