@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -79,10 +80,11 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun initView(){
 
-        loginEmail = findViewById(R.id.loginEmail)
-        loginPassword = findViewById(R.id.loginPassword)
-        loginButton = findViewById(R.id.loginLoginButton)
-        loginGoRegisterButton = findViewById(R.id.loginGoRegisterButton)
+        loginEmail = viewBinding.loginEmail
+        loginPassword = viewBinding.loginPassword
+        loginButton = viewBinding.loginLoginButton
+        loginGoRegisterButton = viewBinding.loginGoRegisterButton
+        viewBinding.loginView.visibility = View.INVISIBLE
 
     }
     //Función que se encarga de ver si hay una sesión iniciada

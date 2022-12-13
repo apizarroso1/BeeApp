@@ -37,25 +37,25 @@
             android:id="@+id/tvFecha"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="28/12/2022"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             android:autoSizeMaxTextSize="30sp"
-            android:autoSizeMinTextSize="10sp"
-
+            android:autoSizeMinTextSize="24sp"
+            android:autoSizeTextType="uniform"
             />
         <TextView
             android:id="@+id/tvHora"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="18:00"
-
+            android:autoSizeTextType="uniform"
             android:textColor="@color/black"
             android:autoSizeMaxTextSize="30sp"
-            android:autoSizeMinTextSize="10sp" />
+            android:autoSizeMinTextSize="24sp" />
 
     </LinearLayout>
     <LinearLayout
@@ -78,7 +78,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_weight="40"
         android:background="@drawable/rv_background"
         android:padding="15dp">
