@@ -28,39 +28,40 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        >
+        android:orientation="horizontal">
+
         <EditText
-            android:layout_marginTop="5dp"
             android:id="@+id/edDate"
-            android:hint="date"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:background="@drawable/rv_background"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="date"
-            android:focusable="false"
-            android:clickable="true"
-            android:maxLines="1"
-            android:textAlignment="center"/>
-        <EditText
             android:layout_marginTop="5dp"
-            android:id="@+id/edTime"
-            android:hint="time"
+            android:layout_weight="1"
+            android:background="@drawable/rv_background"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="date"
+            android:inputType="date"
+            android:maxLines="1"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:background="@drawable/rv_background"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/edTime"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:inputType="time"
-            android:focusable="false"
+            android:background="@drawable/rv_background"
             android:clickable="true"
+            android:focusable="false"
+            android:hint="time"
+            android:inputType="time"
             android:maxLines="1"
-            android:textAlignment="center"/>
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textAlignment="center" />
     </LinearLayout>
 
 
@@ -72,58 +73,58 @@
         android:orientation="horizontal">
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:singleSelection="true"
-            android:id="@+id/chipGroup"
-            >
+            app:singleSelection="true">
+
 
             <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checkable="true"
                 android:id="@+id/cLEISURE"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checkable="true"
                 android:text="LEISURE"
-                app:chipBackgroundColor="@color/custom_chip"
                 android:textColor="@color/custom_chip_text"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:textSize="12sp"
+                app:chipBackgroundColor="@color/custom_chip"
 
                 />
 
             <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checkable="true"
                 android:id="@+id/cBUSINESS"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checkable="true"
                 android:text="BUSINESS"
-                app:chipBackgroundColor="@color/custom_chip"
                 android:textColor="@color/custom_chip_text"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                />
+                android:textSize="12sp"
+                app:chipBackgroundColor="@color/custom_chip" />
 
             <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checkable="true"
                 android:id="@+id/cFAMILY"
-                android:text="FAMILY"
-                app:chipBackgroundColor="@color/custom_chip"
-                android:textColor="@color/custom_chip_text"
-
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                />
-
-            <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:checkable="true"
-                android:id="@+id/cSPORTS"
-                android:text="SPORTS"
-                app:chipBackgroundColor="@color/custom_chip"
+                android:text="FAMILY"
                 android:textColor="@color/custom_chip_text"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                />
+                android:textSize="12sp"
 
+                app:chipBackgroundColor="@color/custom_chip" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/cSPORTS"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checkable="true"
+                android:text="SPORTS"
+                android:textColor="@color/custom_chip_text"
+                android:textSize="12sp"
+                app:chipBackgroundColor="@color/custom_chip" />
 
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
@@ -136,8 +137,8 @@
 
         android:layout_weight="22"
         android:background="@drawable/rv_background"
-        android:hint="Description"
         android:gravity="top"
+        android:hint="Description"
         android:maxLength="255"
         android:paddingStart="15dp"
         android:paddingTop="10dp"

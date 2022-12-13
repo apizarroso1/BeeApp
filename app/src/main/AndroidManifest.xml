@@ -33,10 +33,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDaebzXTNZqToE_0KC0XJX30T9sjQuvZOY" />
 
-        <activity
-            android:name=".activity.MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
+
         <activity
             android:name=".activity.GoogleMapsActivity"
             android:exported="false"
