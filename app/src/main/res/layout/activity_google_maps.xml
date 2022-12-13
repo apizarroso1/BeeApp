@@ -41,7 +41,10 @@
             android:text="28/12/2022"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
-            android:textSize="28sp" />
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="10sp"
+
+            />
         <TextView
             android:id="@+id/tvHora"
             android:layout_width="0dp"
@@ -51,7 +54,8 @@
             android:text="18:00"
 
             android:textColor="@color/black"
-            android:textSize="28sp" />
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="10sp" />
 
     </LinearLayout>
     <LinearLayout

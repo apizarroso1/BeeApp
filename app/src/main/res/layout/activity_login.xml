@@ -1,85 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activity.LoginActivity"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center"
-        android:background="@drawable/background">
-
-    <TextView
-        android:id="@+id/textView"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="50dp"
-        android:text="Log in"
-        android:textColor="@color/black"
-        android:textSize="38sp"
-        android:fontFamily="@font/press_start_2p"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".activity.LoginActivity"
+        android:id="@+id/loginView">
 
-    <EditText
-        android:id="@+id/loginEmail"
-        android:layout_width="320dp"
-        android:layout_height="64dp"
-        android:layout_below="@id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/text_entry"
-        android:fontFamily="@font/press_start_2p"
-        android:hint="email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="Log in"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="38sp" />
 
 
-    <EditText
-        android:id="@+id/loginPassword"
-        android:layout_width="320dp"
-        android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/loginEmail"
-        android:layout_marginTop="44dp"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:hint="password"
-        android:inputType="textPassword"
-        android:background="@drawable/text_entry"
-        android:fontFamily="@font/press_start_2p"
-        android:textColor="@color/black"
-         />
+        <EditText
+            android:id="@+id/loginEmail"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:layout_below="@id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/text_entry"
+            android:fontFamily="@font/press_start_2p"
+            android:hint="email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/black" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginLoginButton"
-        android:layout_width="160dp"
-        android:layout_height="64dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/loginPassword"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/custom_button"
-        android:fontFamily="@font/press_start_2p"
-        android:textSize="16sp"
-        android:text="LOG IN"
 
-         />
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:layout_below="@id/loginEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/text_entry"
+            android:fontFamily="@font/press_start_2p"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/black" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginGoRegisterButton"
-        android:layout_width="160dp"
-        android:layout_height="64dp"
-        android:layout_below="@id/loginLoginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/custom_button"
-        android:fontFamily="@font/press_start_2p"
-        android:text="SIGN UP INSTEAD"
-        android:textSize="16sp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginLoginButton"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_below="@id/loginPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="52dp"
+            android:background="@drawable/custom_button"
+            android:fontFamily="@font/press_start_2p"
+            android:text="LOG IN"
+            android:textSize="16sp"
 
-</LinearLayout>
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginGoRegisterButton"
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_below="@id/loginLoginButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/custom_button"
+            android:fontFamily="@font/press_start_2p"
+            android:text="SIGN UP INSTEAD"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</RelativeLayout>

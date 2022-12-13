@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.beeapp.R
+import com.example.beeapp.databinding.ActivityLoginBinding
+
 import com.example.beeapp.model.User
 import com.example.beeapp.service.ApiUserInterface
 import com.example.beeapp.service.RetrofitService
@@ -27,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginPassword: EditText
     private lateinit var loginButton: Button
     private lateinit var loginGoRegisterButton: Button
+    private lateinit var viewBinding: ActivityLoginBinding
+
     private var apiUserInterface: ApiUserInterface = RetrofitService().getRetrofit().create()
 
     companion object {
@@ -36,17 +40,15 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        viewBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
         //Se comprueba que haya una sesión iniciada anteriormente
         checkLoggedUser()
 
-        loginEmail = findViewById(R.id.loginEmail)
-        loginPassword = findViewById(R.id.loginPassword)
-        loginButton = findViewById(R.id.loginLoginButton)
-        loginGoRegisterButton = findViewById(R.id.loginGoRegisterButton)
+        initView()
 
         loginButton.setOnClickListener {
 
@@ -76,6 +78,11 @@ class LoginActivity : AppCompatActivity() {
 
     }
     private fun initView(){
+
+        loginEmail = findViewById(R.id.loginEmail)
+        loginPassword = findViewById(R.id.loginPassword)
+        loginButton = findViewById(R.id.loginLoginButton)
+        loginGoRegisterButton = findViewById(R.id.loginGoRegisterButton)
 
     }
     //Función que se encarga de ver si hay una sesión iniciada
